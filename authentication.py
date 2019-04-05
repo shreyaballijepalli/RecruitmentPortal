@@ -36,6 +36,7 @@ consumer_key=GOOGLE_CLIENT_ID,
 consumer_secret=GOOGLE_CLIENT_SECRET)
 
 results = []
+name_ = ""
 
 @app.route('/')
 def index():
@@ -65,6 +66,8 @@ def verify():
 	result = res.read()
 	print 'res read ',result
 	d = json.loads(result)
+	global name_ 
+	name_ = d['email']
 	print d['email']
 	
 	sql = "SELECT * FROM main_table WHERE email = '%s'" % (d['email'])       #checking if user is already there in database
@@ -85,7 +88,8 @@ def verify():
 
 @app.route('/menu/', methods=['GET'])       #on submission of login details
 def show_applications(): 
-	return render_template('show_application.html', rows=results, name_=results[0][2])
+
+	return render_template('show_application.html', rows=results, name_=name_)
 
 @app.route('/login')
 def login():
