@@ -39,7 +39,7 @@
       }
 
       .button {
-        background-color: #4CAF50;
+        background-color: #34609e;
         border: none;
         color: white;
         padding: 15px 32px;
@@ -51,7 +51,6 @@
         cursor: pointer;
       }
 
-      .button a.hover {color: black;}
     </style>
   </head>
   </head>
@@ -80,20 +79,8 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class="active"><a href="index.html">IITH</a></li>
-                <li><a href="listings.html">CSE</a></li>
-                <li class="has-children">
-                  <a href="about.html">About</a>
-                  <ul class="dropdown">
-                    <li><a href="#">The Company</a></li>
-                    <li><a href="#">The Leadership</a></li>
-                    <li><a href="#">Philosophy</a></li>
-                    <li><a href="#">Careers</a></li>
-                  </ul>
-                </li>
-                <li><a href="contact.html">Contact</a></li>
-
-                <li class="ml-xl-3 login"><a href="/verify"><span class="border-left pl-xl-4"></span>Log In/Register</a></li>
+                <li><a href="">{{name_}}</a></li>
+                <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
               </ul>
             </nav>
           </div>
@@ -121,10 +108,10 @@
           {% for row in rows %}
                <tr>
                 <td>{{row[0]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[2]}}</td>
                     <td>{{row[1]}}</td>
-                    <td>{{row[4]}}</td>
-                    <td>{{row[5]}}</td>
-                    <td><a href="{{url_for('telephone_page.static',filename = 'downloads/'+row[0]|string + '.pdf' )}}" target="_blank">Download</a></td>
+                    <td>{{row[15]}}</td>
                </tr>
             {% endfor %}
             </table>
@@ -133,7 +120,7 @@
 
       </section> 
 
-     <a href="#" class="button" style="position:fixed; bottom:20%; left:30%;">Link Button</a>
+     <a href="#" class="button" style="position:fixed; bottom:20%; left:40%;">New application</a>
   </div>
 
   <script src="{{ url_for('static',filename='styles/js/jquery-3.3.1.min.js') }}"></script>
