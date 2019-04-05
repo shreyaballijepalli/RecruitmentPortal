@@ -10,6 +10,7 @@ menu = Blueprint('menu', __name__, template_folder='templates', static_folder='s
 
 @menu.route('/', methods=['GET'])       #on submission of login details
 def show_menu(): 
+	
    return render_template('show_menu.html')
 
 

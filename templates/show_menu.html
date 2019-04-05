@@ -23,7 +23,37 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/rangeslider.css') }}">
 
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/style.css') }}">
-    
+    <style type="text/css">
+      table {
+          border-collapse: collapse;    
+          }
+
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: center;
+          padding: 8px;
+      }
+
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+
+      .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+
+      .button a.hover {color: black;}
+    </style>
+  </head>
   </head>
   <body style="background-color: #333333;">
   
@@ -78,9 +108,32 @@
       
     </header>
 
- 
+ <section style="position:fixed; top:20%; left:5%; width:90%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+         
+         <div >
+            <table border =1 align="center" style="width:100%; background-color: #f2f2f2;">
+            <tr><th>Application number</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Date</th>
+             </tr>     
+          {% for row in rows %}
+               <tr>
+                <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td><a href="{{url_for('telephone_page.static',filename = 'downloads/'+row[0]|string + '.pdf' )}}" target="_blank">Download</a></td>
+               </tr>
+            {% endfor %}
+            </table>
+         </div>
 
-    
+
+      </section> 
+
+     <a href="#" class="button" style="position:fixed; bottom:20%; left:30%;">Link Button</a>
   </div>
 
   <script src="{{ url_for('static',filename='styles/js/jquery-3.3.1.min.js') }}"></script>
