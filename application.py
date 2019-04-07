@@ -7,27 +7,64 @@ from app import app, cursor, db
 
 application = Blueprint('application', __name__, template_folder='templates', static_folder='static')   
 
+application_number = -1
+email_ = ""
 
-@application.route('/part1', methods=['GET','POST'])       #on submission of login details
+
+def set_params(email):
+	global email_
+	email_ = email
+
+@application.route('part1', methods=['GET','POST'])       #on submission of login details
 def part1(): 
 	#insert
+	global application_number
+
 	if (request.method =='POST'):
 		val = request.form['application_no']
 		print val
-		return render_template('application_part1.html')
+		application_number = val
+		sql = "SELECT * FROM main_table WHERE application_no = '%s';" %(val)
+		params_=[]
+		# cursor.execute(sql)
+		# try:   
+		cursor.execute(sql)
+		rows = cursor.fetchall()
+		rows = list(rows[0])
+
+		name_list = rows[3][1:-1].split(",")
+		params_ = [rows[2],name_list,rows[9],rows[10],rows[11],rows[12],rows[8],rows[13],
+		rows[4],rows[5],rows[6],rows[16]]
+
+		# print params_
+		# db.commit()
+		print "Form personal info is stored"
+
+		# except:
+		# 	print "Info error"
+
+		return render_template('application_placeholders_part1.html',params=params_)
+
 	else:
-		return "new application"
+		sql = "INSERT INTO main_table(email,status) VALUES ('%s','%s')" %(email_,"new")
+		cursor.execute(sql)
+		sql = "SELECT application_no from main_table WHERE email = '%s' ORDER BY application_no DESC LIMIT 1 ;" %(email_)
+		cursor.execute(sql)
+		rows = cursor.fetchall()
+		application_number = rows[0][0]
+		return render_template('application_part1.html')
+
 	# return render_template('application_placeholders_part1.html',params=params)
 
 
-@application.route('/part2', methods=['GET'])       #on submission of login details
+@application.route('part2', methods=['GET'])       #on submission of login details
 def part2(): 
    return render_template('application_part2.html')
 
 
 
 
-@application.route('/insert_1', methods=['GET','POST'])       #on submission of login details
+@application.route('insert_1', methods=['GET','POST'])       #on submission of login details
 def insert_1(): 
 	if (request.method =='POST'):
 		position = request.form['position']
@@ -39,7 +76,7 @@ def insert_1():
 		address2 = request.form['address_2']
 		address3 = request.form['address_3']
 		address = address1+address2+address3
-		email = request.form['email']
+		#email = request.form['email']
 		altemail = request.form['alt_email']
 		nationality = request.form['nationality']
 		age = request.form['age']
@@ -50,15 +87,23 @@ def insert_1():
 		# photo = request.form['photo']
 		# signature = request.form['signature']
 
-		params = [position,firstname,middlename,lastname,nationality,age,date_of_birth,
-		caste,email,altemail,disability,address1,address2,address3,other_info]
+		params = [position,[firstname,middlename,lastname],nationality,age,date_of_birth,
+		caste,altemail,disability,address1,address2,address3,other_info]
 
-#update
-		sql = "INSERT INTO main_table (position_applied, name, address, email, alt_email,\
-		 nationality,age,date_of_birth, caste, disability,other_info) \
-		VALUES('%s','%s','%s','%s','%s','%s','%d','%s','%s','%s','%s') " \
-		% (position,name,address,email,altemail,nationality,
-		  int(age),date_of_birth,caste,disability,other_info)
+
+
+		sql = "UPDATE main_table SET position_applied = '%s', name='%s',address='%s',\
+		alt_email='%s',nationality='%s',age='%s',date_of_birth='%s',caste='%s',\
+		disability='%s',other_info='%s' WHERE application_no = '%s';"\
+		%(position,name,address,altemail,nationality,int(age),date_of_birth,caste,
+			disability,other_info,application_number)
+
+# #update
+# 		sql = "INSERT INTO main_table (position_applied, name, address, alt_email,\
+# 		 nationality,age,date_of_birth, caste, disability,other_info) \
+# 		VALUES('%s','%s','%s','%s','%s','%s','%d','%s','%s','%s','%s') WHERE application_no = '%s';" \
+# 		% (position,name,address,altemail,nationality,
+# 		  int(age),date_of_birth,caste,disability,other_info)
 
 		try:   
 		   cursor.execute(sql)
@@ -68,11 +113,12 @@ def insert_1():
 			print "Info error"
 
 	#return "Saved!"
-   	return redirect(url_for("/part1"))
+	return render_template('application_placeholders_part1.html',params=params)
 
 
 
-@application.route('/insert_2', methods=['GET','POST'])       #on submission of login details
+
+@application.route('insert_2', methods=['GET','POST'])       #on submission of login details
 def insert_2(): 
 	phd_date_studied = request.form['phd_university_date']
 	phd_university = request.form['phd_university']

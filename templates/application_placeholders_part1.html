@@ -147,48 +147,48 @@
             </select> 
 
              <label for="first_name_">First Name</label>
-             <input type="text" id="first_name" name="first_name" value="{{params[1]}}" required>
+             <input type="text" id="first_name" name="first_name" value="{{params[1][0]}}" required>
 
              <label for="middle_name_">Middle Name</label>
-             <input type="text" id="middle_name" name="middle_name" placeholder="{{params[2]}}" required>
+             <input type="text" id="middle_name" name="middle_name" value="{{params[1][1]}}" required>
 
              <label for="last_name_">Last Name</label>
-             <input type="text" id="last_name" name="last_name" placeholder="{{params[3]}}" required>
+             <input type="text" id="last_name" name="last_name" value="{{params[1][2]}}" required>
 
              <label for="nationality_">Nationality</label>
-             <input type="text" id="nationality" name="nationality" placeholder="{{params[4]}}" required>
+             <input type="text" id="nationality" name="nationality" value="{{params[2]}}" required>
 
              <label for="age_">Age</label>
-             <input type="number" id="age" name="age" placeholder="{{params[5]}}" required>
+             <input type="number" id="age" name="age" value="{{params[3]}}" required>
 
              <label for="date_of_birth_">Date of Birth</label>
-             <input type="date" id="date_of_birth" name="date_of_birth" placeholder="{{params[6]}}" required><br>
+             <input type="date" id="date_of_birth" name="date_of_birth" value="{{params[4]}}" required><br>
 
              <label for="caste_">Caste</label>
-             <input type="text" id="caste" name="caste" placeholder="{{params[7]}}" required>
+             <input type="text" id="caste" name="caste" value="{{params[5]}}" required>
 
-             <label for="email_">Email</label>
-             <input type="text" id="email" name="email" placeholder="{{params[8]}}"  required>
+            <!--  <label for="email_">Email</label>
+             <input type="text" id="email" name="email" value="{{params[6]}}"  required> -->
              
              <label for="alt_email_">Alternate Email</label>
-             <input type="text" id="alt_email" name="alt_email" placeholder="{{params[9]}}"  required>
+             <input type="text" id="alt_email" name="alt_email" value="{{params[6]}}"  required>
 
              <label for="disabilty">Disabilty</label>
              <input type = "radio" name = "disability" value = "Yes" style="margin: 0 30px 0 30px" required> Yes
              <input type = "radio" name = "disability" value = "No" style="margin: 0 30px 0 30px"> No <br>
             
              <label for="address1_">Address Line1</label>
-             <input type = "text" id="address_1" name="address_1" placeholder="{{params[11]}}"  required><br>
+             <input type = "text" id="address_1" name="address_1" value="{{params[8]}}"  required><br>
 
              <label for="address2_">Address Line2</label>
-             <input type = "text" id="address_2" name="address_2" placeholder="{{params[12]}}"  required><br>
+             <input type = "text" id="address_2" name="address_2" value="{{params[9]}}"  required><br>
 
              <label for="address3_">Address Line3</label>
-             <input type = "text" id="address_3" name="address_3" placeholder="{{params[13]}}"  required><br>
+             <input type = "text" id="address_3" name="address_3" value="{{params[10]}}"  required><br>
 
 
             <label for="other_info_">Other Information</label>
-             <input type = "text" id="other_info" name="other_info" placeholder="{{params[14]}}" >
+             <input type = "text" id="other_info" name="other_info" value="{{params[11]}}" >
            
              <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
              

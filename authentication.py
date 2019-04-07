@@ -20,7 +20,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-from application import application
+from application import application, set_params
 app.register_blueprint(application, url_prefix='/application')
  
 google = oauth.remote_app('google',
@@ -74,13 +74,13 @@ def verify():
 	cursor.execute(sql)
 	global results
 	results = cursor.fetchall()
-	if results == []:
-		query = "INSERT INTO main_table(email) VALUES ('"+d['email']+"')"
-		cursor.execute(query)
-		db.commit()
+	# if results == []:
+	# 	query = "INSERT INTO main_table(email) VALUES ('"+d['email']+"')"
+	# 	cursor.execute(query)
+	# 	db.commit()
 
 	confirm_login()
-	# set_params(results)
+	set_params(name_)
 	return redirect(url_for('show_applications')) 
 	# else:
 	# 	print "existing"
