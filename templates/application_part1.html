@@ -95,39 +95,108 @@
       
     </header>
 
- <section style="position:fixed; top:20%; left:5%; width:90%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+
+<section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
+         <div>
+          <style>
+            li a {
+            display: block;
+            color: #000;
+            padding:8px;
+            padding-right:10px;
+            padding-left:10px; 
+            text-decoration: none;
+        }
+
+        li a.active {
+            background-color: #008080;
+            color: white;
+
+          }
+          </style>
+        <ul>
+         <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="" class = "active">Personal Information</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>   
+         <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
+         <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
+      </ul>
+      </div>
+    </section>
+    <section style="position:fixed; top:20%; left:25%; width:70%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+        <style>
+        input[type=text], input[type=date],input[type=number],input[type=number],input[type=textarea],input[type=submit],select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      }
+      
+        </style>
          
-         <div >
-            <table border =1 align="center" style="width:100%; background-color: #f2f2f2;">
-            <form action="/application/part1" method="POST">
-            <tr><th></th>
-                <th>Application number</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Status</th>
-                <th>Date</th>
-             </tr>     
-          {% for row in rows %}
-               <tr>
-                  <td><input type="radio" name="application_no" value="{{row[0]}}"></td>
-                  <td>{{row[0]}}</td>
-                  <td>{{row[3]}}</td>
-                  <td>{{row[2]}}</td>
-                  <td>{{row[1]}}</td>
-                  <td>{{row[15]}}</td>
-               </tr>
-            {% endfor %}
-            </table>
-          <input type="submit" value="Select" class="button" style="position:fixed; bottom:20%; right:20%;">
-          </form>
+         <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
+           <form action="insert_1" method="POST">
+             <label for="position_">Position Applying For</label>
+              <select style="background-color:white" id="position" name="position">
+              <option selected required> Select</option>
+              <option value="Faculty" required>Faculty</option> 
+              </select> 
 
-          <a href="/application/part1" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
-          
-          </div>
+             <label for="first_name_">First Name</label>
+             <input type="text" id="first_name" name="first_name" placeholder="Your First Name.." required>
 
+             <label for="middle_name_">Middle Name</label>
+             <input type="text" id="middle_name" name="middle_name" placeholder="Your Middle Name.." >
+
+             <label for="last_name_">Last Name</label>
+             <input type="text" id="last_name" name="last_name" placeholder="Your Last Name.." required>
+
+             <label for="nationality_">Nationality</label>
+             <input type="text" id="nationality" name="nationality" placeholder="Your nationality.." required>
+
+             <label for="age_">Age</label>
+             <input type="number" id="age" name="age" placeholder="Your Age.." required>
+
+             <label for="date_of_birth_">Date of Birth</label>
+             <input type="date" id="date_of_birth" name="date_of_birth" required><br>
+
+             <label for="caste_">Caste</label>
+             <input type="text" id="caste" name="caste" placeholder="Your Caste.."required>
+
+             <label for="email_">Email</label>
+             <input type="text" id="email" name="email" placeholder="Your Email.." required>
+             
+             <label for="alt_email_">Alternate Email</label>
+             <input type="text" id="alt_email" name="alt_email" placeholder="Alternate Email.." >
+
+             <label for="disabilty">Disabilty</label>
+             <input type = "radio" name = "disability" value = "Yes" style="margin: 0 30px 0 30px" required> Yes
+             <input type = "radio" name = "disability" value = "No" style="margin: 0 30px 0 30px"> No <br>
+            
+             <label for="address1_">Address Line1</label>
+             <input type = "text" id="address_1" name="address_1" placeholder="" required><br>
+
+             <label for="address2_">Address Line2</label>
+             <input type = "text" id="address_2" name="address_2" placeholder="" ><br>
+
+             <label for="address3_">Address Line3</label>
+             <input type = "text" id="address_3" name="address_3" placeholder=""><br>
+
+
+            <label for="other_info_">Other Information</label>
+             <input type = "text" id="other_info" name="other_info" placeholder="">
+           
+             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
+             
+           </form>
+         </div>
       </section> 
+      
 
-    
   </div>
 
   <script src="{{ url_for('static',filename='styles/js/jquery-3.3.1.min.js') }}"></script>
