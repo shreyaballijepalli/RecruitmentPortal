@@ -20,7 +20,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-from application import application, set_params
+from application import application
 app.register_blueprint(application, url_prefix='/application')
  
 google = oauth.remote_app('google',
@@ -80,7 +80,7 @@ def verify():
 		db.commit()
 
 	confirm_login()
-	set_params(results)
+	# set_params(results)
 	return redirect(url_for('show_applications')) 
 	# else:
 	# 	print "existing"
@@ -88,7 +88,6 @@ def verify():
 
 @app.route('/menu/', methods=['GET'])       #on submission of login details
 def show_applications(): 
-
 	return render_template('show_application.html', rows=results, name_=name_)
 
 @app.route('/login')
