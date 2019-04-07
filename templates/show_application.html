@@ -23,7 +23,36 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/rangeslider.css') }}">
 
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/style.css') }}">
-    
+    <style type="text/css">
+      table {
+          border-collapse: collapse;    
+          }
+
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: center;
+          padding: 8px;
+      }
+
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+
+      .button {
+        background-color: #34609e;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
   </head>
   <body style="background-color: #333333;">
   
@@ -50,20 +79,8 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class="active"><a href="index.html">IITH</a></li>
-                <li><a href="listings.html">CSE</a></li>
-                <li class="has-children">
-                  <a href="about.html">About</a>
-                  <ul class="dropdown">
-                    <li><a href="#">The Company</a></li>
-                    <li><a href="#">The Leadership</a></li>
-                    <li><a href="#">Philosophy</a></li>
-                    <li><a href="#">Careers</a></li>
-                  </ul>
-                </li>
-                <li><a href="contact.html">Contact</a></li>
-
-                <li class="ml-xl-3 login"><a href="/verify"><span class="border-left pl-xl-4"></span>Log In/Register</a></li>
+                <li><a href="">{{name_}}</a></li>
+                <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
               </ul>
             </nav>
           </div>
@@ -78,9 +95,32 @@
       
     </header>
 
- 
+ <section style="position:fixed; top:20%; left:5%; width:90%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+         
+         <div >
+            <table border =1 align="center" style="width:100%; background-color: #f2f2f2;">
+            <tr><th>Application number</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Date</th>
+             </tr>     
+          {% for row in rows %}
+               <tr>
+                <td>{{row[0]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[15]}}</td>
+               </tr>
+            {% endfor %}
+            </table>
+         </div>
 
-    
+
+      </section> 
+
+     <a href="#" class="button" style="position:fixed; bottom:20%; left:40%;">New application</a>
   </div>
 
   <script src="{{ url_for('static',filename='styles/js/jquery-3.3.1.min.js') }}"></script>
