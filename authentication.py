@@ -86,7 +86,7 @@ def verify():
 	# 	print "existing"
 	# 	return redirect(url_for('menu.show_menu'))
 
-@app.route('/menu/', methods=['GET'])       #on submission of login details
+@app.route('/menu/', methods=['GET','POST'])       #on submission of login details
 def show_applications(): 
 	return render_template('show_application.html', rows=results, name_=name_)
 

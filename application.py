@@ -46,36 +46,39 @@ def part1():
 		return render_template('application_placeholders_part1.html',params=params_)
 
 	else:
-		sql = "INSERT INTO main_table(email,status) VALUES ('%s','%s')" %(email_,"new")
+		sql = "INSERT INTO main_table(email,status) VALUES ('%s','%s') RETURNING application_no" %(email_,"new")
 		cursor.execute(sql)
-		sql = "SELECT application_no from main_table WHERE email = '%s' ORDER BY application_no DESC LIMIT 1 ;" %(email_)
-		cursor.execute(sql)
+		
+		# sql = "SELECT application_no from main_table WHERE email = '%s' ORDER BY application_no DESC LIMIT 1 ;" %(email_)
+		# cursor.execute(sql)
 		rows = cursor.fetchall()
+		db.commit()
 		application_number = rows[0][0]
-		return render_template('application_part1.html')
+
+		sql = "INSERT INTO main_table(email,status) VALUES ('%s','%s') RETURNING application_no" %(email_,"new")
+		cursor.execute(sql)
+		db.commit()
+
+
+
+		print email_, application_number
+		return render_template('application_part1.html', email_=email_, application_number=application_number)
 
 	# return render_template('application_placeholders_part1.html',params=params)
-
-
-@application.route('part2', methods=['GET'])       #on submission of login details
-def part2(): 
-   return render_template('application_part2.html')
-
-
-
 
 @application.route('insert_1', methods=['GET','POST'])       #on submission of login details
 def insert_1(): 
 	if (request.method =='POST'):
+		application_number = request.form['application_number']
 		position = request.form['position']
 		firstname = request.form['first_name']
 		middlename = request.form['middle_name']
 		lastname = request.form['last_name']
-		name = "("+firstname+","+middlename+","+lastname+")"
+		name =  "(\""+firstname+"\",\""+middlename+"\",\""+lastname+"\")"
 		address1 = request.form['address_1']
 		address2 = request.form['address_2']
 		address3 = request.form['address_3']
-		address = address1+address2+address3
+		# address = address1+address2+address3
 		#email = request.form['email']
 		altemail = request.form['alt_email']
 		nationality = request.form['nationality']
@@ -90,20 +93,20 @@ def insert_1():
 		params = [position,[firstname,middlename,lastname],nationality,age,date_of_birth,
 		caste,altemail,disability,address1,address2,address3,other_info]
 
+		status = "modified"
 
+		sql = "UPDATE main_table SET position_applied = '%s', name='%s',address1='%s', address2='%s', address3='%s',\
+		alt_email='%s',nationality='%s',age='%d',date_of_birth='%s',caste='%s', status='%s'\
+		disability='%s',other_info='%s' WHERE application_no = '%d';" % (position,name,address1,address2,address3,\
+		altemail,nationality,int(age),date_of_birth,caste,status,disability,other_info,int(application_number))
 
-		sql = "UPDATE main_table SET position_applied = '%s', name='%s',address='%s',\
-		alt_email='%s',nationality='%s',age='%s',date_of_birth='%s',caste='%s',\
-		disability='%s',other_info='%s' WHERE application_no = '%s';"\
-		%(position,name,address,altemail,nationality,int(age),date_of_birth,caste,
-			disability,other_info,application_number)
-
+		# print application_number, sql
 # #update
-# 		sql = "INSERT INTO main_table (position_applied, name, address, alt_email,\
-# 		 nationality,age,date_of_birth, caste, disability,other_info) \
-# 		VALUES('%s','%s','%s','%s','%s','%s','%d','%s','%s','%s','%s') WHERE application_no = '%s';" \
-# 		% (position,name,address,altemail,nationality,
-# 		  int(age),date_of_birth,caste,disability,other_info)
+		# sql = "INSERT INTO main_table (position_applied, name, address1,address2,address3, alt_email,\
+		#  nationality,age,date_of_birth, caste, disability,other_info) \
+		# VALUES('%s','%s','%s','%s','%s','%s','%d','%s','%s','%s','%s') WHERE application_no = '%s';" \
+		# % (position,name,address1,address2,address3, altemail,nationality,
+		#   int(age),date_of_birth,caste,disability,other_info)
 
 		try:   
 		   cursor.execute(sql)
@@ -113,7 +116,14 @@ def insert_1():
 			print "Info error"
 
 	#return "Saved!"
-	return render_template('application_placeholders_part1.html',params=params)
+	return render_template('application_placeholders_part1.html',params=params, email_=email_, application_number=application_number)
+
+
+
+@application.route('part2', methods=['GET'])       #on submission of login details
+def part2(): 
+   return render_template('application_part2.html')
+
 
 
 

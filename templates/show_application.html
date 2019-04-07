@@ -99,6 +99,24 @@
          
          <div >
             <table border =1 align="center" style="width:100%; background-color: #f2f2f2;">
+              {% if rows == [] %}
+            
+            <form action="/menu/" method="POST">
+              <tr><th></th>
+                  <th>Application number</th>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Status</th>
+                  <th>Date</th>
+               </tr>     
+                <input type="hidden" hidden name="application_no" value="-1">
+              </table>
+          
+              <a href="/application/part1" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
+              <input type="submit" value="Select" class="button" style="position:fixed; bottom:20%; right:20%;">
+            </form>
+              
+              {% else %}
             <form action="/application/part1" method="POST">
             <tr><th></th>
                 <th>Application number</th>
@@ -118,10 +136,12 @@
                </tr>
             {% endfor %}
             </table>
+          
+          <a href="/application/part1" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
           <input type="submit" value="Select" class="button" style="position:fixed; bottom:20%; right:20%;">
           </form>
-
-          <a href="/application/part1" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
+          {% endif %}
+          
           
           </div>
 

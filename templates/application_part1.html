@@ -79,7 +79,7 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="">{{name_}}</a></li>
+                <li><a href="">{{email_}}</a></li>
                 <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
               </ul>
             </nav>
@@ -146,6 +146,8 @@
               <option value="Faculty" required>Faculty</option> 
               </select> 
 
+              <input type="hidden" id="application_number" name="application_number" value="{{application_number}}">
+
              <label for="first_name_">First Name</label>
              <input type="text" id="first_name" name="first_name" placeholder="Your First Name.." required>
 
@@ -190,7 +192,7 @@
             <label for="other_info_">Other Information</label>
              <input type = "text" id="other_info" name="other_info" placeholder="">
            
-             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
+             <input type="submit" value="Save" style="background-color: #008080;color:white;width=100%">
              
            </form>
          </div>

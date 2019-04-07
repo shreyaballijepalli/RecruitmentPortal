@@ -79,7 +79,7 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="">{{name_}}</a></li>
+                <li><a href="">{{email_}}</a></li>
                 <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
               </ul>
             </nav>
@@ -141,16 +141,18 @@
          <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
            <form action="insert_1" method="POST">
              <label for="position_">Position Applying For</label>
-              <select style="background-color:white">
+              <select style="background-color:white" id="position" name="position">
               <option  required> Select</option>
               <option selected value="Faculty" required>Faculty</option> 
             </select> 
+
+             <input type="hidden" id="application_number" name="application_number" value="{{application_number}}">
 
              <label for="first_name_">First Name</label>
              <input type="text" id="first_name" name="first_name" value="{{params[1][0]}}" required>
 
              <label for="middle_name_">Middle Name</label>
-             <input type="text" id="middle_name" name="middle_name" value="{{params[1][1]}}" required>
+             <input type="text" id="middle_name" name="middle_name" value="{{params[1][1]}}" >
 
              <label for="last_name_">Last Name</label>
              <input type="text" id="last_name" name="last_name" value="{{params[1][2]}}" required>
@@ -175,22 +177,22 @@
 
              <label for="disabilty">Disabilty</label>
              <input type = "radio" name = "disability" value = "Yes" style="margin: 0 30px 0 30px" required> Yes
-             <input type = "radio" name = "disability" value = "No" style="margin: 0 30px 0 30px"> No <br>
+             <input type = "radio" name = "disability" value = "No" style="margin: 0 30px 0 30px" checked> No <br>
             
              <label for="address1_">Address Line1</label>
              <input type = "text" id="address_1" name="address_1" value="{{params[8]}}"  required><br>
 
              <label for="address2_">Address Line2</label>
-             <input type = "text" id="address_2" name="address_2" value="{{params[9]}}"  required><br>
+             <input type = "text" id="address_2" name="address_2" value="{{params[9]}}" ><br>
 
              <label for="address3_">Address Line3</label>
-             <input type = "text" id="address_3" name="address_3" value="{{params[10]}}"  required><br>
+             <input type = "text" id="address_3" name="address_3" value="{{params[10]}}" ><br>
 
 
             <label for="other_info_">Other Information</label>
              <input type = "text" id="other_info" name="other_info" value="{{params[11]}}" >
            
-             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
+             <input type="submit" value="Save" style="background-color: #008080;color:white;width=100%">
              
            </form>
          </div>
