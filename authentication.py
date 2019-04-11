@@ -20,9 +20,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-from application import application, set_params
+from application import application
 app.register_blueprint(application, url_prefix='/application')
- 
+
+from application_part2 import application_part2
+app.register_blueprint(application_part2, url_prefix='/application')
+
 google = oauth.remote_app('google',
 base_url='https://www.google.com/accounts/',
 authorize_url='https://accounts.google.com/o/oauth2/auth',
@@ -35,8 +38,6 @@ access_token_params={'grant_type': 'authorization_code'},
 consumer_key=GOOGLE_CLIENT_ID,
 consumer_secret=GOOGLE_CLIENT_SECRET)
 
-results = []
-name_ = ""
 
 @app.route('/')
 def index():
@@ -64,31 +65,20 @@ def verify():
 		return res.read()
 	 
 	result = res.read()
-	print 'res read ',result
 	d = json.loads(result)
-	global name_ 
-	name_ = d['email']
+	session['email'] = d['email']
 	print d['email']
 	
-	sql = "SELECT * FROM main_table WHERE email = '%s'" % (d['email'])       #checking if user is already there in database
-	cursor.execute(sql)
-	global results
-	results = cursor.fetchall()
-	# if results == []:
-	# 	query = "INSERT INTO main_table(email) VALUES ('"+d['email']+"')"
-	# 	cursor.execute(query)
-	# 	db.commit()
-
 	confirm_login()
-	set_params(name_)
 	return redirect(url_for('show_applications')) 
-	# else:
-	# 	print "existing"
-	# 	return redirect(url_for('menu.show_menu'))
+
 
 @app.route('/menu/', methods=['GET','POST'])       #on submission of login details
 def show_applications(): 
-	return render_template('show_application.html', rows=results, name_=name_)
+	sql = "SELECT * FROM main_table WHERE email = '%s'" % (session['email'])       #checking if user is already there in database
+	cursor.execute(sql)
+	results = cursor.fetchall()
+	return render_template('show_application.html', rows=results, email_=session['email'])
 
 @app.route('/login')
 def login():
@@ -113,4 +103,4 @@ def get_access_token():
 
  
 if __name__ == '__main__':
-	app.run(debug = True)
+	app.run(debug = True, threaded=True)

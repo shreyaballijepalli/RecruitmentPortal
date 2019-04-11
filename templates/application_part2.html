@@ -93,82 +93,80 @@
           </div>
 
         </div>
-      <!-- </div> -->
-      
+      <!-- </div> -->      
     </header>
 
- <section style="position:fixed; top:20%; left:5%; width:80%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
-<section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
-         <div>
-          <style>
-            li a {
+    <section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
+      <div>
+        <style>
+          li a {
             display: block;
             color: #000;
             padding:8px;
             padding-right:10px;
             padding-left:10px; 
             text-decoration: none;
-        }
-
-        li a.active {
+          }
+          li a.active {
             background-color: #008080;
             color: white;
-
           }
           </style>
         <ul>
-         <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="part1" >Personal Information</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="" class = "active">Educational Qualifications</a></li>   
-         <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
-         <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
-      </ul>
+          <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="part1" >Personal Information</a></li>
+          <li style="display:block;font-size:20px;color: #000;"><a href="" class = "active">Educational Qualifications</a></li>   
+          <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
+          <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
+          <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
+          <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
+        </ul>
       </div>
     </section>
+
     <section style="position:fixed; top:20%; left:25%; width:70%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
         <style>
-        input[type=text], input[type=date],input[type=number],input[type=number],input[type=textarea],input[type=submit],select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      }
-      
+          input[type=text], input[type=date],input[type=number],input[type=number],input[type=textarea],
+          input[type=submit],select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            }
         </style>
          
          <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
            <form action="insert_2" method="POST">
              <h2>Bachelor's</h2>
-  <!--            <label for="degree">Degree</label>
+              <!--<label for="degree">Degree</label>
               <select style="background-color:white">
-              <option selected required> Select</option>
-              <option value="B.Tech" required>B.Tech</option>
-              <option value="B.Sc" required>B.Sc</option>
-            </select>
- -->
-<!-- 
-            <label for="start_year">Start Year</label>
-             <select id="year" style="background-color:white"></select>
-             <script type="text/javascript">
-             var start = 1900;
-              var end = new Date().getFullYear();
-              var options = "";
-              options += "<option>select</option>";
-              for(var year = start ; year <=end; year++){
-                options += "<option>"+ year +"</option>";
-              }
-              document.getElementById("year").innerHTML = options;
-             </script>
- -->
+                <option selected required> Select</option>
+                <option value="B.Tech" required>B.Tech</option>
+                <option value="B.Sc" required>B.Sc</option>
+              </select>
+              <label for="start_year">Start Year</label>
+              <select id="year" style="background-color:white"></select>
+              
+              <script type="text/javascript">
+                var start = 1900;
+                var end = new Date().getFullYear();
+                var options = "";
+                options += "<option>select</option>";
+                for(var year = start ; year <=end; year++){
+                  options += "<option>"+ year +"</option>";
+                }
+                document.getElementById("year").innerHTML = options;
+              </script>
+              -->
 
             <label for="end_year">Year of Graduation</label>
-            <select id="bachelors_date_studied" style="background-color:white" name="bachelors_date_studied"></select>
+            <input type="date" id="bachelors_date_studied" name="bachelors_date_studied" required><br>
+
+            <!-- <select id="bachelors_date_studied" style="background-color:white" name="bachelors_date_studied"></select>
             <script type="text/javascript">
-             var start1 = 2000;
+              var start1 = 2000;
               var end1 = 2025;
               var options1 = "";
               options1 += "<option>select</option>";
@@ -176,69 +174,67 @@
                 options1 += "<option>"+ year +"</option>";
               }
               document.getElementById("bachelors_date_studied").innerHTML = options1;
-             </script>
-             
+            </script> -->
 
+            <label for="bachelors_university_name_">University Name</label>
+            <input type="text" id="bachelors_university" name="bachelors_university" placeholder="Your University Name.." required>
 
-             <label for="bachelors_university_name_">University Name</label>
-             <input type="text" id="bachelors_university" name="bachelors_university" placeholder="Your University Name.." required>
+            <label for="bachelors_specialization_">Specialization</label>
+            <input type="text" id="bachelors_specialization" name="bachelors_specialization" placeholder="Your Specialization.." required>
 
-             <label for="bachelors_specialization_">Specialization</label>
-             <input type="text" id="bachelors_specialization" name="bachelors_specialization" placeholder="Your Specialization.." required>
+            <label for="cgpa">CGPA / Percentage</label>
+            <input type="text" id="bachelors_cgpa" name="bachelors_cgpa" placeholder="Your CGPA.." required>
 
-             <label for="cgpa">CGPA / Percentage</label>
-             <input type="text" id="cgpa" name="cgpa" placeholder="Your CGPA.." required>
-
-
-
-
-             <h2>Master's</h2>
-<!--              <label for="degree">Degree</label>
+            <h2>Master's</h2>
+            <!--
+              <label for="degree">Degree</label>
               <select style="background-color:white">
-              <option selected required> Select</option>
-              <option value="M.Tech" required>M.Tech</option>
-              <option value="M.Sc" required>M.Sc</option>
-            </select> -->
+                <option selected required> Select</option>
+                <option value="M.Tech" required>M.Tech</option>
+                <option value="M.Sc" required>M.Sc</option>
+              </select> 
 
-
-<!--             <label for="masters_start_year">Start Year</label>
-             <select id="year2" style="background-color:white"></select>
-             <script>
-              document.getElementById("year2").innerHTML = options;
-             </script>
- -->
+              <label for="masters_start_year">Start Year</label>
+              <select id="year2" style="background-color:white"></select>
+              <script>
+                document.getElementById("year2").innerHTML = options;
+              </script>
+            -->
 
             <label for="masters_end_year">Year of Graduation</label>
-            <select id="masters_date_studied" style="background-color:white" name="masters_date_studied"></select>
+            <input type="date" id="masters_date_studied" name="masters_date_studied" required><br>
+
+
+           <!--  <select id="masters_date_studied" style="background-color:white" name="masters_date_studied"></select>
             <script>
               document.getElementById("masters_date_studied").innerHTML = options1;
-             </script>
+            </script> -->
              
-             <label for="masters_university_name_">University Name</label>
-             <input type="text" id="masters_university" name="masters_university" placeholder="Your University Name.." required>
+            <label for="masters_university_name_">University Name</label>
+            <input type="text" id="masters_university" name="masters_university" placeholder="Your University Name.." required>
 
-             <label for="bachelors_specialization_">Specialization</label>
-             <input type="text" id="masters_specialization" name="masters_specialization" placeholder="Your Specialization.." required>
+            <label for="masters_specialization_">Specialization</label>
+            <input type="text" id="masters_specialization" name="masters_specialization" placeholder="Your Specialization.." required>
 
-             <label for="masters_cgpa">CGPA / Percentage</label>
-             <input type="text" id="masters_cgpa" name="masters_cgpa" placeholder="Your CGPA.." required>
+            <label for="masters_cgpa">CGPA / Percentage</label>
+            <input type="text" id="masters_cgpa" name="masters_cgpa" placeholder="Your CGPA.." required>
 
+            <h2>PhD</h2>
 
-
-             <h2>PhD</h2>
+            <label for="phd_end_year">Year of Graduation</label>
+            <input type="date" id="phd_date_studied" name="phd_date_studied" required><br>
           
-             <label for="phd_start_year">Start Year</label>
-             <select id="phd_date_studied" name="phd_date_studied" style="background-color:white"></select>
-             <script>
+           <!--  <label for="phd_start_year">Start Year</label>
+            <select id="phd_date_studied" name="phd_date_studied" style="background-color:white"></select>
+            <script>
               document.getElementById("phd_date_studied").innerHTML = options;
-             </script>
+            </script> -->
 
-             <label for="phd_university_name_">University Name</label>
-             <input type="text" id="phd_university" name="phd_university" placeholder="Your University Name.." required>
+            <label for="phd_university_name_">University Name</label>
+            <input type="text" id="phd_university" name="phd_university" placeholder="Your University Name.." required>
 
-             <label for="phd_specialization_">Specialization</label>
-             <input type="text" id="phd_specialization" name="phd_specialization" placeholder="Your Specialization.." required>
-
+            <label for="phd_specialization_">Specialization</label>
+            <input type="text" id="phd_specialization" name="phd_specialization" placeholder="Your Specialization.." required>
 
             <label for="phd_date_thesis">Date of Thesis Submission</label>
             <input type="date" id="phd_date_thesis" name="phd_date_thesis" required><br>
@@ -246,7 +242,11 @@
             <label for="phd_date_defence">Date of defence</label>
             <input type="date" id="phd_date_defence" name="phd_date_defence" required><br>
 
-            
+            <input type="text" id="phd_cgpa" name="phd_cgpa" placeholder="Your CGPA.." required>
+
+
+
+  
             <h2>Gate</h2>
             <label for="gate_type">Gate Type</label>
             <input type="text" id="gate_type" name="gate_type" placeholder="Your Gate Type.." >
@@ -259,98 +259,96 @@
             <input type="text" id="research_specialization" name="research_specialization" placeholder="Your Research Specialization.." >   
           
             <div id='research_fields'>
-            <form name='myForm' id='randomFields'>
-              
-            <div id="input-player-list">Research Interests <input id="research_interest" type='text' name='research_interest' placeholder='Research Interest..'><br></div>
-            <input type='button' id='Add' value='Add'>
-            <input type='button' id='Remove' value='Remove'>
-            </form>
-          </div>
-          <script>
-          var input_tillnow=document.getElementsByTagName('INPUT').length-1;
-          document.getElementById('Add').onclick = function createInputField() {
-          var input = document.createElement('input');
-          var lineBreak = document.createElement('br');
-          var testId = "research_interest";
-          var i = 0;
-          var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-          for (i = 0; i < x; i++) {
-            i;
-          }
-          input.setAttribute('id', testId + i);
-          input.type = 'text';
-          input.name = 'research_interest[]';
-          input.placeholder='Research Interest'+i;
-          var aplayer1 = document.getElementById('input-player-list');
-          aplayer1.appendChild(input);
-          aplayer1.appendChild(lineBreak);
-        }
-
-        document.getElementById('Remove').onclick = function removeInputField() {
+              <form name='myForm' id='randomFields'>  
+                <div id="input-player-list">Research Interests <input id="research_interest" type='text' name='research_interest' placeholder='Research Interest..'><br>
+                </div>
+                <input type='button' id='Add' value='Add'>
+                <input type='button' id='Remove' value='Remove'>
+              </form>
+            </div>
           
-          var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-          if ( x > 2 ) {
-          $('#input-player-list input:last').remove();
-          $('#input-player-list br:last').remove();
-          return false;
-          } else {
-          }
-        }
-          </script>
+            <script>
+              var input_tillnow=document.getElementsByTagName('INPUT').length-1;
+              document.getElementById('Add').onclick = function createInputField() {
+                var input = document.createElement('input');
+                var lineBreak = document.createElement('br');
+                var testId = "research_interest";
+                var i = 0;
+                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                for (i = 0; i < x; i++) {
+                  i;
+                }
+                input.setAttribute('id', testId + i);
+                input.type = 'text';
+                input.name = 'research_interest[]';
+                input.placeholder='Research Interest'+i;
+                var aplayer1 = document.getElementById('input-player-list');
+                aplayer1.appendChild(input);
+                aplayer1.appendChild(lineBreak);
+              }
 
-        <h2 style="padding-top:10px"> Post Doc</h2>
-        <div id='post_doc'>
-            <form name='myForm1' id='randomFields1'>
-              
-            <div id="input-player-list1">Post Doc Specialization<input id="post_doc_spec" type='text' name='post_doc_spec' placeholder='Post Doc Sepcialization..'><br></div>
-            <input type='button' id='Add1' value='Add'>
-            <input type='button' id='Remove1' value='Remove'>
-            </form>
-          </div>
-          <script>
-          var input_tillnow=document.getElementsByTagName('INPUT').length-1;
-          document.getElementById('Add1').onclick = function createInputField() {
-          var input = document.createElement('input');
-          var lineBreak = document.createElement('br');
-          var testId = "post_doc_spec";
-          var i = 0;
-          var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-          if(x<=3)
-         { for (i = 0; i < x; i++) {
-            i;
-          }
-          input.setAttribute('id', testId + i);
-          input.type = 'text';
-          input.name = 'post_doc_spec[]';
-          input.placeholder='Post Doc Specialization'+i;
-          var aplayer1 = document.getElementById('input-player-list1');
-          aplayer1.appendChild(input);
-          aplayer1.appendChild(lineBreak);
-         }else{}
-        }
+              document.getElementById('Remove').onclick = function removeInputField() {
+                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                if ( x > 2 ) {
+                  $('#input-player-list input:last').remove();
+                  $('#input-player-list br:last').remove();
+                  return false;
+                } else {
+                }
+              }
 
-        document.getElementById('Remove1').onclick = function removeInputField() {
-          
-          var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-          if ( x > 2 ) {
-          $('#input-player-list1 input:last').remove();
-          $('#input-player-list1 br:last').remove();
-          return false;
-          } else {
-          }
-        }
-          </script>
+            </script>
+
+            <h2 style="padding-top:10px"> Post Doc</h2>
+            <div id='post_doc'>
+              <form name='myForm1' id='randomFields1'>  
+                <div id="input-player-list1">Post Doc Specialization<input id="post_doc_spec" type='text' name='post_doc_spec' placeholder='Post Doc Sepcialization..'><br>
+                </div>
+                <input type='button' id='Add1' value='Add'>
+                <input type='button' id='Remove1' value='Remove'>
+              </form>
+            </div>
+
+            <script>
+              var input_tillnow=document.getElementsByTagName('INPUT').length-1;
+              document.getElementById('Add1').onclick = function createInputField() {
+                var input = document.createElement('input');
+                var lineBreak = document.createElement('br');
+                var testId = "post_doc_spec";
+                var i = 0;
+                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                if(x<=3){
+                  for (i = 0; i < x; i++) {
+                    i;
+                  }
+                  input.setAttribute('id', testId + i);
+                  input.type = 'text';
+                  input.name = 'post_doc_spec[]';
+                  input.placeholder='Post Doc Specialization'+i;
+                  var aplayer1 = document.getElementById('input-player-list1');
+                  aplayer1.appendChild(input);
+                  aplayer1.appendChild(lineBreak);
+                 }else{
+                 }
+              }
+
+              document.getElementById('Remove1').onclick = function removeInputField() {
+                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                if ( x > 2 ) {
+                  $('#input-player-list1 input:last').remove();
+                  $('#input-player-list1 br:last').remove();
+                  return false;
+                } else {
+                }
+              }
+            </script>
 
 
-             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
+            <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
              
-           </form>
-         </div>
-      </section> 
-      
-
-      </section> 
-
+          </form>
+        </div>
+    </section> 
   </div>
 
   <script src="{{ url_for('static',filename='styles/js/jquery-3.3.1.min.js') }}"></script>

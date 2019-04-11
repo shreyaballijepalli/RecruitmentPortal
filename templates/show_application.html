@@ -79,7 +79,7 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="">{{name_}}</a></li>
+                <li><a href="">{{email_}}</a></li>
                 <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
               </ul>
             </nav>
@@ -98,6 +98,7 @@
  <section style="position:fixed; top:20%; left:5%; width:90%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
          
          <div >
+         <!-- if there are no applications -->
             <table border =1 align="center" style="width:100%; background-color: #f2f2f2;">
               {% if rows == [] %}
             
@@ -112,10 +113,11 @@
                 <input type="hidden" hidden name="application_no" value="-1">
               </table>
           
-              <a href="/application/part1" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
+              <a href="/application/new_application" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
               <input type="submit" value="Select" class="button" style="position:fixed; bottom:20%; right:20%;">
             </form>
-              
+          <!-- ends here -->
+
               {% else %}
             <form action="/application/part1" method="POST">
             <tr><th></th>
@@ -137,7 +139,7 @@
             {% endfor %}
             </table>
           
-          <a href="/application/part1" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
+          <a href="/application/new_application" class="button" style="position:fixed; bottom:20%; left:20%;">New application</a>
           <input type="submit" value="Select" class="button" style="position:fixed; bottom:20%; right:20%;">
           </form>
           {% endif %}

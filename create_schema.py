@@ -15,7 +15,7 @@ cur.execute('''CREATE TYPE name_info AS (first_name text, middle_name text, last
 # 	district text,state text,pin_code integer,country text ); ''')
 
 cur.execute('''CREATE TYPE education_info AS (date_studied date, university text,
-	specialization text);''')
+	specialization text,cgpa decimal);''')
 
 
 cur.execute('''CREATE TYPE phd_thesis_info AS (date_thesis date,
@@ -23,7 +23,7 @@ cur.execute('''CREATE TYPE phd_thesis_info AS (date_thesis date,
 
 cur.execute('''CREATE TYPE gate_info AS (type text,gate_score integer); ''')
 
-cur.execute('''CREATE TYPE research_info AS (specialization text, interest text);''')
+cur.execute('''CREATE TYPE research_info AS (specialization text, interest text[]);''')
 
 cur.execute('''CREATE TYPE position_info AS (position text, pay_band integer, grade_pay integer,
 	consolidated_salary integer);''')
@@ -45,16 +45,15 @@ cur.execute('''CREATE TABLE main_table (application_no serial primary key, statu
 	disability boolean, photo text, signature text,other_info text,date_submitted date );''')
 
 cur.execute('''CREATE TABLE education (application_no integer references main_table(application_no), status text,
-	phd education_info,phd_thesis phd_thesis_info,masters education_info,
-	bachelors education_info, gate gate_info,
-	research research_info, post_doc text[]);''')
+	bachelors education_info,masters education_info,phd education_info,phd_thesis phd_thesis_info,post_doc text[],
+	gate gate_info,research research_info);''')
 
 cur.execute('''CREATE TABLE teaching_experience (application_no integer references main_table(application_no),
 	status text, postion position_info, experience experience_info,
 	google_scholar text, dblp text, linkedin text, sponsored_project project_info,
 	consultancy_project project_info,referee referee_info[]);''')
 
-cur.execute('''CREATE TABLE attachments (application_no integer references main_table(application_no),
+cur.execute('''CREATE TABLE attachments (application_no integer references main_table(application_no), status text,
 	cv text,list_of_publications text,research_statement text,teaching_statement text);''')
 
 
