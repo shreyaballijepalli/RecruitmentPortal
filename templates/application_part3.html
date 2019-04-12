@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>IITH | RP</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/fonts/icomoon/style.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/magnific-popup.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/owl.theme.default.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/bootstrap-datepicker.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/fonts/flaticon/font/flaticon.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/rangeslider.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/style.css') }}">
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        
+        .button {
+            background-color: #34609e;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+</head>
+
+<body style="background-color: #333333;">
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar container py-0 bg-white" role="banner">
+
+        <!-- <div class="container"> -->
+        <div class="row align-items-center">
+
+            <div class="col-6 col-xl-2">
+                <h1 class="mb-0 site-logo"><a href="/" class="text-black mb-0">Recruitment<span class="text-primary">Portal</span>  </a></h1>
+            </div>
+            <div class="col-12 col-md-10 d-none d-xl-block">
+                <nav class="site-navigation position-relative text-right" role="navigation">
+
+                    <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                        <li><a href="">{{name_}}</a></li>
+                        <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">
+                <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
+            </div>
+
+        </div>
+        <!-- </div> -->
+
+    </header>
+
+    <section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
+      <div>
+        <style>
+            li a {
+                display: block;
+                color: #000;
+                padding: 8px;
+                padding-right: 10px;
+                padding-left: 10px;
+                text-decoration: none;
+            }
+            
+            li a.active {
+                background-color: #008080;
+                color: white;
+            }
+        </style>
+        <ul>
+            <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="">Personal Information</a></li>
+            <li style="display:block;font-size:20px;color: #000;"><a href="/telephone/update">Educational Qualifications</a></li>
+            <li style="display:block;font-size:20px;color: #000;"><a href="/telephone/delete" class="active">Experience</a></li>
+            <li style="display:block;font-size:20px;color: #000;"><a href="/telephone/display">Attachments</a></li>
+            <li style="display:block;font-size:20px;color: #000;"><a href="/show_menu">Back to menu</a></li>
+            <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
+        </ul>
+      </div>
+    </section>
+    <section style="position:fixed; top:20%; left:25%; width:70%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+      <style>
+          input[type=text],
+          input[type=date],
+          input[type=number],
+          input[type=number],
+          input[type=textarea],
+          input[type=submit],
+          select {
+              width: 100%;
+              padding: 12px 20px;
+              margin: 8px 0;
+              display: inline-block;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              box-sizing: border-box;
+          }
+      </style>
+
+      <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
+          <form action="insert" method="POST">
+
+              <!-- <input type="file" value="upload" style="background-color: #008080;color:white;width=100%"> -->
+              <h2>Present Position</h2>
+
+              <label for="current_position">First Name</label>
+              <input type="text" id="current_position" name="current_position" placeholder="Your Current Position..">
+
+              <label for="pay_band">Pay Band</label>
+              <input type="text" id="pay_band" name="pay_band" placeholder="Your Pay Band..">
+
+              <label for="grade_pay">Grade Pay</label>
+              <input type="number" id="grade_pay" name="grade_pay" placeholder="Your Grade Pay">
+
+              <label for="consolidated_salary">Consolidated Salary</label>
+              <input type="number" id="consolidated_salary" name="consolidated_salary" placeholder="Your Consolidated Salary..">
+
+              <h2>Research/Teaching/Industrial Experience</h2>
+
+              <div id='experience'>
+                <div id="input-experience-list">
+                  <div>
+                    <label for="experience_org">Organization</label>
+                    <input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..">
+                    <br>
+
+                    <label for="start_date">Start Date</label>
+                    <input id="start_date" type="date" name="start_date[]">
+                    <br>
+
+                    <label for="end_date">End Date</label>
+                    <input id="end_date" type="date" name="end_date">
+                    <br>
+
+                    <label for="total_period">Total period</label>
+                    <input id="total_period" type="number" name="total_period[]" placeholder="Your period..">
+                    <br>
+
+                    <label for="full_time">Disabilty</label>
+                    <input type="radio" name="full_time[]" value="Yes" style="margin: 0 30px 0 30px"> Yes
+                    <input type="radio" name="full_time[]" value="No" style="margin: 0 30px 0 30px"> No
+                    <br>
+
+                    <label for="desgn">Designation</label>
+                    <input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..">
+                    <br>
+
+                    <label for="type_of_work">Type of Work</label>
+                    <input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..">
+                    <br>
+
+                  </div>
+                </div>
+
+                <input type='button' id='Add' value='Add'>
+                <input type='button' id='Remove' value='Remove'>
+                  
+              </div>
+              <script>
+                var count = 1;
+                document.getElementById('Add').onclick = function createInputField() {
+
+                    var str1 = '<div ><label for="experience_org">Organization</label><input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization.."><br><label for="start_date">Start Date</label><input id="start_date" type="date" name="start_date[]" ><br><label for="end_date">End Date</label><input id="end_date" type="date" name="end_date" ><br><label for="total_period">Total period</label><input id="total_period" type="number" name="total_period[]" placeholder="Your period.." ><br><label for="full_time">Disabilty</label><input type = "radio" name = "full_time[]" value = "Yes" style="margin: 0 30px 0 30px"> Yes<input type = "radio" name = "full_time[]" value = "No" style="margin: 0 30px 0 30px"> No <br><label for="desgn">Designation</label><input id="desgn" type="text" name="desgn[]" placeholder="Your Designation.."><br><label for="type_of_work">Type of Work</label><input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work.."><br></div>';
+
+                    var currentDiv = document.getElementById("input-experience-list");
+                    currentDiv.innerHTML += str1;
+
+                    count++;
+                }
+
+                document.getElementById('Remove').onclick = function removeInputField() {
+
+                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                    if (count >= 2) {
+                        var currentDiv = document.getElementById("input-experience-list");
+                        currentDiv.removeChild(currentDiv.lastChild);
+                        count--;
+                        return false;
+
+                    } else {}
+                }
+              </script>
+
+              <h2>Online Profiles</h2>
+              <label for="google_scholar">Google Scholar</label>
+              <input id="google_scholar" type="text" name="google_scholar" placeholder="Your Google Scholar username..">
+              <br>
+
+              <label for="dblp">DBLP</label>
+              <input id="dblp" type="text" name="dblp" placeholder="Your dblp username..">
+              <br>
+
+              <label for="linkedin">Linkedin</label>
+              <input id="linkedin" type="text" name="linkedin" placeholder="Your linkedin username..">
+              <br>
+
+              <h2>Projects</h2>
+              <!-- <div id='projects'> -->
+                <div id="input-sponsored_project-list">
+                    <label for="">Sponsored Project Number</label>
+                    <div>
+                      <input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number.." style="width:100%">
+                      <br>
+                      <label for="">Sponsored Project Amount</label>
+                      <input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project amount.." style="width:100%">
+                      <br>
+                    </div>
+                </div>
+                <input type='button' id='Add1' value='Add'>
+                <input type='button' id='Remove1' value='Remove'>
+                <script>
+                  var count3 = 1;
+                  document.getElementById('Add1').onclick = function createInputField() {
+
+                      var str2 = '<div><label for="">Sponsored Project Number</label><input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number.."><br><label for="">Sponsored Project Amount</label><input id="sponsored_project_number"type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project amount.."><br> </div>';
+
+                      var currentDiv = document.getElementById("input-sponsored_project-list");
+                      currentDiv.innerHTML += str2;
+
+                      count3++;
+                    }
+
+                    document.getElementById('Remove1').onclick = function removeInputField() {
+
+                        // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                        if (count3 >= 2) {
+                            var currentDiv = document.getElementById("input-sponsored_project-list");
+                            currentDiv.removeChild(currentDiv.lastChild);
+                            count3--;
+                            return false;
+                        } else {}
+                    }
+                  </script>
+
+              
+                  <div id="input-consultancy_project-list">
+                    <label for="consultancy_project"></label>
+                    <div>
+                        <label for="">Consultancy Project Number</label>
+                        <input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number.." style="width=100%">
+                        <br>
+                        <label for="">Consultancy Project Amount</label>
+                        <input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount.." style="width=100%">
+                        <br>
+                      </div>
+                  </div>
+                  <input type='button' id='Add2' value='Add'>
+                  <input type='button' id='Remove2' value='Remove'>
+                  <script>
+                      var count2 = 1;
+                      document.getElementById('Add2').onclick = function createInputField() {
+
+                          var str3 = '<div><label for="">Consultancy Project Number</label><input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number.."><br><label for="">Consultancy Project Amount</label><input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount.."><br></div>';
+                          var currentDiv = document.getElementById("input-consultancy_project-list");
+                          currentDiv.innerHTML += str3;
+
+                          count2++;
+                      }
+
+                      document.getElementById('Remove2').onclick = function removeInputField() {
+
+                          // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                          if (count2 >= 2) {
+                              var currentDiv = document.getElementById("input-consultancy_project-list");
+                              currentDiv.removeChild(currentDiv.lastChild);
+                              count2--;
+                              return false;
+
+                          } else {}
+                      }
+                  </script>
+                
+
+                <h2 style="padding-top:10px"> Referees</h2>
+                  <div id="input-referee-list">
+                    <div>
+                        <label for="">Referee Email</label>
+                        <input id="referee_email" type="text" name="referee_email[]" placeholder="Your Referee Email.." style="width=100%">
+                        <br>
+                        <label for="">Referee Name</label>
+                        <input id="referee_name" type="text" name="referee_name[]" placeholder="Your Referee Name.." style="width=100%">
+                        <br>
+                        <label for="">Referee Designation</label>
+                        <input id="referee1_desg" type="text" name="referee_desg[]" placeholder="Your Referee Designation.." style="width=100%">
+                        <br>
+                        <label for="">Referee Addres</label>
+                        <input id="referee_address" type="text" name="referee_address[]" placeholder="Your Referee Address.." style="width=100%">
+                        <br>
+                    </div>
+                  </div>
+                  <input type='button' id='Add3' value='Add'>
+                  <input type='button' id='Remove3' value='Remove'>
+                  <script>
+                    var count4 = 1;
+                    document.getElementById('Add3').onclick = function createInputField() {
+
+                        var str4 = '<div><label for="">Referee Email</label><input id="referee_email" type="text" name="referee_email[]" placeholder="Your Referee1 Email.." style="width=100%"><br><label for="">Referee Name</label><input id="referee_name" type="text" name="referee_name[]" placeholder="Your Referee Name.." style="width=100%"><br><label for="">Referee Designation</label><input id="referee1_desg" type="text" name="referee_desg[]" placeholder="Your Referee Designation.." style="width=100%"><br><label for="">Referee Addres</label><input id="referee_address" type="text" name="referee_address[]" placeholder="Your Referee Address.." style="width=100%"><br></div>';
+
+                        var currentDiv = document.getElementById("input-referee-list");
+                        if (count4 < 3) {
+                            currentDiv.innerHTML += str4;
+                            count4++;
+                        } else {}
+                    }
+
+                    document.getElementById('Remove3').onclick = function removeInputField() {
+
+                        // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                        if (count4 >= 2) {
+                            var currentDiv = document.getElementById("input-referee-list");
+                            currentDiv.removeChild(currentDiv.lastChild);
+                            count4--;
+                            return false;
+
+                        } else {}
+                    }
+                  </script>
+              
+                  <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
+          </form>
+        </div>
+    </section>
+
+  </div>
+
+  <script src="{{ url_for('static',filename='styles/js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery-migrate-3.0.1.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery-ui.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/popper.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/owl.carousel.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery.stellar.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery.countdown.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/aos.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/rangeslider.min.js') }}"></script>
+
+  <script src="{{ url_for('static',filename='styles/js/main.js') }}"></script>
+
+</body>
+
+</html>
