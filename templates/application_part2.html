@@ -260,7 +260,7 @@
           
             <div id='research_fields'>
               <!-- <form name='myForm' id='randomFields'>   -->
-                <div id="input-player-list">Research Interests <input id="research_interest" type='text' name='research_interest' placeholder='Research Interest..'><br>
+                <div id="input-researchfields-list">Research Interests <input id="research_interest" type='text' name='research_interest[]' placeholder='Research Interest..'><br>
                 </div>
                 <input type='button' id='Add' value='Add'>
                 <input type='button' id='Remove' value='Remove'>
@@ -268,41 +268,66 @@
             </div>
           
             <script>
-              var input_tillnow=document.getElementsByTagName('INPUT').length-1;
+              // var input_tillnow=document.getElementsByTagName('INPUT').length-1;
+              // document.getElementById('Add').onclick = function createInputField() {
+              //   var input = document.createElement('input');
+              //   var lineBreak = document.createElement('br');
+              //   var testId = "research_interest";
+              //   var i = 0;
+              //   var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+              //   for (i = 0; i < x; i++) {
+              //     i;
+              //   }
+              //   input.setAttribute('id', testId + i);
+              //   input.type = 'text';
+              //   input.name = 'research_interest[]';
+              //   input.placeholder='Research Interest'+i;
+              //   var aplayer1 = document.getElementById('input-player-list');
+              //   aplayer1.appendChild(input);
+              //   aplayer1.appendChild(lineBreak);
+              // }
+
+              // document.getElementById('Remove').onclick = function removeInputField() {
+              //   var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+              //   if ( x > 2 ) {
+              //     $('#input-player-list input:last').remove();
+              //     $('#input-player-list br:last').remove();
+              //     return false;
+              //   } else {
+              //   }
+              // }
+              var count = 1;
               document.getElementById('Add').onclick = function createInputField() {
-                var input = document.createElement('input');
-                var lineBreak = document.createElement('br');
-                var testId = "research_interest";
-                var i = 0;
-                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                for (i = 0; i < x; i++) {
-                  i;
+                  count=count+1;
+                  var input = document.createElement('input');
+                  input.setAttribute('id', "research_interest" + count);
+                  input.type = 'text';
+                  input.name = 'research_interest[]';
+                  input.placeholder='Research Interest'+count;
+                  
+                  var currentDiv = document.getElementById("input-researchfields-list");
+                  currentDiv.appendChild(input);
+                  currentDiv.appendChild(lineBreak);
+                  
                 }
-                input.setAttribute('id', testId + i);
-                input.type = 'text';
-                input.name = 'research_interest[]';
-                input.placeholder='Research Interest'+i;
-                var aplayer1 = document.getElementById('input-player-list');
-                aplayer1.appendChild(input);
-                aplayer1.appendChild(lineBreak);
-              }
 
-              document.getElementById('Remove').onclick = function removeInputField() {
-                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                if ( x > 2 ) {
-                  $('#input-player-list input:last').remove();
-                  $('#input-player-list br:last').remove();
-                  return false;
-                } else {
+                document.getElementById('Remove').onclick = function removeInputField() {
+
+                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                    if (count >= 2) {
+                        var currentDiv = document.getElementById("input-researchfields-list");
+                        $('#input-researchfields-list input:last').remove();
+                        $('#input-researchfields-list br:last').remove();
+                        count--;
+                        return false;
+                    } else {}
                 }
-              }
-
             </script>
 
             <h2 style="padding-top:10px"> Post Doc</h2>
             <div id='post_doc'>
               <!-- <form name='myForm1' id='randomFields1'>   -->
-                <div id="input-player-list1">Post Doc Specialization<input id="post_doc_spec" type='text' name='post_doc_spec' placeholder='Post Doc Sepcialization..'><br>
+                <div id="input-postdoc-list">Post Doc Specialization<input id="post_doc_spec[]" type='text' name='post_doc_spec[]' placeholder='Post Doc Sepcialization..'><br>
                 </div>
                 <input type='button' id='Add1' value='Add'>
                 <input type='button' id='Remove1' value='Remove'>
@@ -310,37 +335,33 @@
             </div>
 
             <script>
-              var input_tillnow=document.getElementsByTagName('INPUT').length-1;
+              var count1 = 1;
               document.getElementById('Add1').onclick = function createInputField() {
-                var input = document.createElement('input');
-                var lineBreak = document.createElement('br');
-                var testId = "post_doc_spec";
-                var i = 0;
-                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                if(x<=3){
-                  for (i = 0; i < x; i++) {
-                    i;
-                  }
-                  input.setAttribute('id', testId + i);
+                  if(count1<3){
+                  count1=count1+1;
+                  var input = document.createElement('input');
+                  input.setAttribute('id', "post_doc_spec" + count1);
                   input.type = 'text';
                   input.name = 'post_doc_spec[]';
-                  input.placeholder='Post Doc Specialization'+i;
-                  var aplayer1 = document.getElementById('input-player-list1');
-                  aplayer1.appendChild(input);
-                  aplayer1.appendChild(lineBreak);
-                 }else{
-                 }
-              }
-
-              document.getElementById('Remove1').onclick = function removeInputField() {
-                var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                if ( x > 2 ) {
-                  $('#input-player-list1 input:last').remove();
-                  $('#input-player-list1 br:last').remove();
-                  return false;
-                } else {
+                  input.placeholder='Post Doc Sepcialization'+count1;
+                  
+                  var currentDiv = document.getElementById("input-postdoc-list");
+                  currentDiv.appendChild(input);
+                  currentDiv.appendChild(lineBreak);
+                }  
                 }
-              }
+
+                document.getElementById('Remove1').onclick = function removeInputField() {
+
+                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                    if (count1 >= 2) {
+                        var currentDiv = document.getElementById("input-postdoc-list");
+                        $('#input-postdoc-list input:last').remove();
+                        $('#input-postdoc-list br:last').remove();
+                        count1--;
+                        return false;
+                    } else {}
+                }
             </script>
 
 
