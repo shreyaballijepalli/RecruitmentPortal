@@ -14,59 +14,63 @@ def part2():
 
 @application_part2.route('insert_2', methods=['GET','POST'])       #on submission of login details
 def insert_2(): 
-	bachelors_date_studied = request.form['bachelors_date_studied']
-	bachelors_university = request.form['bachelors_university']
-	bachelors_specialization = request.form['bachelors_specialization']
-	bachelors_cgpa = request.form['bachelors_cgpa']
-	bachelors_info = "("+bachelors_date_studied+","+bachelors_university+","+bachelors_specialization+","+bachelors_cgpa+")"
+	if (request.method =='POST'):
+		bachelors_date_studied = request.form['bachelors_date_studied']
+		bachelors_university = request.form['bachelors_university']
+		bachelors_specialization = request.form['bachelors_specialization']
+		bachelors_cgpa = request.form['bachelors_cgpa']
+		bachelors_info = "("+bachelors_date_studied+","+bachelors_university+","+bachelors_specialization+","+bachelors_cgpa+")"
 
 
-	masters_date_studied = request.form['masters_date_studied']
-	masters_university = request.form['masters_university']
-	masters_specialization = request.form['masters_specialization']
-	masters_cgpa = request.form['masters_cgpa']
-	masters_info = "("+masters_date_studied+","+masters_university+","+masters_specialization+","+masters_cgpa+")"
-
-
-
-	phd_date_studied = request.form['phd_date_studied']
-	phd_university = request.form['phd_university']
-	phd_specialization = request.form['phd_specialization']
-	phd_cgpa = request.form['phd_cgpa']
-	phd_date_thesis = request.form['phd_date_thesis']
-	phd_date_defence = request.form['phd_date_defence']
-	phd_edu_info = "("+phd_date_studied+","+phd_university+","+phd_specialization+","+phd_cgpa+")"
-	phd_info = "("+phd_edu_info+","+phd_date_thesis+","+phd_date_defence+")"
+		masters_date_studied = request.form['masters_date_studied']
+		masters_university = request.form['masters_university']
+		masters_specialization = request.form['masters_specialization']
+		masters_cgpa = request.form['masters_cgpa']
+		masters_info = "("+masters_date_studied+","+masters_university+","+masters_specialization+","+masters_cgpa+")"
 
 
 
-	gate_type = request.form['gate_type']
-	gate_score = request.form['gate_score']
-	gate_info = "("+gate_type+","+gate_score+")"
+		phd_date_studied = request.form['phd_date_studied']
+		phd_university = request.form['phd_university']
+		phd_specialization = request.form['phd_specialization']
+		phd_cgpa = request.form['phd_cgpa']
+		phd_date_thesis = request.form['phd_date_thesis']
+		phd_date_defence = request.form['phd_date_defence']
+		phd_edu_info = "("+phd_date_studied+","+phd_university+","+phd_specialization+","+phd_cgpa+")"
+		phd_info = "("+phd_date_thesis+","+phd_date_defence+")"
 
-	research_specialization = request.form['research_specialization']
-	research_interest = request.form['research_interest']
-	research_info = "("+research_specialization+","+str(research_interest)+")"
 
-	print "check research ",research_interest
 
-	post_doc = request.form['post_doc_spec']
+		gate_type = request.form['gate_type']
+		gate_score = request.form['gate_score']
+		gate_info = "("+gate_type+","+gate_score+")"
 
-	print "check  ",post_doc
+		research_specialization = request.form['research_specialization']
+		research_interest = request.form.getlist('research_interest[]')
+		research_interest = [r.encode("utf8") for r in research_interest]
+		temp="{"+ ",".join(research_interest)+"}"
+		research_interest_str=temp
 
-	# post_doc1 = request.form['post_doc1']
-	# post_doc2 = request.form['post_doc2']
-	# post_doc3 = request.form['post_doc3']
+		print "research_interest ",research_interest_str
 
-	# post_doc = "{"+post_doc1+","+post_doc2+","+post_doc3+"}"
 
-	sql = "UPDATE education SET bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',post_doc='%s',gate='%s',research='%s' WHERE application_no='%d';" % (bachelors_info, masters_info, phd_edu_info, phd_info, post_doc, gate_info,research_info, int(session['application_number']))
-	try:   
-	   cursor.execute(sql)
-	   db.commit()
-	   print "Form education is stored"
-	except:
-		print "Info error"
+		post_doc = request.form.getlist('post_doc_spec[]')
+		post_doc = [p.encode('utf8') for p in post_doc]
+		temp="{"+ ",".join(post_doc)+"}"
+		post_doc_str=temp
 
-	return "Saved!"
-   	# return render_template('application_placeholders_part1.html',params=params)
+		params = [[bachelors_date_studied,bachelors_university,bachelors_specialization,bachelors_cgpa],
+		[masters_date_studied,masters_university,masters_specialization,masters_cgpa],[phd_date_studied,phd_university,phd_specialization,phd_cgpa],[phd_date_thesis,phd_date_defence],[gate_type,gate_score],research_specialization,research_interest,post_doc]
+
+		sql = "UPDATE education SET bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',post_doc='%s',gate='%s',research_specialization='%s',research_interest='%s' WHERE application_no='%d';" % (bachelors_info, masters_info, phd_edu_info, phd_info, post_doc_str, gate_info,research_specialization,research_interest_str, int(session['application_number']))
+		print sql
+
+		try:   
+		   cursor.execute(sql)
+		   db.commit()
+		   print "Form education is stored"
+		except:
+			print "Info error"
+
+		# return "Saved!"
+	return render_template('application_placeholders_part2.html',params=params, email_=session['email'], application_number=session['application_number'])

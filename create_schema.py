@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(database="recruitment_portal", user = "postgres", password = "password", host = "127.0.0.1", port = "5432")
+conn = psycopg2.connect(database="recruitment_portal", user = "postgres", password = "root", host = "127.0.0.1", port = "5432")
 
 print "Opened database successfully"
 
@@ -23,7 +23,7 @@ cur.execute('''CREATE TYPE phd_thesis_info AS (date_thesis date,
 
 cur.execute('''CREATE TYPE gate_info AS (type text,gate_score integer); ''')
 
-cur.execute('''CREATE TYPE research_info AS (specialization text, interest text[]);''')
+# cur.execute('''CREATE TYPE research_info AS (specialization text, interest text[]);''')
 
 cur.execute('''CREATE TYPE position_info AS (position text, pay_band integer, grade_pay integer,
 	consolidated_salary integer);''')
@@ -46,7 +46,7 @@ cur.execute('''CREATE TABLE main_table (application_no serial primary key, statu
 
 cur.execute('''CREATE TABLE education (application_no integer references main_table(application_no), status text,
 	bachelors education_info,masters education_info,phd education_info,phd_thesis phd_thesis_info,post_doc text[],
-	gate gate_info,research research_info);''')
+	gate gate_info,research_specialization text,research_interest text[]);''')
 
 cur.execute('''CREATE TABLE teaching_experience (application_no integer references main_table(application_no),
 	status text, postion position_info, experience experience_info,
