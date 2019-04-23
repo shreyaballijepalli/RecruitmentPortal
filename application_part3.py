@@ -10,27 +10,7 @@ application_part2 = Blueprint('application_part2', __name__, template_folder='te
 
 @application_part2.route('part2', methods=['GET'])       #on submission of login details
 def part2(): 
-	sql = "SELECT status FROM education WHERE application_no = '%s';" %(session['application_number'])
-	cursor.execute(sql)
-	rows = cursor.fetchall()
-	if rows[0][0] == "new" :
-		return render_template('application_part2.html', email_=session['email'], application_number=session['application_number'])
-	elif rows[0][0] == "modified" :
-		sql = "SELECT * FROM education WHERE application_no = '%s';" %(session['application_number'])
-		cursor.execute(sql)
-		rows = cursor.fetchall()
-		rows = list(rows[0])
-		btech_list = rows[2][1:-1].split(",")
-		mtech_list = rows[3][1:-1].split(",")
-		phd_list = rows[4][1:-1].split(",")
-		phd_thesis = rows[5][1:-1].split(",")
-		gate_list = rows[7][1:-1].split(",")
-		# name_list = rows[3][1:-1].split(",")
-		params_ = [btech_list,mtech_list,phd_list,phd_thesis,gate_list,rows[8],rows[9],rows[6]]
-		
-		print "retrieved properly"
-		return render_template('application_placeholders_part2.html',params=params_,email_=session['email'], application_number=session['application_number'])
-
+   return render_template('application_part2.html')
 
 @application_part2.route('insert_2', methods=['GET','POST'])       #on submission of login details
 def insert_2(): 
@@ -82,7 +62,7 @@ def insert_2():
 		params = [[bachelors_date_studied,bachelors_university,bachelors_specialization,bachelors_cgpa],
 		[masters_date_studied,masters_university,masters_specialization,masters_cgpa],[phd_date_studied,phd_university,phd_specialization,phd_cgpa],[phd_date_thesis,phd_date_defence],[gate_type,gate_score],research_specialization,research_interest,post_doc]
 
-		sql = "UPDATE education SET status='%s', bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',post_doc='%s',gate='%s',research_specialization='%s',research_interest='%s' WHERE application_no='%d';" % ("modified", bachelors_info, masters_info, phd_edu_info, phd_info, post_doc_str, gate_info,research_specialization,research_interest_str, int(session['application_number']))
+		sql = "UPDATE education SET bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',post_doc='%s',gate='%s',research_specialization='%s',research_interest='%s' WHERE application_no='%d';" % (bachelors_info, masters_info, phd_edu_info, phd_info, post_doc_str, gate_info,research_specialization,research_interest_str, int(session['application_number']))
 		print sql
 
 		try:   
