@@ -29,7 +29,7 @@ def part2():
 		params_ = [btech_list,mtech_list,phd_list,phd_thesis,gate_list,rows[8],rows[9],rows[6]]
 		
 		print "retrieved properly"
-		return render_template('application_placeholders_part2.html',params=params_,email_=session['email'], application_number=session['application_number'])
+		return render_template('application_placeholders_part2_.html',params=params_,email_=session['email'], application_number=session['application_number'])
 
 
 @application_part2.route('insert_2', methods=['GET','POST'])       #on submission of login details
@@ -93,4 +93,4 @@ def insert_2():
 			print "Info error"
 
 		# return "Saved!"
-	return render_template('application_placeholders_part2.html',params=params, email_=session['email'], application_number=session['application_number'])
+	return render_template('application_placeholders_part2_.html',params=params, email_=session['email'], application_number=session['application_number'])

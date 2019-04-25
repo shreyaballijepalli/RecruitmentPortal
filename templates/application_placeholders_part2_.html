@@ -262,7 +262,12 @@
           
             <div id='research_fields'>
               <!-- <form name='myForm' id='randomFields'>   -->
-                <div id="input-researchfields-list">Research Interests <input id="research_interest" type='text' name='research_interest[]' value="{{params[6]}}" ><br>
+                <div id="input-researchfields-list">Research Interests 
+                  {% for your_list_element in  params[6] %}
+                      <input id="research_interest" type='text' name='research_interest[]' value="{{ your_list_element }}" ><br>
+                      <!-- <p>{{ your_list_element }} </p> -->
+                  {% endfor %}
+                  <!-- <input id="research_interest" type='text' name='research_interest[]' value="{{params[6]}}" ><br> -->
                 </div>
                 <input type='button' id='Add' value='Add'>
                 <input type='button' id='Remove' value='Remove'>
@@ -329,7 +334,12 @@
             <h2 style="padding-top:10px"> Post Doc</h2>
             <div id='post_doc'>
               <!-- <form name='myForm1' id='randomFields1'>   -->
-                <div id="input-postdoc-list">Post Doc Specialization<input id="post_doc_spec[]" type='text' name='post_doc_spec[]' value="{{params[7]}}" ><br>
+                <div id="input-postdoc-list">Post Doc Specialization
+                  {% for your_list_element in  params[7] %}
+                      <input id="post_doc_spec[]" type='text' name='post_doc_spec[]' value="{{ your_list_element }}" ><br>
+                      <!-- <p>{{ your_list_element }} </p> -->
+                  {% endfor %}
+                  <!-- <input id="post_doc_spec[]" type='text' name='post_doc_spec[]' value="{{params[7]}}" ><br> -->
                 </div>
                 <input type='button' id='Add1' value='Add'>
                 <input type='button' id='Remove1' value='Remove'>

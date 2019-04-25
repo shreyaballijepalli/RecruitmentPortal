@@ -150,23 +150,51 @@
               <h2>Present Position</h2>
 
               <label for="current_position">First Name</label>
-              <input type="text" id="current_position" name="current_position" placeholder="Your Current Position..">
+              <input type="text" id="current_position" name="current_position" value="{{params[0][0]}}">
 
               <label for="pay_band">Pay Band</label>
-              <input type="text" id="pay_band" name="pay_band" placeholder="Your Pay Band..">
+              <input type="text" id="pay_band" name="pay_band" value="{{params[0][1]}}">
 
               <label for="grade_pay">Grade Pay</label>
-              <input type="number" id="grade_pay" name="grade_pay" placeholder="Your Grade Pay">
+              <input type="number" id="grade_pay" name="grade_pay" value="{{params[0][2]}}">
 
               <label for="consolidated_salary">Consolidated Salary</label>
-              <input type="number" id="consolidated_salary" name="consolidated_salary" placeholder="Your Consolidated Salary..">
+              <input type="number" id="consolidated_salary" name="consolidated_salary" value="{{params[0][3]}}">
 
               <h2>Research/Teaching/Industrial Experience</h2>
 
               <div id='experience'>
                 <div id="input-experience-list">
-                  <div>
-                    <label for="experience_org">Organization</label>
+                    {% for i in range(0,params[1]|length) %}
+                      <!-- <input id="research_interest" type='text' name='research_interest[]' value={{ your_list_element }} ><br> -->
+                      <!-- <p>{{ your_list_element }} </p> -->
+                      <div>
+                      <label for="experience_org">Organization</label>
+                      <input id="experience_org" type="text" name="experience_org[]" value="{{params[1][i]}}"><br>
+
+                      <label for="start_date">Start Date</label>
+                      <input id="start_date" type="date" name="start_date[]" value="{{params[2][i]}}"><br>
+
+                      <label for="end_date">End Date</label>
+                      <input id="end_date" type="date" name="end_date[]" value="{{params[3][i]}}"><br>
+
+                      <label for="total_period">Total period</label>
+                      <input id="total_period" type="number" name="total_period[]" value="{{params[4][i]}}"><br>
+
+                      <label for="full_time">Full Time</label>
+                      <input type="radio" name="full_time[]" value="Yes" style="margin: 0 30px 0 30px"> Yes
+                      <input type="radio" name="full_time[]" value="No" style="margin: 0 30px 0 30px"> No<br>
+
+                      <label for="desgn">Designation</label>
+                      <input id="desgn" type="text" name="desgn[]" value="{{params[6][i]}}"><br>
+
+                      <label for="type_of_work">Type of Work</label>
+                      <input id="type_of_work" type="text" name="type_of_work[]" value="{{params[7][i]}}">
+                      <br>
+                      </div>
+                    {% endfor %}
+                    
+                   <!--  <label for="experience_org">Organization</label>
                     <input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..">
                     <br>
 
@@ -193,9 +221,9 @@
 
                     <label for="type_of_work">Type of Work</label>
                     <input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..">
-                    <br>
+                    <br> -->
 
-                  </div>
+                  
                 </div>
 
                 <input type='button' id='Add' value='Add'>
@@ -207,9 +235,11 @@
                 document.getElementById('Add').onclick = function createInputField() {
                     count++;
                     var str1 = '<div ><label for="experience_org">Organization</label><input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..'+count+'"><br><label for="start_date">Start Date</label><input id="start_date" type="date" name="start_date[]" ><br><label for="end_date">End Date</label><input id="end_date" type="date" name="end_date[]" ><br><label for="total_period">Total period</label><input id="total_period" type="number" name="total_period[]" placeholder="Your period..'+count+'" ><br><label for="full_time">Full Time</label><input type = "radio" name = "full_time[]" value = "Yes" style="margin: 0 30px 0 30px"> Yes<input type = "radio" name = "full_time[]" value = "No" style="margin: 0 30px 0 30px"> No <br><label for="desgn">Designation</label><input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..'+count+'"><br><label for="type_of_work">Type of Work</label><input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..'+count+'"><br></div>';
-
+                    
+                    var new_div = document.createElement('div');
+                    new_div.innerHTML=str1;
                     var currentDiv = document.getElementById("input-experience-list");
-                    currentDiv.innerHTML += str1;   
+                    currentDiv.appendChild(new_div);     
                 }
 
                 document.getElementById('Remove').onclick = function removeInputField() {
@@ -227,28 +257,32 @@
 
               <h2>Online Profiles</h2>
               <label for="google_scholar">Google Scholar</label>
-              <input id="google_scholar" type="text" name="google_scholar" placeholder="Your Google Scholar username..">
+              <input id="google_scholar" type="text" name="google_scholar" value="{{params[11]}}">
               <br>
 
               <label for="dblp">DBLP</label>
-              <input id="dblp" type="text" name="dblp" placeholder="Your dblp username..">
+              <input id="dblp" type="text" name="dblp" value="{{params[12]}}">
               <br>
 
               <label for="linkedin">Linkedin</label>
-              <input id="linkedin" type="text" name="linkedin" placeholder="Your linkedin username..">
+              <input id="linkedin" type="text" name="linkedin" value="{{params[13]}}">
               <br>
 
               <h2>Projects</h2>
               <!-- <div id='projects'> -->
                 <div id="input-sponsored_project-list">
                     <label for="">Sponsored Project Number</label>
-                    <div>
-                      <input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number.." style="width:100%">
-                      <br>
-                      <label for="">Sponsored Project Amount</label>
-                      <input id="sponsored_project_amount" type="Number" name="sponsored_project_amount[]" placeholder="Your sponsored project amount.." style="width:100%">
-                      <br>
-                    </div>
+                  {% for i in range(0,params[8]|length) %}
+                    {% if params[8][i]=="sponsored" %}
+                      <div>
+                        <input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" value="{{params[9][i]}}" style="width:100%">
+                        <br>
+                        <label for="">Sponsored Project Amount</label>
+                        <input id="sponsored_project_amount" type="Number" name="sponsored_project_amount[]" value="{{params[10][i]}}" style="width:100%">
+                        <br>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                 </div>
                 <input type='button' id='Add1' value='Add'>
                 <input type='button' id='Remove1' value='Remove'>
@@ -257,9 +291,10 @@
                   document.getElementById('Add1').onclick = function createInputField() {
                       count3++;
                       var str2 = '<div><label for="">Sponsored Project Number</label><input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number..'+count3+'"><br><label for="">Sponsored Project Amount</label><input id="sponsored_project_amount"type="Number" name="sponsored_project_amount[]" placeholder="Your sponsored project amount..'+count3+'"><br> </div>';
-
+                      var new_div = document.createElement('div');
+                      new_div.innerHTML=str2;
                       var currentDiv = document.getElementById("input-sponsored_project-list");
-                      currentDiv.innerHTML += str2;  
+                      currentDiv.appendChild(new_div);
                     }
 
                     document.getElementById('Remove1').onclick = function removeInputField() {
@@ -277,14 +312,18 @@
               
                   <div id="input-consultancy_project-list">
                     <label for="consultancy_project"></label>
-                    <div>
-                        <label for="">Consultancy Project Number</label>
-                        <input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number.." style="width=100%">
-                        <br>
-                        <label for="">Consultancy Project Amount</label>
-                        <input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount.." style="width=100%">
-                        <br>
+                    {% for i in range(0,params[8]|length) %}
+                    {% if params[8][i]=="consultancy" %}
+                      <div>
+                          <label for="">Consultancy Project Number</label>
+                          <input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" value="{{params[9][i]}}" style="width=100%">
+                          <br>
+                          <label for="">Consultancy Project Amount</label>
+                          <input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" value="{{params[10][i]}}" style="width=100%">
+                          <br>
                       </div>
+                    {% endif %}
+                  {% endfor %}  
                   </div>
                   <input type='button' id='Add2' value='Add'>
                   <input type='button' id='Remove2' value='Remove'>
@@ -293,8 +332,11 @@
                       document.getElementById('Add2').onclick = function createInputField() {
                           count2++;
                           var str3 = '<div><label for="">Consultancy Project Number</label><input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number..'+count2+'"><br><label for="">Consultancy Project Amount</label><input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount..'+count2+'"><br></div>';
+                          
+                          var new_div = document.createElement('div');
+                          new_div.innerHTML=str3;
                           var currentDiv = document.getElementById("input-consultancy_project-list");
-                          currentDiv.innerHTML += str3;
+                          currentDiv.appendChild(new_div);
      
                       }
 
@@ -316,40 +358,40 @@
                   <div id="input-referee-list">
                    <!--  <div> -->
                         <label for="">Referee Email1</label>
-                        <input id="referee1_email" type="text" name="referee1_email" placeholder="Your Referee Email..1" style="width=100%">
+                        <input id="referee1_email" type="text" name="referee1_email" value="{{params[14][0]}}" style="width=100%">
                         <br>
                         <label for="">Referee Name1</label>
-                        <input id="referee1_name" type="text" name="referee1_name" placeholder="Your Referee Name..1" style="width=100%">
+                        <input id="referee1_name" type="text" name="referee1_name" value="{{params[14][1]}}" style="width=100%">
                         <br>
                         <label for="">Referee Designation1</label>
-                        <input id="referee1_desg" type="text" name="referee1_desg" placeholder="Your Referee Designation..1" style="width=100%">
+                        <input id="referee1_desg" type="text" name="referee1_desg" value="{{params[14][2]}}" style="width=100%">
                         <br>
                         <label for="">Referee Address1</label>
-                        <input id="referee1_address" type="text" name="referee1_address" placeholder="Your Referee Address..1" style="width=100%">
+                        <input id="referee1_address" type="text" name="referee1_address" value="{{params[14][3]}}" style="width=100%">
                         <br>
                         <label for="">Referee Email2</label>
-                        <input id="referee2_email" type="text" name="referee2_email" placeholder="Your Referee Email..2" style="width=100%">
+                        <input id="referee2_email" type="text" name="referee2_email" value="{{params[15][0]}}" style="width=100%">
                         <br>
                         <label for="">Referee Name2</label>
-                        <input id="referee2_name" type="text" name="referee2_name" placeholder="Your Referee Name..2" style="width=100%">
+                        <input id="referee2_name" type="text" name="referee2_name" value="{{params[15][1]}}" style="width=100%">
                         <br>
                         <label for="">Referee Designation2</label>
-                        <input id="referee2_desg" type="text" name="referee2_desg" placeholder="Your Referee Designation..2" style="width=100%">
+                        <input id="referee2_desg" type="text" name="referee2_desg" value="{{params[15][2]}}" style="width=100%">
                         <br>
                         <label for="">Referee Address2</label>
-                        <input id="referee2_address" type="text" name="referee2_address" placeholder="Your Referee Address..2" style="width=100%">
+                        <input id="referee2_address" type="text" name="referee2_address" value="{{params[15][3]}}" style="width=100%">
                         <br>
                         <label for="">Referee Email3</label>
-                        <input id="referee3_email" type="text" name="referee3_email" placeholder="Your Referee Email..3" style="width=100%">
+                        <input id="referee3_email" type="text" name="referee3_email" value="{{params[16][0]}}" style="width=100%">
                         <br>
                         <label for="">Referee Name3</label>
-                        <input id="referee3_name" type="text" name="referee3_name" placeholder="Your Referee Name..3" style="width=100%">
+                        <input id="referee3_name" type="text" name="referee3_name" value="{{params[16][1]}}" style="width=100%">
                         <br>
                         <label for="">Referee Designation3</label>
-                        <input id="referee3_desg" type="text" name="referee3_desg" placeholder="Your Referee Designation..3" style="width=100%">
+                        <input id="referee3_desg" type="text" name="referee3_desg" value="{{params[16][2]}}" style="width=100%">
                         <br>
                         <label for="">Referee Address3</label>
-                        <input id="referee3_address" type="text" name="referee3_address" placeholder="Your Referee Address..3" style="width=100%">
+                        <input id="referee3_address" type="text" name="referee3_address" value="{{params[16][3]}}" style="width=100%">
                         <br>
 
                     <!-- </div> -->

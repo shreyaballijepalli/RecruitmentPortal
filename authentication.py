@@ -26,6 +26,17 @@ app.register_blueprint(application, url_prefix='/application')
 from application_part2 import application_part2
 app.register_blueprint(application_part2, url_prefix='/application')
 
+from application_part3 import application_part3
+app.register_blueprint(application_part3, url_prefix='/application')
+
+from application_part4 import application_part4
+app.register_blueprint(application_part4, url_prefix='/application')
+
+from application_part5 import application_part5
+app.register_blueprint(application_part5, url_prefix='/application')
+
+
+
 google = oauth.remote_app('google',
 base_url='https://www.google.com/accounts/',
 authorize_url='https://accounts.google.com/o/oauth2/auth',

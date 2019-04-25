@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>IITH | RP</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/fonts/icomoon/style.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/magnific-popup.css') }}">
+  
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/owl.theme.default.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/bootstrap-datepicker.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/fonts/flaticon/font/flaticon.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/rangeslider.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/style.css') }}">
+    <link rel="shortcut icon" href="favicon.ico">
+    
+    <style type="text/css">
+      table {
+          border-collapse: collapse;    
+          }
+
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: center;
+          padding: 8px;
+      }
+
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+
+      .button {
+        background-color: #34609e;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+  </head>
+  <body style="background-color: #333333;">
+  
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+    
+    <header class="site-navbar container py-0 bg-white" role="banner">
+
+      <!-- <div class="container"> -->
+        <div class="row align-items-center">
+          
+          <div class="col-6 col-xl-2">
+            <h1 class="mb-0 site-logo"><a href="/" class="text-black mb-0">Recruitment<span class="text-primary">Portal</span>  </a></h1>
+          </div>
+          <div class="col-12 col-md-10 d-none d-xl-block">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+
+              <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="">{{name_}}</a></li>
+                <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
+              </ul>
+            </nav>
+          </div>
+
+
+          <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">
+            <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
+          </div>
+
+        </div>
+      <!-- </div> -->
+      
+    </header>
+
+<section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
+         <div>
+          <style>
+            li a {
+            display: block;
+            color: #000;
+            padding:8px;
+            padding-right:10px;
+            padding-left:10px; 
+            text-decoration: none;
+        }
+
+        li a.active {
+            background-color: #008080;
+            color: white;
+
+          }
+          </style>
+        <ul>
+         <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="part1">Personal Information</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>   
+         <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="" class="active" >Attachments</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="part5">Submit Application</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
+         <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
+      </ul>
+      </div>
+    </section>
+    <section style="position:fixed; top:20%; left:25%; width:70%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+        <style>
+        input[type=text], input[type=date],input[type=number],input[type=number],input[type=textarea],input[type=submit],select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      }
+      
+        </style>
+         
+         <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
+           <form action="insert_4" method="POST" 
+           enctype = "multipart/form-data">
+
+             <style>
+             .inputfile {
+                  width: 0.1px;
+                  height: 0.1px;
+                  opacity: 0;
+                  overflow: hidden;
+                  position: center;
+                  z-index: -1;
+              }
+
+              .inputfile + label {
+                  max-width: 80%;
+                  font-size: 13px;
+                  /* 20px */
+                  font-weight: 700;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  cursor: pointer;
+                  display: inline-block;
+                  overflow: hidden;
+                  padding: 0.625rem 1.25rem;
+                  /* 10px 20px */
+              }
+
+              .no-js .inputfile + label {
+                  display: none;
+              }
+
+              .inputfile:focus + label,
+              .inputfile.has-focus + label {
+                  outline: 1px dotted #000;
+                  outline: -webkit-focus-ring-color auto 5px;
+              }
+
+              .inputfile + label * {
+                  /* pointer-events: none; */
+                  /* in case of FastClick lib use */
+              }
+
+              .inputfile + label svg {
+                  width: 1em;
+                  height: 1em;
+                  vertical-align: middle;
+                  fill: currentColor;
+                  margin-top: -0.25em;
+                  /* 4px */
+                  margin-right: 0.25em;
+                  /* 4px */
+              }
+
+
+              /* style 1 */
+
+              .inputfile-1 + label {
+                  margin-top: -10em;
+                  color: white;
+                  background-color: #008080;
+                  /*style="background-color: #008080;color:white*/
+              }
+
+              .inputfile-1:focus + label,
+              .inputfile-1.has-focus + label,
+              .inputfile-1 + label:hover {
+                  background-color: #722040;
+              }
+
+              /*.box {
+                  background-color: #dfc8ca;
+                  padding: 6.25rem 1.25rem;
+                }
+
+                .box + .box {
+                  margin-top: 2.5rem;
+                }*/
+
+             </style>
+              <div class="box">
+              <label for="photo" style="margin-top:5px">Upload Photo </label>
+              <input type="file" name="photo" id="photo" class="inputfile inputfile-1" required />
+              <label for="photo" style="margin-top:10px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label><br>
+
+              <label for="signature" style="margin-top:5px">Upload Signature </label>
+              <input type="file" name="signature" id="signature" class="inputfile inputfile-1" required/>
+              <label for="signature" style="margin-top:10px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label><br>
+
+              <label for="cv" style="margin-top:5px">Upload CV </label>
+              <input type="file" name="cv" id="cv" class="inputfile inputfile-1"  required/>
+              <label for="cv" style="margin-top:10px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label><br>
+
+              <label for="teaching" style="margin-top:5px">Upload Teaching statement </label>
+              <input type="file" name="teaching" id="teaching" class="inputfile inputfile-1" required />
+              <label for="teaching" style="margin-top:10px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label><br>
+
+              <label for="research" style="margin-top:5px">Upload research statement </label>
+              <input type="file" name="research" id="research" class="inputfile inputfile-1"  required/>
+              <label for="research" style="margin-top:10px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label><br>
+
+              <label for="LOP" style="margin-top:5px">Upload List of Publications </label>
+              <input type="file" name="LOP" id="LOP" class="inputfile inputfile-1" required/>
+              <label for="LOP" style="margin-top:10px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label><br>
+
+              <label for="others[]" style="margin-top:5px">Upload Other files </label>
+              <input type="file" name="others[]" id="others[]" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+              <label for="others[]" style="margin-top:10px"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label><br>
+
+            </div>
+            <script>
+            'use strict';
+
+            ;( function ( document, window, index )
+            {
+              var inputs = document.querySelectorAll( '.inputfile' );
+              Array.prototype.forEach.call( inputs, function( input )
+              {
+                var label  = input.nextElementSibling,
+                  labelVal = label.innerHTML;
+
+                input.addEventListener( 'change', function( e )
+                {
+                  var fileName = '';
+                  if( this.files && this.files.length > 1 )
+                    fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+                  else
+                    fileName = e.target.value.split( '\\' ).pop();
+
+                  if( fileName )
+                    label.querySelector( 'span' ).innerHTML = fileName;
+                  else
+                    label.innerHTML = labelVal;
+                });
+
+                // Firefox bug fix
+                input.addEventListener( 'focus', function(){ input.classList.add( 'has-focus' ); });
+                input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
+              });
+            }( document, window, 0 ));
+            </script>
+            
+             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
+             
+           </form>
+         </div>
+      </section> 
+      
+
+  </div>
+
+  <script src="{{ url_for('static',filename='styles/js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery-migrate-3.0.1.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery-ui.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/popper.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/owl.carousel.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery.stellar.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery.countdown.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/aos.js') }}"></script>
+  <script src="{{ url_for('static',filename='styles/js/rangeslider.min.js') }}"></script>
+
+  <script src="{{ url_for('static',filename='styles/js/main.js') }}"></script>
+    
+  </body>
+</html>
