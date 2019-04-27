@@ -24,9 +24,9 @@ def new_application():
 	cursor.execute(sql)
 	db.commit()
 
-	sql = "INSERT INTO attachments(application_no,status) VALUES ('%s','%s') " %(session['application_number'],"new")
-	cursor.execute(sql)
-	db.commit()
+	# sql = "INSERT INTO attachments(application_no,status) VALUES ('%s','%s') " %(session['application_number'],"new")
+	# cursor.execute(sql)
+	# db.commit()
 
 	return render_template('application_part1.html', email_=session['email'], application_number=session['application_number'])
 
@@ -40,11 +40,11 @@ def part1():
 	rows = cursor.fetchall()
 	rows = list(rows[0])
 	name_list = rows[3][1:-1].split(",")
-	params_ = [rows[2],name_list,rows[9],rows[10],rows[11],rows[12],rows[8],rows[13],
-	rows[4],rows[5],rows[6],rows[16]]
+	print rows
+	params_ = [rows[2],name_list,rows[9],rows[10],rows[11],rows[12],rows[8],rows[13], rows[4],rows[5],rows[6],rows[14]]
 	print "retrieved properly"
 	return render_template('application_placeholders_part1.html',params=params_, application_number=session['application_number'])
-	
+
 
 
 @application.route('insert_1', methods=['GET','POST'])       #on submission of login details

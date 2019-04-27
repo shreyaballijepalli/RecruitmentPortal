@@ -208,8 +208,10 @@
                     count++;
                     var str1 = '<div ><label for="experience_org">Organization</label><input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..'+count+'"><br><label for="start_date">Start Date</label><input id="start_date" type="date" name="start_date[]" ><br><label for="end_date">End Date</label><input id="end_date" type="date" name="end_date[]" ><br><label for="total_period">Total period</label><input id="total_period" type="number" name="total_period[]" placeholder="Your period..'+count+'" ><br><label for="full_time">Full Time</label><input type = "radio" name = "full_time[]" value = "Yes" style="margin: 0 30px 0 30px"> Yes<input type = "radio" name = "full_time[]" value = "No" style="margin: 0 30px 0 30px"> No <br><label for="desgn">Designation</label><input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..'+count+'"><br><label for="type_of_work">Type of Work</label><input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..'+count+'"><br></div>';
 
+                    var new_div = document.createElement('div');
+                    new_div.innerHTML=str1;
                     var currentDiv = document.getElementById("input-experience-list");
-                    currentDiv.innerHTML += str1;   
+                    currentDiv.appendChild(new_div);  
                 }
 
                 document.getElementById('Remove').onclick = function removeInputField() {
@@ -257,9 +259,10 @@
                   document.getElementById('Add1').onclick = function createInputField() {
                       count3++;
                       var str2 = '<div><label for="">Sponsored Project Number</label><input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number..'+count3+'"><br><label for="">Sponsored Project Amount</label><input id="sponsored_project_amount"type="Number" name="sponsored_project_amount[]" placeholder="Your sponsored project amount..'+count3+'"><br> </div>';
-
+                      var new_div = document.createElement('div');
+                      new_div.innerHTML=str2;
                       var currentDiv = document.getElementById("input-sponsored_project-list");
-                      currentDiv.innerHTML += str2;  
+                      currentDiv.appendChild(new_div);
                     }
 
                     document.getElementById('Remove1').onclick = function removeInputField() {
@@ -293,8 +296,10 @@
                       document.getElementById('Add2').onclick = function createInputField() {
                           count2++;
                           var str3 = '<div><label for="">Consultancy Project Number</label><input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number..'+count2+'"><br><label for="">Consultancy Project Amount</label><input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount..'+count2+'"><br></div>';
+                          var new_div = document.createElement('div');
+                          new_div.innerHTML=str3;
                           var currentDiv = document.getElementById("input-consultancy_project-list");
-                          currentDiv.innerHTML += str3;
+                          currentDiv.appendChild(new_div);
      
                       }
 
