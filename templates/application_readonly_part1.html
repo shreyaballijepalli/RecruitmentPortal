@@ -119,7 +119,6 @@
          <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>   
          <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
          <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
-        <li style="display:block;font-size:20px;color: #000;"><a href="part5">Submit Application</a></li>
          <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
          <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
       </ul>
@@ -140,7 +139,7 @@
         </style>
          
          <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
-           <form action="insert_1" method="POST">
+           <form >
              <label for="position_">Position Applying For</label>
               <select style="background-color:white" id="position" name="position">
               <option  required> Select</option>
@@ -167,7 +166,7 @@
              <label for="date_of_birth_">Date of Birth</label>
              <input type="date" id="date_of_birth" name="date_of_birth" value="{{params[4]}}" required readonly><br>
 
-             <label for="caste_">Caste</label>
+             <label for="caste_">Category</label>
              <input type="text" id="caste" name="caste" value="{{params[5]}}" required readonly>
 
             <!--  <label for="email_">Email</label>

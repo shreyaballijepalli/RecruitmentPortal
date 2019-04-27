@@ -15,7 +15,7 @@ def part2():
 	rows = cursor.fetchall()
 	if rows[0][0] == "new" :
 		return render_template('application_part2.html', email_=session['email'], application_number=session['application_number'])
-	elif rows[0][0] == "modified" :
+	else:
 		sql = "SELECT * FROM education WHERE application_no = '%s';" %(session['application_number'])
 		cursor.execute(sql)
 		rows = cursor.fetchall()
@@ -27,10 +27,11 @@ def part2():
 		gate_list = rows[7][1:-1].split(",")
 		# name_list = rows[3][1:-1].split(",")
 		params_ = [btech_list,mtech_list,phd_list,phd_thesis,gate_list,rows[8],rows[9],rows[6]]
-		
 		print "retrieved properly"
+		if rows[1] == "submitted" :
+			return render_template('application_readonly_part2.html',params=params_, application_number=session['application_number'])
 		return render_template('application_placeholders_part2_.html',params=params_,email_=session['email'], application_number=session['application_number'])
-
+	
 
 @application_part2.route('insert_2', methods=['GET','POST'])       #on submission of login details
 def insert_2(): 

@@ -118,7 +118,6 @@
             <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>
             <li style="display:block;font-size:20px;color: #000;"><a href="" class="active">Experience</a></li>
             <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
-            <li style="display:block;font-size:20px;color: #000;"><a href="part5">Submit Application</a></li>
             <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
             <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
         </ul>
@@ -144,7 +143,7 @@
       </style>
 
       <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
-          <form action="insert_3" method="POST">
+          <form >
 
               <!-- <input type="file" value="upload" style="background-color: #008080;color:white;width=100%"> -->
               <h2>Present Position</h2>
@@ -153,7 +152,7 @@
               <input type="text" id="current_position" name="current_position" value="{{params[0][0]}}" readonly>
 
               <label for="pay_band">Pay Band</label>
-              <input type="text" id="pay_band" name="pay_band" value="{{params[0][1]}}" readonly>
+              <input type="number" id="pay_band" name="pay_band" value="{{params[0][1]}}" readonly>
 
               <label for="grade_pay">Grade Pay</label>
               <input type="number" id="grade_pay" name="grade_pay" value="{{params[0][2]}}" readonly>
@@ -271,10 +270,11 @@
               <h2>Projects</h2>
               <!-- <div id='projects'> -->
                 <div id="input-sponsored_project-list">
-                    <label for="">Sponsored Project Number</label>
+                   <label for="sponsored_project"></label>
                   {% for i in range(0,params[8]|length) %}
                     {% if params[8][i]=="sponsored" %}
                       <div>
+                       <label for="">Sponsored Project Number</label>
                         <input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" value="{{params[9][i]}}" style="width:100%" readonly>
                         <br>
                         <label for="">Sponsored Project Amount</label>
@@ -368,7 +368,7 @@
                         <br>
                         <label for="">Referee Address1</label>
                         <input id="referee1_address" type="text" name="referee1_address" value="{{params[14][3]}}" style="width=100%" readonly>
-                        <br>
+                        <br><hr><br>
                         <label for="">Referee Email2</label>
                         <input id="referee2_email" type="text" name="referee2_email" value="{{params[15][0]}}" style="width=100%" readonly>
                         <br>
@@ -380,7 +380,7 @@
                         <br>
                         <label for="">Referee Address2</label>
                         <input id="referee2_address" type="text" name="referee2_address" value="{{params[15][3]}}" style="width=100%" readonly>
-                        <br>
+                        <br><hr><br>
                         <label for="">Referee Email3</label>
                         <input id="referee3_email" type="text" name="referee3_email" value="{{params[16][0]}}" style="width=100%" readonly>
                         <br>

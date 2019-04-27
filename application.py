@@ -10,7 +10,7 @@ application = Blueprint('application', __name__, template_folder='templates', st
 
 @application.route('new_application', methods=['GET'])
 def new_application():
-	sql = "INSERT INTO main_table(email,status) VALUES ('%s','%s') RETURNING application_no" %(session['email'],"new")
+	sql = "INSERT INTO main_table(email,status, attachment_status) VALUES ('%s','%s','%s') RETURNING application_no" %(session['email'],"new","new")
 	cursor.execute(sql)
 	rows = cursor.fetchall()
 	db.commit()
@@ -43,6 +43,8 @@ def part1():
 	print rows
 	params_ = [rows[2],name_list,rows[9],rows[10],rows[11],rows[12],rows[8],rows[13], rows[4],rows[5],rows[6],rows[14]]
 	print "retrieved properly"
+	if rows[1] == 'submitted':
+		return render_template('application_readonly_part1.html',params=params_, application_number=session['application_number'])
 	return render_template('application_placeholders_part1.html',params=params_, application_number=session['application_number'])
 
 
