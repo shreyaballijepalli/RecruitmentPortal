@@ -42,7 +42,7 @@ cur.execute('''CREATE TYPE referee_info AS (email text,name text,desgn text,
 cur.execute('''CREATE TABLE main_table (application_no serial primary key, status text,
 	position_applied text,name name_info, address1 text,address2 text,address3 text,email text,
 	alt_email text, nationality text, age integer, date_of_birth text, caste text,
-	disability boolean,other_info text,date_submitted date );''')
+	disability boolean,other_info text,date_submitted date, attachment_status text );''')
 
 cur.execute('''CREATE TABLE education (application_no integer references main_table(application_no), status text,
 	bachelors education_info,masters education_info,phd education_info,phd_thesis phd_thesis_info,post_doc text[],

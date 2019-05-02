@@ -15,7 +15,7 @@ def part3():
 	rows = cursor.fetchall()
 	if rows[0][0] == "new" :
 		return render_template('application_part3.html', email_=session['email'], application_number=session['application_number'])
-	elif rows[0][0] == "modified" :
+	else:
 		sql = "SELECT * FROM teaching_experience WHERE application_no = '%s';" %(session['application_number'])
 		cursor.execute(sql)
 		rows = cursor.fetchall()
@@ -29,8 +29,11 @@ def part3():
 		rows[13],rows[14],rows[15],referee1,referee2,referee3]
 		
 		# print "retrieved properly"
-		return render_template('application_placeholders_part3.html',params=params_,email_=session['email'], application_number=session['application_number'])
 
+		if rows[1] == "submitted" :
+			return render_template('application_readonly_part3.html',params=params_, application_number=session['application_number'])
+		return render_template('application_placeholders_part3.html',params=params_,email_=session['email'], application_number=session['application_number'])
+	
 
 @application_part3.route('insert_3', methods=['GET','POST'])       #on submission of login details
 def insert_3(): 
@@ -96,7 +99,7 @@ def insert_3():
 
 		sponsored_project_number = request.form.getlist('sponsored_project_number[]')
 		consultancy_project_number = request.form.getlist('consultancy_project_number[]')
-		temp="{"+ ",".join(sponsored_project_number)
+		temp="{"+ ",".join(sponsored_project_number) + ","
 		temp+=",".join(consultancy_project_number)+"}"
 		project_number_str=temp
 		merged_project_number = sponsored_project_number+consultancy_project_number
@@ -104,8 +107,8 @@ def insert_3():
 
 		sponsored_project_amount = request.form.getlist('sponsored_project_amount[]')
 		consultancy_project_amount = request.form.getlist('consultancy_project_amount[]')
-		temp="{"+ ",".join(sponsored_project_amount)
-		temp+=",".join(consultancy_project_amount)+"}"
+		temp = "{"+ ",".join(sponsored_project_amount) + ","
+		temp += ",".join(consultancy_project_amount)+"}"
 		project_amount_str = temp
 		merged_project_amount=sponsored_project_amount+consultancy_project_amount 
 
@@ -181,8 +184,8 @@ def insert_3():
 
 
 		params = [[current_position,pay_band,grade_pay,consolidated_salary],experience_org,start_date,end_date,
-		total_period,full_time,desgn,type_of_work,project_type,merged_project_number,merged_project_amount,google_scholar,dblp,linkedin,referee1_email,referee1_name,referee1_desg,referee1_address,referee2_email,referee2_name,
-		referee2_desg,referee2_address,referee3_email,referee3_name,referee3_desg,referee3_address]
+		total_period,full_time,desgn,type_of_work,project_type,merged_project_number,merged_project_amount,google_scholar,dblp,linkedin,[referee1_email,referee1_name,referee1_desg,referee1_address],[referee2_email,referee2_name,
+		referee2_desg,referee2_address],[referee3_email,referee3_name,referee3_desg,referee3_address]]
 
 
 		# for i in range(len(sponsored_project_number)):

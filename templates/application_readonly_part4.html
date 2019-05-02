@@ -121,7 +121,6 @@
          <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>   
          <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
          <li style="display:block;font-size:20px;color: #000;"><a href="" class="active" >Attachments</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="part5">Submit Application</a></li>
          <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
          <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
       </ul>
@@ -297,8 +296,8 @@
             <input type="submit" value="Save" style="background-color: #008080;color:white;width=100%">
              
           </form>
-          <br><hr><br>        
-
+          <br><hr><br>
+        
         {% if params != [] %}
           <h2>Files submitted so far...</h2>
           <table>
@@ -309,7 +308,7 @@
             {% for row in params %}
               <tr>
                 <td>{{row[1]}}</td>
-                <td><a href="{{url_for('static', filename='uploads/'+ row[2]) }}" target="_blank">See this file</a></td>
+                <td><a href="{{url_for('static',filename='uploads/'+ row[2] ) }}" target="_blank">See this file</a></td>
                 <td>{{row[3]}}</td>
               </tr>
             {% endfor %}

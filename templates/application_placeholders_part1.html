@@ -127,7 +127,17 @@
     </section>
     <section style="position:fixed; top:20%; left:25%; width:70%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
         <style>
-        input[type=text], input[type=date],input[type=number],input[type=number],input[type=textarea],input[type=submit],select {
+        input[type=text], input[type=number],input[type=email],input[type=textarea],input[type=submit],select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      }
+
+      input[type=date]{
       width: 100%;
       padding: 12px 20px;
       margin: 8px 0;
@@ -167,14 +177,14 @@
              <label for="date_of_birth_">Date of Birth</label>
              <input type="date" id="date_of_birth" name="date_of_birth" value="{{params[4]}}" required><br>
 
-             <label for="caste_">Caste</label>
+             <label for="caste_">Category</label>
              <input type="text" id="caste" name="caste" value="{{params[5]}}" required>
 
             <!--  <label for="email_">Email</label>
              <input type="text" id="email" name="email" value="{{params[6]}}"  required> -->
              
              <label for="alt_email_">Alternate Email</label>
-             <input type="text" id="alt_email" name="alt_email" value="{{params[6]}}"  required>
+             <input type="email" id="alt_email" name="alt_email" value="{{params[6]}}"  required>
 
              <label for="disabilty">Disabilty</label>
              <input type = "radio" name = "disability" value = "Yes" style="margin: 0 30px 0 30px" required> Yes

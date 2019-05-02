@@ -117,7 +117,6 @@
           <li style="display:block;font-size:20px;color: #000;"><a href="" class = "active">Educational Qualifications</a></li>   
           <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
           <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
-          <li style="display:block;font-size:20px;color: #000;"><a href="part5">Submit Application</a></li>
           <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
           <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
         </ul>
@@ -139,7 +138,7 @@
         </style>
          
          <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
-           <form action="insert_2" method="POST">
+           <form >
              <h2>Bachelor's</h2>
               <!--<label for="degree">Degree</label>
               <select style="background-color:white">
@@ -263,8 +262,8 @@
             <div id='research_fields'>
               <!-- <form name='myForm' id='randomFields'>   -->
                 <div id="input-researchfields-list">Research Interests 
-                  {% for your_list_element in  params[6] %}
-                  <input id="research_interest" type='text' name='research_interest[]' value="{{params[6]}}" readonly><br>
+                  {% for item in  params[6] %}
+                  <input id="research_interest" type='text' name='research_interest[]' value="{{item}}" readonly><br>
                   {% endfor %}
                 </div>
                 <!-- <input type='button' id='Add' value='Add'>
