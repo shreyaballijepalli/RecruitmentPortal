@@ -136,64 +136,138 @@
             border-radius: 4px;
             box-sizing: border-box;
             }
+            .required:after {
+              color: #e32;
+              content: ' *';
+              display:inline;}
         </style>
          
          <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
            <form action="insert_2" method="POST">
              <h2>Bachelor's</h2>
+              <!--<label for="degree">Degree</label>
+              <select style="background-color:white">
+                <option selected required> Select</option>
+                <option value="B.Tech" required>B.Tech</option>
+                <option value="B.Sc" required>B.Sc</option>
+              </select>
+              <label for="start_year">Start Year</label>
+              <select id="year" style="background-color:white"></select>
               
-            <label for="end_year">Year of Graduation</label>
+              <script type="text/javascript">
+                var start = 1900;
+                var end = new Date().getFullYear();
+                var options = "";
+                options += "<option>select</option>";
+                for(var year = start ; year <=end; year++){
+                  options += "<option>"+ year +"</option>";
+                }
+                document.getElementById("year").innerHTML = options;
+              </script>
+              -->
+
+            <label for="end_year" class="required">Year of Graduation</label>
             <input type="date" id="bachelors_date_studied" name="bachelors_date_studied" required><br>
 
-            <label for="bachelors_university_name_">University Name</label>
+            <!-- <select id="bachelors_date_studied" style="background-color:white" name="bachelors_date_studied"></select>
+            <script type="text/javascript">
+              var start1 = 2000;
+              var end1 = 2025;
+              var options1 = "";
+              options1 += "<option>select</option>";
+              for(var year = start1 ; year <=end1; year++){
+                options1 += "<option>"+ year +"</option>";
+              }
+              document.getElementById("bachelors_date_studied").innerHTML = options1;
+            </script> -->
+
+            <label for="bachelors_university_name_" class="required">University Name</label>
             <input type="text" id="bachelors_university" name="bachelors_university" placeholder="Your University Name.." required>
 
-            <label for="bachelors_specialization_">Specialization</label>
+            <label for="bachelors_institute_name_" class="required">Institute Name</label>
+            <input type="text" id="bachelors_institute" name="bachelors_institute" placeholder="Your Institute Name.." required>
+
+            <label for="bachelors_specialization_" class="required">Specialization</label>
             <input type="text" id="bachelors_specialization" name="bachelors_specialization" placeholder="Your Specialization.." required>
 
-            <label for="cgpa">CGPA / Percentage</label>
-            <input type="number" step="0.01" id="bachelors_cgpa" name="bachelors_cgpa" placeholder="Your CGPA.." required>
+            <label for="cgpa" class="required">CGPA/10</label>
+            <input type="number" step="0.01" id="bachelors_cgpa" name="bachelors_cgpa" min=0 max=10 placeholder="Your CGPA.." required>
 
             <h2>Master's</h2>
+            <!--
+              <label for="degree">Degree</label>
+              <select style="background-color:white">
+                <option selected required> Select</option>
+                <option value="M.Tech" required>M.Tech</option>
+                <option value="M.Sc" required>M.Sc</option>
+              </select> 
 
-            <label for="masters_end_year">Year of Graduation</label>
+              <label for="masters_start_year">Start Year</label>
+              <select id="year2" style="background-color:white"></select>
+              <script>
+                document.getElementById("year2").innerHTML = options;
+              </script>
+            -->
+
+            <label for="masters_end_year" class="required">Year of Graduation</label>
             <input type="date" id="masters_date_studied" name="masters_date_studied" required><br>
+
+
+           <!--  <select id="masters_date_studied" style="background-color:white" name="masters_date_studied"></select>
+            <script>
+              document.getElementById("masters_date_studied").innerHTML = options1;
+            </script> -->
              
-            <label for="masters_university_name_">University Name</label>
+            <label for="masters_university_name_" class="required">University Name</label>
             <input type="text" id="masters_university" name="masters_university" placeholder="Your University Name.." required>
 
-            <label for="masters_specialization_">Specialization</label>
+            <label for="masters_institute_name_" class="required">Institute Name</label>
+            <input type="text" id="masters_institute" name="masters_institute" placeholder="Your Institute Name.." required>
+
+            <label for="masters_specialization_" class="required">Specialization</label>
             <input type="text" id="masters_specialization" name="masters_specialization" placeholder="Your Specialization.." required>
 
-            <label for="masters_cgpa">CGPA / Percentage</label>
-            <input type="number" step="0.01" id="masters_cgpa" name="masters_cgpa" placeholder="Your CGPA.." required>
+            <label for="masters_cgpa" class="required">CGPA / Percentage</label>
+            <input type="number" step="0.01" id="masters_cgpa" name="masters_cgpa" min=0 max=10 placeholder="Your CGPA.." required>
 
             <h2>PhD</h2>
 
-            <label for="phd_end_year">Year of Graduation</label>
+            <label for="phd_end_year" class="required">Year of Graduation</label>
             <input type="date" id="phd_date_studied" name="phd_date_studied" required><br>
+          
+           <!--  <label for="phd_start_year">Start Year</label>
+            <select id="phd_date_studied" name="phd_date_studied" style="background-color:white"></select>
+            <script>
+              document.getElementById("phd_date_studied").innerHTML = options;
+            </script> -->
 
-            <label for="phd_university_name_">University Name</label>
+            <label for="phd_university_name_" class="required">University Name</label>
             <input type="text" id="phd_university" name="phd_university" placeholder="Your University Name.." required>
 
-            <label for="phd_specialization_">Specialization</label>
+            <label for="phd_institute_name_" class="required">Institute Name</label>
+            <input type="text" id="phd_institute" name="phd_institute" placeholder="Your Institute Name.." required>
+
+            <label for="phd_specialization_" class="required">Specialization</label>
             <input type="text" id="phd_specialization" name="phd_specialization" placeholder="Your Specialization.." required>
 
-            <label for="phd_cgpa">CGPA / Percentage</label>
-            <input type="number" step="0.01" id="phd_cgpa" name="phd_cgpa" placeholder="Your CGPA.." required>
+            <label for="cgpa" class="required">CGPA / Percentage</label>
+            <input type="number" step="0.01" id="phd_cgpa" name="phd_cgpa"  min=0 max=10 placeholder="Your CGPA.." required>
 
-            <label for="phd_date_thesis">Date of Thesis Submission</label>
+
+            <label for="phd_date_thesis" class="required">Date of Thesis Submission</label>
             <input type="date" id="phd_date_thesis" name="phd_date_thesis" required><br>
             
-            <label for="phd_date_defence">Date of defence</label>
+            <label for="phd_date_defence" class="required">Date of defence</label>
             <input type="date" id="phd_date_defence" name="phd_date_defence" required><br>
 
-            <h2>Gate</h2>
-            <label for="gate_type">Gate Type</label>
-            <input type="text" id="gate_type" name="gate_type" placeholder="Your Gate Type.." >
 
-            <label for="gate_score">Gate Rank</label>
-            <input type="number" id="gate_score" name="gate_score" placeholder="Your Gate Rank.." > 
+  
+            <h2>GATE</h2>
+            <label for="gate_year">GATE Year</label>
+            <input type="Number" id="gate_year" name="gate_year" min="1984" placeholder="Your Gate Year.." >
+
+            <label for="gate_score">GATE Rank</label>
+            <input type="number" id="gate_score" name="gate_score" min="1" placeholder="Your Gate Rank.." > 
 
             <h2>Research</h2>
             <label for="research_specialization">Research Specialization</label>
@@ -209,6 +283,34 @@
             </div>
           
             <script>
+              // var input_tillnow=document.getElementsByTagName('INPUT').length-1;
+              // document.getElementById('Add').onclick = function createInputField() {
+              //   var input = document.createElement('input');
+              //   var lineBreak = document.createElement('br');
+              //   var testId = "research_interest";
+              //   var i = 0;
+              //   var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+              //   for (i = 0; i < x; i++) {
+              //     i;
+              //   }
+              //   input.setAttribute('id', testId + i);
+              //   input.type = 'text';
+              //   input.name = 'research_interest[]';
+              //   input.placeholder='Research Interest'+i;
+              //   var aplayer1 = document.getElementById('input-player-list');
+              //   aplayer1.appendChild(input);
+              //   aplayer1.appendChild(lineBreak);
+              // }
+
+              // document.getElementById('Remove').onclick = function removeInputField() {
+              //   var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+              //   if ( x > 2 ) {
+              //     $('#input-player-list input:last').remove();
+              //     $('#input-player-list br:last').remove();
+              //     return false;
+              //   } else {
+              //   }
+              // }
               var count = 1;
               document.getElementById('Add').onclick = function createInputField() {
                   count=count+1;
@@ -237,48 +339,48 @@
                 }
             </script>
 
-            <h2 style="padding-top:10px"> Post Doc</h2>
+           <!--  <h2 style="padding-top:10px"> Post Doc</h2>
             <div id='post_doc'>
-              <!-- <form name='myForm1' id='randomFields1'>   -->
+              
                 <div id="input-postdoc-list">Post Doc Specialization<input id="post_doc_spec[]" type='text' name='post_doc_spec[]' placeholder='Post Doc Sepcialization..'><br>
                 </div>
                 <input type='button' id='Add1' value='Add'>
                 <input type='button' id='Remove1' value='Remove'>
-              <!-- </form> -->
-            </div>
+              
+            </div> -->
 
             <script>
-              var count1 = 1;
-              document.getElementById('Add1').onclick = function createInputField() {
-                  if(count1<3){
-                  count1=count1+1;
-                  var input = document.createElement('input');
-                  input.setAttribute('id', "post_doc_spec" + count1);
-                  input.type = 'text';
-                  input.name = 'post_doc_spec[]';
-                  input.placeholder='Post Doc Sepcialization'+count1;
+            //   var count1 = 1;
+            //   document.getElementById('Add1').onclick = function createInputField() {
+            //       if(count1<3){
+            //       count1=count1+1;
+            //       var input = document.createElement('input');
+            //       input.setAttribute('id', "post_doc_spec" + count1);
+            //       input.type = 'text';
+            //       input.name = 'post_doc_spec[]';
+            //       input.placeholder='Post Doc Sepcialization'+count1;
                   
-                  var currentDiv = document.getElementById("input-postdoc-list");
-                  currentDiv.appendChild(input);
-                  currentDiv.appendChild(lineBreak);
-                }  
-                }
+            //       var currentDiv = document.getElementById("input-postdoc-list");
+            //       currentDiv.appendChild(input);
+            //       currentDiv.appendChild(lineBreak);
+            //     }  
+            //     }
 
-                document.getElementById('Remove1').onclick = function removeInputField() {
+            //     document.getElementById('Remove1').onclick = function removeInputField() {
 
-                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                    if (count1 >= 2) {
-                        var currentDiv = document.getElementById("input-postdoc-list");
-                        $('#input-postdoc-list input:last').remove();
-                        $('#input-postdoc-list br:last').remove();
-                        count1--;
-                        return false;
-                    } else {}
-                }
-            </script>
+            //         // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+            //         if (count1 >= 2) {
+            //             var currentDiv = document.getElementById("input-postdoc-list");
+            //             $('#input-postdoc-list input:last').remove();
+            //             $('#input-postdoc-list br:last').remove();
+            //             count1--;
+            //             return false;
+            //         } else {}
+            //     }
+            // </script>
 
 
-            <input type="submit" value="Save" style="background-color: #008080;color:white;width=100%">
+            <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
              
           </form>
         </div>

@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(database="recruitment_portal", user = "postgres", password = "password", host = "127.0.0.1", port = "5432")
+conn = psycopg2.connect(database="recruitment_portal", user = "postgres", password = "root", host = "127.0.0.1", port = "5432")
 
 print "Opened database successfully"
 
@@ -14,14 +14,14 @@ cur.execute('''CREATE TYPE name_info AS (first_name text, middle_name text, last
 # cur.execute('''CREATE TYPE address_info AS (house_no text, locality text, city text,
 # 	district text,state text,pin_code integer,country text ); ''')
 
-cur.execute('''CREATE TYPE education_info AS (date_studied date, university text,
+cur.execute('''CREATE TYPE education_info AS (date_studied date, university text,institute text,
 	specialization text,cgpa decimal);''')
 
 
 cur.execute('''CREATE TYPE phd_thesis_info AS (date_thesis date,
 	date_defence date  );''')
 
-cur.execute('''CREATE TYPE gate_info AS (type text,gate_score integer); ''')
+cur.execute('''CREATE TYPE gate_info AS (year integer,gate_score integer); ''')
 
 # cur.execute('''CREATE TYPE research_info AS (specialization text, interest text[]);''')
 
@@ -42,7 +42,7 @@ cur.execute('''CREATE TYPE referee_info AS (email text,name text,desgn text,
 cur.execute('''CREATE TABLE main_table (application_no serial primary key, status text,
 	position_applied text,name name_info, address1 text,address2 text,address3 text,email text,
 	alt_email text, nationality text, age integer, date_of_birth text, caste text,
-	disability boolean,other_info text,date_submitted date, attachment_status text );''')
+	disability boolean,other_info text,gender text,marital_status text,date_submitted date, attachment_status text );''')
 
 cur.execute('''CREATE TABLE education (application_no integer references main_table(application_no), status text,
 	bachelors education_info,masters education_info,phd education_info,phd_thesis phd_thesis_info,post_doc text[],

@@ -2,11 +2,16 @@ import os, jinja2, json
 from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory, Blueprint, session
 from werkzeug import secure_filename
 from flask_oauth import OAuth
-
+from datetime import date
 from app import app, cursor, db
+from datetime import datetime
 
 application = Blueprint('application', __name__, template_folder='templates', static_folder='static')   
 
+
+def calculate_age(dob):
+    today = date.today()
+    return today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 
 @application.route('new_application', methods=['GET'])
 def new_application():
@@ -41,7 +46,7 @@ def part1():
 	rows = list(rows[0])
 	name_list = rows[3][1:-1].split(",")
 	print rows
-	params_ = [rows[2],name_list,rows[9],rows[10],rows[11],rows[12],rows[8],rows[13], rows[4],rows[5],rows[6],rows[14]]
+	params_ = [rows[2],name_list,rows[9],rows[11],rows[12],rows[15],rows[16],rows[8],rows[13], rows[4],rows[5],rows[6],rows[14]]
 	print "retrieved properly"
 	if rows[1] == 'submitted':
 		return render_template('application_readonly_part1.html',params=params_, application_number=session['application_number'])
@@ -51,6 +56,7 @@ def part1():
 
 @application.route('insert_1', methods=['GET','POST'])       #on submission of login details
 def insert_1(): 
+	params = []
 	if (request.method =='POST'):
 		position = request.form['position']
 		firstname = request.form['first_name']
@@ -65,21 +71,27 @@ def insert_1():
 		address3 = request.form['address_3']
 		altemail = request.form['alt_email']
 		nationality = request.form['nationality']
-		age = request.form['age']
+		# age = request.form['age']
 		date_of_birth = request.form['date_of_birth']
 		caste = request.form['caste']
 		disability = request.form['disability']
 		other_info = request.form['other_info']
+
+		gender = request.form['gender']
+		marital_status = request.form['marital_status']
 		
-		params = [position,[firstname,middlename,lastname],nationality,age,date_of_birth,
-		caste,altemail,disability,address1,address2,address3,other_info]
+		params = [position,[firstname,middlename,lastname],nationality,date_of_birth,
+		caste,gender,marital_status,altemail,disability,address1,address2,address3,other_info]
 
 		status = "modified"
 
+		dob = date_of_birth.replace('/','-')
+		dob = datetime.strptime(dob, '%Y-%m-%d')
+
 		sql = "UPDATE main_table SET position_applied = '%s', name='%s',address1='%s', address2='%s', address3='%s',\
 		alt_email='%s',nationality='%s',age='%d',date_of_birth='%s',caste='%s', status='%s',\
-		disability='%s',other_info='%s' WHERE application_no = '%d';" % (position,name,address1,address2,address3,\
-		altemail,nationality,int(age),date_of_birth,caste,status,disability,other_info,int(session['application_number']))
+		disability='%s',other_info='%s',gender = '%s',marital_status='%s' WHERE application_no = '%d';" % (position,name,address1,address2,address3,\
+		altemail,nationality,calculate_age(dob),date_of_birth,caste,status,disability,other_info,gender,marital_status,int(session['application_number']))
 
 		print sql
 		print session['application_number']
@@ -88,8 +100,8 @@ def insert_1():
 		   cursor.execute(sql)
 		   db.commit()
 		   print "Form personal info is stored"
-		except:
-			print "Info error"
+		except exception:
+			print "Info error ",exception 
 
 	return render_template('application_placeholders_part1.html',params=params, email_=session['email'], application_number=session['application_number'])
 

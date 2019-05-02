@@ -38,33 +38,36 @@ def insert_2():
 	if (request.method =='POST'):
 		bachelors_date_studied = request.form['bachelors_date_studied']
 		bachelors_university = request.form['bachelors_university']
+		bachelors_institute = request.form['bachelors_institute']
 		bachelors_specialization = request.form['bachelors_specialization']
 		bachelors_cgpa = request.form['bachelors_cgpa']
-		bachelors_info = "("+bachelors_date_studied+","+bachelors_university+","+bachelors_specialization+","+bachelors_cgpa+")"
+		bachelors_info = "("+bachelors_date_studied+","+bachelors_university+","+bachelors_institute+","+bachelors_specialization+","+bachelors_cgpa+")"
 
 
 		masters_date_studied = request.form['masters_date_studied']
 		masters_university = request.form['masters_university']
+		masters_institute = request.form['masters_institute']
 		masters_specialization = request.form['masters_specialization']
 		masters_cgpa = request.form['masters_cgpa']
-		masters_info = "("+masters_date_studied+","+masters_university+","+masters_specialization+","+masters_cgpa+")"
+		masters_info = "("+masters_date_studied+","+masters_university+","+masters_institute+","+masters_specialization+","+masters_cgpa+")"
 
 
 
 		phd_date_studied = request.form['phd_date_studied']
 		phd_university = request.form['phd_university']
+		phd_institute = request.form['phd_institute']
 		phd_specialization = request.form['phd_specialization']
 		phd_cgpa = request.form['phd_cgpa']
 		phd_date_thesis = request.form['phd_date_thesis']
 		phd_date_defence = request.form['phd_date_defence']
-		phd_edu_info = "("+phd_date_studied+","+phd_university+","+phd_specialization+","+phd_cgpa+")"
+		phd_edu_info = "("+phd_date_studied+","+phd_university+","+phd_institute+","+phd_specialization+","+phd_cgpa+")"
 		phd_info = "("+phd_date_thesis+","+phd_date_defence+")"
 
 
 
-		gate_type = request.form['gate_type']
+		gate_year = request.form['gate_year']
 		gate_score = request.form['gate_score']
-		gate_info = "("+gate_type+","+gate_score+")"
+		gate_info = "("+gate_year+","+gate_score+")"
 
 		research_specialization = request.form['research_specialization']
 		research_interest = request.form.getlist('research_interest[]')
@@ -80,8 +83,8 @@ def insert_2():
 		temp="{"+ ",".join(post_doc)+"}"
 		post_doc_str=temp
 
-		params = [[bachelors_date_studied,bachelors_university,bachelors_specialization,bachelors_cgpa],
-		[masters_date_studied,masters_university,masters_specialization,masters_cgpa],[phd_date_studied,phd_university,phd_specialization,phd_cgpa],[phd_date_thesis,phd_date_defence],[gate_type,gate_score],research_specialization,research_interest,post_doc]
+		params = [[bachelors_date_studied,bachelors_university,bachelors_institute,bachelors_specialization,bachelors_cgpa],
+		[masters_date_studied,masters_university,masters_institute,masters_specialization,masters_cgpa],[phd_date_studied,phd_university,phd_institute,phd_specialization,phd_cgpa],[phd_date_thesis,phd_date_defence],[gate_year,gate_score],research_specialization,research_interest,post_doc]
 
 		sql = "UPDATE education SET status='%s', bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',post_doc='%s',gate='%s',research_specialization='%s',research_interest='%s' WHERE application_no='%d';" % ("modified", bachelors_info, masters_info, phd_edu_info, phd_info, post_doc_str, gate_info,research_specialization,research_interest_str, int(session['application_number']))
 		print sql
