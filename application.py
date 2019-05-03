@@ -44,6 +44,9 @@ def part1():
 	cursor.execute(sql)
 	rows = cursor.fetchall()
 	rows = list(rows[0])
+	if rows[2] is None:
+		return render_template('application_part1.html', email_=session['email'], application_number=session['application_number'])
+
 	name_list = rows[3][1:-1].split(",")
 	print rows
 	params_ = [rows[2],name_list,rows[9],rows[11],rows[12],rows[15],rows[16],rows[8],rows[13], rows[4],rows[5],rows[6],rows[14]]

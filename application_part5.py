@@ -81,6 +81,7 @@ def insert_5():
 				print "Info error"
 			return redirect(url_for('show_applications')) 
 		else:
+			print("aleerrrrtt")
 			return render_template('application_alert_part5.html', email_=session['email'],msg="Please complete all the previous sections!!")
 
 	# return render_template('.html',params=params, email_=session['email'], application_number=session['application_number'])

@@ -81,7 +81,7 @@
                 <nav class="site-navigation position-relative text-right" role="navigation">
 
                     <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                        <li><a href="">{{name_}}</a></li>
+                        <li><a href="">{{email_}}</a></li>
                         <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
                     </ul>
                 </nav>
@@ -141,25 +141,66 @@
               border-radius: 4px;
               box-sizing: border-box;
           }
+          .required:after {
+            color: #e32;
+            content: ' *';
+            display:inline;}
       </style>
 
       <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
           <form action="insert_3" method="POST">
+              <h2 > Post Doc</h2>
+              <div id='post_doc'>
+                  <div id="input-postdoc-list">Post Doc Specialization<input id="post_doc_spec[]" type='text' name='post_doc_spec[]' placeholder='Post Doc Sepcialization..'><br>
+                  </div>
+                  <input type='button' id='Add_postdoc' value='Add'>
+                  <input type='button' id='Remove_postdoc' value='Remove'>
+                
+              </div>
+              <script>
+              var count1 = 1;
+              document.getElementById('Add_postdoc').onclick = function createInputField() {
+                  if(count1<3){
+                  count1=count1+1;
+                  var input = document.createElement('input');
+                  input.setAttribute('id', "post_doc_spec" + count1);
+                  input.type = 'text';
+                  input.name = 'post_doc_spec[]';
+                  input.placeholder='Post Doc Sepcialization'+count1;
+                  
+                  var currentDiv = document.getElementById("input-postdoc-list");
+                  currentDiv.appendChild(input);
+                  currentDiv.appendChild(lineBreak);
+                }  
+                }
+
+                document.getElementById('Remove_postdoc').onclick = function removeInputField() {
+
+                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                    if (count1 >1) {
+                        var currentDiv = document.getElementById("input-postdoc-list");
+                        $('#input-postdoc-list input:last').remove();
+                        $('#input-postdoc-list br:last').remove();
+                        count1--;
+                        return false;
+                    } else {}
+                }
+            </script>
 
               <!-- <input type="file" value="upload" style="background-color: #008080;color:white;width=100%"> -->
               <h2>Present Position</h2>
 
-              <label for="current_position">First Name</label>
+              <label for="current_position">Current Position</label>
               <input type="text" id="current_position" name="current_position" placeholder="Your Current Position..">
 
               <label for="pay_band">Pay Band</label>
-              <input type="number" id="pay_band" name="pay_band" placeholder="Your Pay Band..">
+              <input type="text" id="pay_band" name="pay_band" placeholder="Your Pay Band..">
 
               <label for="grade_pay">Grade Pay</label>
-              <input type="number" id="grade_pay" name="grade_pay" placeholder="Your Grade Pay">
+              <input type="text" id="grade_pay" name="grade_pay" placeholder="Your Grade Pay">
 
               <label for="consolidated_salary">Consolidated Salary</label>
-              <input type="number" id="consolidated_salary" name="consolidated_salary" placeholder="Your Consolidated Salary..">
+              <input type="text" id="consolidated_salary" name="consolidated_salary" placeholder="Your Consolidated Salary..">
 
               <h2>Research/Teaching/Industrial Experience</h2>
 
@@ -178,13 +219,18 @@
                     <input id="end_date" type="date" name="end_date[]">
                     <br>
 
-                    <label for="total_period">Total period in months</label>
+                    <!-- <label for="total_period">Total period</label>
                     <input id="total_period" type="number" name="total_period[]" placeholder="Your period..">
-                    <br>
+                    <br> -->
 
                     <label for="full_time">Full Time</label>
-                    <input type="radio" name="full_time[]" value="Yes" style="margin: 0 30px 0 30px"> Yes
-                    <input type="radio" name="full_time[]" value="No" style="margin: 0 30px 0 30px"> No
+                    <!-- <input type="radio" name="full_time[]" value="Yes" style="margin: 0 30px 0 30px"> Yes
+                    <input type="radio" name="full_time[]" value="No" style="margin: 0 30px 0 30px"> No -->
+                    <select style="background-color:white" id="full_time[]" name="full_time[]">
+                    <option selected required>Select</option>
+                    <option value="YES" required>YES</option> 
+                    <option value="NO" required>NO</option> 
+                    </select>
                     <br>
 
                     <label for="desgn">Designation</label>
@@ -206,7 +252,7 @@
                 var count = 1;
                 document.getElementById('Add').onclick = function createInputField() {
                     count++;
-                    var str1 = '<div ><label for="experience_org">Organization</label><input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..'+count+'"><br><label for="start_date">Start Date</label><input id="start_date" type="date" name="start_date[]" ><br><label for="end_date">End Date</label><input id="end_date" type="date" name="end_date[]" ><br><label for="total_period">Total period</label><input id="total_period" type="number" name="total_period[]" placeholder="Your period..'+count+'" ><br><label for="full_time">Full Time</label><input type = "radio" name = "full_time[]" value = "Yes" style="margin: 0 30px 0 30px"> Yes<input type = "radio" name = "full_time[]" value = "No" style="margin: 0 30px 0 30px"> No <br><label for="desgn">Designation</label><input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..'+count+'"><br><label for="type_of_work">Type of Work</label><input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..'+count+'"><br></div>';
+                    var str1 = '<label for="experience_org">Organization</label><input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..'+count+'"><br><label for="start_date">Start Date</label><input id="start_date" type="date" name="start_date[]" ><br><label for="end_date">End Date</label><input id="end_date" type="date" name="end_date[]" ><br><label for="full_time">Full Time</label><select style="background-color:white" id="full_time[]" name="full_time[]"><option selected required>Select</option><option value="YES" required>YES</option> <option value="NO" required>NO</option></select><br><label for="desgn">Designation</label><input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..'+count+'"><br><label for="type_of_work">Type of Work</label><input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..'+count+'"><br>';
 
                     var new_div = document.createElement('div');
                     new_div.innerHTML=str1;
@@ -228,27 +274,30 @@
               </script>
 
               <h2>Online Profiles</h2>
-              <label for="google_scholar">Google Scholar</label>
-              <input id="google_scholar" type="text" name="google_scholar" placeholder="Your Google Scholar username..">
+              <label for="google_scholar" class="required">Google Scholar</label>
+              <input id="google_scholar" type="text" name="google_scholar" placeholder="Your Google Scholar username.." required>
               <br>
 
-              <label for="dblp">DBLP</label>
+              <label for="dblp" class="required">DBLP</label>
               <input id="dblp" type="text" name="dblp" placeholder="Your dblp username..">
               <br>
 
               <label for="linkedin">Linkedin</label>
-              <input id="linkedin" type="text" name="linkedin" placeholder="Your linkedin username..">
+              <input id="linkedin" type="text" name="linkedin" placeholder="Your linkedin username.." required>
               <br>
 
               <h2>Projects</h2>
               <!-- <div id='projects'> -->
                 <div id="input-sponsored_project-list">
-                    <label for="">Sponsored Project Number</label>
                     <div>
-                      <input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number.." style="width:100%">
+                      <label for="">Sponsored Project Title</label>
+                      <input id="sponsored_project_title" type="text" name="sponsored_project_title[]" placeholder="Your sponsored project title.." style="width:100%">
                       <br>
                       <label for="">Sponsored Project Amount</label>
-                      <input id="sponsored_project_amount" type="Number" name="sponsored_project_amount[]" placeholder="Your sponsored project amount.." style="width:100%">
+                      <input id="sponsored_project_amount" type="text" name="sponsored_project_amount[]" placeholder="Your sponsored project amount.." style="width:100%">
+                      <br>
+                      <label for="">Sponsored Project Details</label>
+                      <input id="sponsored_project_details" type="text" name="sponsored_project_details[]" placeholder="Your sponsored project details.." style="width:100%">
                       <br>
                     </div>
                 </div>
@@ -258,7 +307,7 @@
                   var count3 = 1;
                   document.getElementById('Add1').onclick = function createInputField() {
                       count3++;
-                      var str2 = '<div><label for="">Sponsored Project Number</label><input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number..'+count3+'"><br><label for="">Sponsored Project Amount</label><input id="sponsored_project_amount"type="Number" name="sponsored_project_amount[]" placeholder="Your sponsored project amount..'+count3+'"><br> </div>';
+                      var str2 = '<label for="">Sponsored Project Title</label><input id="sponsored_project_title" type="text" name="sponsored_project_title[]" placeholder="Your sponsored project title..'+count3+'" style="width:100%"><br><label for="">Sponsored Project Amount</label><input id="sponsored_project_amount" type="text" name="sponsored_project_amount[]" placeholder="Your sponsored project amount..'+count3+'" style="width:100%"><br><label for="">Sponsored Project Details</label><input id="sponsored_project_details" type="text" name="sponsored_project_details[]" placeholder="Your sponsored project details..'+count3+'" style="width:100%"><br>';
                       var new_div = document.createElement('div');
                       new_div.innerHTML=str2;
                       var currentDiv = document.getElementById("input-sponsored_project-list");
@@ -281,11 +330,14 @@
                   <div id="input-consultancy_project-list">
                     <label for="consultancy_project"></label>
                     <div>
-                        <label for="">Consultancy Project Number</label>
-                        <input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number.." style="width=100%">
+                        <label for="">Consultancy Project Title</label>
+                        <input id="consultancy_project_title" type="text" name="consultancy_project_title[]" placeholder="Your Consultancy Project title.." style="width=100%">
                         <br>
                         <label for="">Consultancy Project Amount</label>
-                        <input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount.." style="width=100%">
+                        <input id="consultancy_project_amount" type="text" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount.." style="width=100%">
+                        <br>
+                        <label for="">Consultancy Project Details</label>
+                        <input id="consultancy_project_details" type="text" name="consultancy_project_details[]" placeholder="Your Consultancy Project details.." style="width=100%">
                         <br>
                       </div>
                   </div>
@@ -295,7 +347,8 @@
                       var count2 = 1;
                       document.getElementById('Add2').onclick = function createInputField() {
                           count2++;
-                          var str3 = '<div><label for="">Consultancy Project Number</label><input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number..'+count2+'"><br><label for="">Consultancy Project Amount</label><input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount..'+count2+'"><br></div>';
+                          var str3 = '<label for="">Consultancy Project Title</label><input id="consultancy_project_title" type="text" name="consultancy_project_title[]" placeholder="Your Consultancy Project title..'+count2+'" style="width=100%"><br><label for="">Consultancy Project Amount</label><input id="consultancy_project_amount" type="text" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount..'+count2+'" style="width=100%"><br><label for="">Consultancy Project Details</label><input id="consultancy_project_details" type="text" name="consultancy_project_details[]" placeholder="Your Consultancy Project details..'+count2+'" style="width=100%"><br>'
+                          ;
                           var new_div = document.createElement('div');
                           new_div.innerHTML=str3;
                           var currentDiv = document.getElementById("input-consultancy_project-list");
@@ -321,7 +374,7 @@
                   <div id="input-referee-list">
                    <!--  <div> -->
                         <label for="">Referee Email1</label>
-                        <input id="referee1_email" type="email" name="referee1_email" placeholder="Your Referee Email..1" style="width=100%">
+                        <input id="referee1_email" type="text" name="referee1_email" placeholder="Your Referee Email..1" style="width=100%">
                         <br>
                         <label for="">Referee Name1</label>
                         <input id="referee1_name" type="text" name="referee1_name" placeholder="Your Referee Name..1" style="width=100%">
@@ -331,9 +384,9 @@
                         <br>
                         <label for="">Referee Address1</label>
                         <input id="referee1_address" type="text" name="referee1_address" placeholder="Your Referee Address..1" style="width=100%">
-                        <br><hr><br>
+                        <br>
                         <label for="">Referee Email2</label>
-                        <input id="referee2_email" type="email" name="referee2_email" placeholder="Your Referee Email..2" style="width=100%">
+                        <input id="referee2_email" type="text" name="referee2_email" placeholder="Your Referee Email..2" style="width=100%">
                         <br>
                         <label for="">Referee Name2</label>
                         <input id="referee2_name" type="text" name="referee2_name" placeholder="Your Referee Name..2" style="width=100%">
@@ -343,9 +396,9 @@
                         <br>
                         <label for="">Referee Address2</label>
                         <input id="referee2_address" type="text" name="referee2_address" placeholder="Your Referee Address..2" style="width=100%">
-                        <br><hr><br>
+                        <br>
                         <label for="">Referee Email3</label>
-                        <input id="referee3_email" type="email" name="referee3_email" placeholder="Your Referee Email..3" style="width=100%">
+                        <input id="referee3_email" type="text" name="referee3_email" placeholder="Your Referee Email..3" style="width=100%">
                         <br>
                         <label for="">Referee Name3</label>
                         <input id="referee3_name" type="text" name="referee3_name" placeholder="Your Referee Name..3" style="width=100%">
@@ -356,7 +409,9 @@
                         <label for="">Referee Address3</label>
                         <input id="referee3_address" type="text" name="referee3_address" placeholder="Your Referee Address..3" style="width=100%">
                         <br>
-
+                        <label>Remarks</label>
+                        <input id="reamrks" type="text" name="remarks" placeholder="Your Remarks" style="width=100%">
+                        <br>
                     <!-- </div> -->
                   </div>
               

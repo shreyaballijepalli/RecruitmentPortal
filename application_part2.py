@@ -24,9 +24,9 @@ def part2():
 		mtech_list = rows[3][1:-1].split(",")
 		phd_list = rows[4][1:-1].split(",")
 		phd_thesis = rows[5][1:-1].split(",")
-		gate_list = rows[7][1:-1].split(",")
+		gate_list = rows[6][1:-1].split(",")
 		# name_list = rows[3][1:-1].split(",")
-		params_ = [btech_list,mtech_list,phd_list,phd_thesis,gate_list,rows[8],rows[9],rows[6]]
+		params_ = [btech_list,mtech_list,phd_list,phd_thesis,gate_list,rows[7],rows[8]]
 		print "retrieved properly"
 		if rows[1] == "submitted" :
 			return render_template('application_readonly_part2.html',params=params_, application_number=session['application_number'])
@@ -78,15 +78,15 @@ def insert_2():
 		print "research_interest ",research_interest_str
 
 
-		post_doc = request.form.getlist('post_doc_spec[]')
-		post_doc = [p.encode('utf8') for p in post_doc]
-		temp="{"+ ",".join(post_doc)+"}"
-		post_doc_str=temp
+		# post_doc = request.form.getlist('post_doc_spec[]')
+		# post_doc = [p.encode('utf8') for p in post_doc]
+		# temp="{"+ ",".join(post_doc)+"}"
+		# post_doc_str=temp
 
 		params = [[bachelors_date_studied,bachelors_university,bachelors_institute,bachelors_specialization,bachelors_cgpa],
-		[masters_date_studied,masters_university,masters_institute,masters_specialization,masters_cgpa],[phd_date_studied,phd_university,phd_institute,phd_specialization,phd_cgpa],[phd_date_thesis,phd_date_defence],[gate_year,gate_score],research_specialization,research_interest,post_doc]
+		[masters_date_studied,masters_university,masters_institute,masters_specialization,masters_cgpa],[phd_date_studied,phd_university,phd_institute,phd_specialization,phd_cgpa],[phd_date_thesis,phd_date_defence],[gate_year,gate_score],research_specialization,research_interest]
 
-		sql = "UPDATE education SET status='%s', bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',post_doc='%s',gate='%s',research_specialization='%s',research_interest='%s' WHERE application_no='%d';" % ("modified", bachelors_info, masters_info, phd_edu_info, phd_info, post_doc_str, gate_info,research_specialization,research_interest_str, int(session['application_number']))
+		sql = "UPDATE education SET status='%s', bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',gate='%s',research_specialization='%s',research_interest='%s' WHERE application_no='%d';" % ("modified", bachelors_info, masters_info, phd_edu_info, phd_info, gate_info,research_specialization,research_interest_str, int(session['application_number']))
 		print sql
 
 		try:   
