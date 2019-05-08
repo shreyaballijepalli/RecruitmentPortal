@@ -190,8 +190,11 @@
             <label for="bachelors_specialization_">Specialization</label>
             <input type="text" id="bachelors_specialization" name="bachelors_specialization"  value="{{params[0][3]}}" required>
 
-            <label for="cgpa">CGPA/10</label>
+            <label for="cgpa">CGPA</label>
             <input type="number" id="bachelors_cgpa" name="bachelors_cgpa" value="{{params[0][4]}}" required>
+
+            <label for="scale" class="required">Scale</label>
+            <input type="number" id="bachelors_scale" name="bachelors_scale" value="{{params[0][5]}}" required>
 
             <h2>Master's</h2>
             <!--
@@ -227,8 +230,11 @@
             <label for="masters_specialization_">Specialization</label>
             <input type="text" id="masters_specialization" name="masters_specialization" value="{{params[1][3]}}" required>
 
-            <label for="masters_cgpa">CGPA / Percentage</label>
+            <label for="masters_cgpa">CGPA</label>
             <input type="number" id="masters_cgpa" name="masters_cgpa" value="{{params[1][4]}}" required>
+
+            <label for="scale" class="required">Scale</label>
+            <input type="number" id="masters_scale" name="masters_scale" value="{{params[1][5]}}"  required>
 
             <h2>PhD</h2>
 
@@ -251,6 +257,10 @@
             <input type="text" id="phd_specialization" name="phd_specialization" value="{{params[2][3]}}" required>
 
             <input type="number" id="phd_cgpa" name="phd_cgpa" value="{{params[2][4]}}" required>
+
+            <label for="scale" class="required">Scale</label>
+            <input type="number" id="phd_scale" name="phd_scale"  value="{{params[2][5]}}"  required>
+
 
 
             <label for="phd_date_thesis">Date of Thesis Submission</label>
@@ -343,20 +353,16 @@
                     } else {}
                 }
             </script>
-
+<!-- 
             <h2 style="padding-top:10px"> Post Doc</h2>
             <div id='post_doc'>
-              <!-- <form name='myForm1' id='randomFields1'>   -->
                 <div id="input-postdoc-list">Post Doc Specialization
                   {% for your_list_element in  params[7] %}
                       <input id="post_doc_spec[]" type='text' name='post_doc_spec[]' value="{{ your_list_element }}" ><br>
-                      <!-- <p>{{ your_list_element }} </p> -->
                   {% endfor %}
-                  <!-- <input id="post_doc_spec[]" type='text' name='post_doc_spec[]' value="{{params[7]}}" ><br> -->
                 </div>
                 <input type='button' id='Add1' value='Add'>
                 <input type='button' id='Remove1' value='Remove'>
-              <!-- </form> -->
             </div>
 
             <script>
@@ -377,8 +383,6 @@
                 }
 
                 document.getElementById('Remove1').onclick = function removeInputField() {
-
-                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
                     if (count1 >= 2) {
                         var currentDiv = document.getElementById("input-postdoc-list");
                         $('#input-postdoc-list input:last').remove();
@@ -387,7 +391,7 @@
                         return false;
                     } else {}
                 }
-            </script>
+            </script> -->
 
 
             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">

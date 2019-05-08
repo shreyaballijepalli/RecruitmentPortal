@@ -35,6 +35,9 @@ app.register_blueprint(application_part4, url_prefix='/application')
 from application_part5 import application_part5
 app.register_blueprint(application_part5, url_prefix='/application')
 
+from admin_section import admin_section
+app.register_blueprint(admin_section, url_prefix='/admin')
+
 
 
 google = oauth.remote_app('google',
@@ -79,8 +82,16 @@ def verify():
 	d = json.loads(result)
 	session['email'] = d['email']
 	print d['email']
-	
+
 	confirm_login()
+
+	sql = "SELECT * FROM admins WHERE email = '%s'" % (session['email'])       #checking if user is already there in database
+	cursor.execute(sql)
+	results = cursor.fetchall()
+	print results
+	if list(results) != []:
+		return redirect(url_for('admin.admin_view_part1'))
+	
 	return redirect(url_for('show_applications')) 
 
 
@@ -91,14 +102,16 @@ def show_applications():
 	results = cursor.fetchall()
 	return render_template('show_application.html', rows=results, email_=session['email'])
 
+
 @app.route('/login')
 def login():
-	callback=url_for('authorized', _external=True)
+	callback = url_for('authorized', _external=True)
 	return google.authorize(callback=callback)
  
 @app.route("/logout/")
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('index'))
 
 @app.route(REDIRECT_URI)

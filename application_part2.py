@@ -29,7 +29,7 @@ def part2():
 		params_ = [btech_list,mtech_list,phd_list,phd_thesis,gate_list,rows[7],rows[8]]
 		print "retrieved properly"
 		if rows[1] == "submitted" :
-			return render_template('application_readonly_part2.html',params=params_, application_number=session['application_number'])
+			return render_template('application_readonly_part2.html',email_=session['email'],params=params_, application_number=session['application_number'])
 		return render_template('application_placeholders_part2_.html',params=params_,email_=session['email'], application_number=session['application_number'])
 	
 
@@ -41,7 +41,8 @@ def insert_2():
 		bachelors_institute = request.form['bachelors_institute']
 		bachelors_specialization = request.form['bachelors_specialization']
 		bachelors_cgpa = request.form['bachelors_cgpa']
-		bachelors_info = "("+bachelors_date_studied+","+bachelors_university+","+bachelors_institute+","+bachelors_specialization+","+bachelors_cgpa+")"
+		bachelors_scale = request.form['bachelors_scale']
+		bachelors_info = "("+bachelors_date_studied+","+bachelors_university+","+bachelors_institute+","+bachelors_specialization+","+bachelors_cgpa+","+bachelors_scale+")"
 
 
 		masters_date_studied = request.form['masters_date_studied']
@@ -49,7 +50,8 @@ def insert_2():
 		masters_institute = request.form['masters_institute']
 		masters_specialization = request.form['masters_specialization']
 		masters_cgpa = request.form['masters_cgpa']
-		masters_info = "("+masters_date_studied+","+masters_university+","+masters_institute+","+masters_specialization+","+masters_cgpa+")"
+		masters_scale = request.form['masters_scale']
+		masters_info = "("+masters_date_studied+","+masters_university+","+masters_institute+","+masters_specialization+","+masters_cgpa+","+masters_scale+")"
 
 
 
@@ -58,9 +60,10 @@ def insert_2():
 		phd_institute = request.form['phd_institute']
 		phd_specialization = request.form['phd_specialization']
 		phd_cgpa = request.form['phd_cgpa']
+		phd_scale = request.form['phd_scale']
 		phd_date_thesis = request.form['phd_date_thesis']
 		phd_date_defence = request.form['phd_date_defence']
-		phd_edu_info = "("+phd_date_studied+","+phd_university+","+phd_institute+","+phd_specialization+","+phd_cgpa+")"
+		phd_edu_info = "("+phd_date_studied+","+phd_university+","+phd_institute+","+phd_specialization+","+phd_cgpa+","+phd_scale+")"
 		phd_info = "("+phd_date_thesis+","+phd_date_defence+")"
 
 
@@ -83,8 +86,8 @@ def insert_2():
 		# temp="{"+ ",".join(post_doc)+"}"
 		# post_doc_str=temp
 
-		params = [[bachelors_date_studied,bachelors_university,bachelors_institute,bachelors_specialization,bachelors_cgpa],
-		[masters_date_studied,masters_university,masters_institute,masters_specialization,masters_cgpa],[phd_date_studied,phd_university,phd_institute,phd_specialization,phd_cgpa],[phd_date_thesis,phd_date_defence],[gate_year,gate_score],research_specialization,research_interest]
+		params = [[bachelors_date_studied,bachelors_university,bachelors_institute,bachelors_specialization,bachelors_cgpa,bachelors_scale],
+		[masters_date_studied,masters_university,masters_institute,masters_specialization,masters_cgpa,masters_scale],[phd_date_studied,phd_university,phd_institute,phd_specialization,phd_cgpa,phd_scale],[phd_date_thesis,phd_date_defence],[gate_year,gate_score],research_specialization,research_interest]
 
 		sql = "UPDATE education SET status='%s', bachelors='%s',masters='%s',phd='%s',phd_thesis='%s',gate='%s',research_specialization='%s',research_interest='%s' WHERE application_no='%d';" % ("modified", bachelors_info, masters_info, phd_edu_info, phd_info, gate_info,research_specialization,research_interest_str, int(session['application_number']))
 		print sql

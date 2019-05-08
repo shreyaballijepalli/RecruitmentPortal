@@ -1,10 +1,17 @@
+'''
+This file corresponds to handling the personal experience form. 
+The function new_application() is for a new applicant. It stores the application number and email of the applicant and displays form1.
+The function part1() corresponds to displaying the form to the user. We retrieve 
+'''
+
 import os, jinja2, json
 from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory, Blueprint, session
 from werkzeug import secure_filename
 from flask_oauth import OAuth
 from datetime import date
-from app import app, cursor, db
 from datetime import datetime
+
+from app import app, cursor, db
 
 application = Blueprint('application', __name__, template_folder='templates', static_folder='static')   
 
@@ -13,9 +20,10 @@ def calculate_age(dob):
     today = date.today()
     return today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 
+'''Updates status in all other tables as new.'''
 @application.route('new_application', methods=['GET'])
 def new_application():
-	sql = "INSERT INTO main_table(email,status, attachment_status) VALUES ('%s','%s','%s') RETURNING application_no" %(session['email'],"new","new")
+	sql = "INSERT INTO main_table(email,status, attachment_status,freeze_status) VALUES ('%s','%s','%s','%s') RETURNING application_no" %(session['email'],"new","new","false")
 	cursor.execute(sql)
 	rows = cursor.fetchall()
 	db.commit()
@@ -28,10 +36,6 @@ def new_application():
 	sql = "INSERT INTO teaching_experience(application_no,status) VALUES ('%s','%s') " %(session['application_number'],"new")
 	cursor.execute(sql)
 	db.commit()
-
-	# sql = "INSERT INTO attachments(application_no,status) VALUES ('%s','%s') " %(session['application_number'],"new")
-	# cursor.execute(sql)
-	# db.commit()
 
 	return render_template('application_part1.html', email_=session['email'], application_number=session['application_number'])
 
@@ -52,8 +56,8 @@ def part1():
 	params_ = [rows[2],name_list,rows[9],rows[11],rows[12],rows[15],rows[16],rows[8],rows[13], rows[4],rows[5],rows[6],rows[14]]
 	print "retrieved properly"
 	if rows[1] == 'submitted':
-		return render_template('application_readonly_part1.html',params=params_, application_number=session['application_number'])
-	return render_template('application_placeholders_part1.html',params=params_, application_number=session['application_number'])
+		return render_template('application_readonly_part1.html',email_=session['email'],params=params_, application_number=session['application_number'])
+	return render_template('application_placeholders_part1.html',email_=session['email'],params=params_, application_number=session['application_number'])
 
 
 

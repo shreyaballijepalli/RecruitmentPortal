@@ -57,8 +57,8 @@
   <body style="background-color: #333333;">
 
     <script> 
-         function msg() { alert({{msg}});} 
-         msg() 
+         function message() { alert({msg});} 
+         message() 
     </script>
 
 
@@ -152,8 +152,11 @@
              <label for="Name" style="margin-top:25px">Full Name</label>
              <input type="text" id="name" name="name" placeholder="Your Full Name.." required>
 
-             <label for="date_of_birth_">Date</label>
-             <input type="date" id="date" name="date" required><br>
+             <label for="place">Place</label>
+             <input type="text" id="place" name="place" placeholder="Enter the place" required><br>
+
+           <!--   <label for="date_of_birth_">Date</label>
+             <input type="date" id="date" name="date" required><br> -->
 
              <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
              

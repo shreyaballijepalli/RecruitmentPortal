@@ -33,10 +33,13 @@ def part4():
 	cursor.execute(sql)
 	rows = cursor.fetchall()
 
-	sql = "SELECT attachment_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
+	sql = "SELECT attachment_status,freeze_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
 	rows1 = cursor.fetchall()
-	if rows1[0][0] == 'submitted':
+	if rows1[0][1] == 'true':
+		print "going to freezed read only"
+		return render_template('application_readonly_freezed_part4.html', params=rows, email_=session['email'])
+	elif rows1[0][0] == 'submitted':
 		return render_template('application_readonly_part4.html', params=rows, email_=session['email'])
 	
 	return render_template('application_part4.html', params=rows, email_=session['email'])
@@ -157,10 +160,15 @@ def insert_4():
 			cursor.execute(sql)
 			rows = cursor.fetchall()
 
-			sql = "SELECT attachment_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
+			sql = "SELECT attachment_status,freeze_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
 			cursor.execute(sql)
 			rows1 = cursor.fetchall()
-			if rows1[0][0] == 'submitted':
+
+			if rows1[0][1] == 'true':
+				print "going to freezed read only"
+				return render_template('application_readonly_freezed_part4.html', params=rows, email_=session['email'])
+
+			elif rows1[0][0] == 'submitted':
 				return render_template('application_readonly_part4.html', params=rows, email_=session['email'])
 	
 			return  render_template('application_part4.html', params = rows,email_=session['email'])
