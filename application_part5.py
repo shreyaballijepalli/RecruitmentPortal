@@ -3,6 +3,7 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug import secure_filename
 from flask_oauth import OAuth
 import smtplib
+from nocache import nocache
 
 from app import app, cursor, db
 
@@ -10,12 +11,15 @@ application_part5 = Blueprint('application_part5', __name__, template_folder='te
 
 
 @application_part5.route('part5', methods=['GET'])       #on submission of login details
+@nocache
+
 def part5(): 
 	return render_template('application_part5.html', email_=session['email'], application_number=session['application_number'])
 
 
 
 @application_part5.route('insert_5', methods=['GET','POST'])       #on submission of login details
+@nocache
 def insert_5(): 
 	print(request.method)
 	if (request.method =='POST'):
@@ -39,7 +43,7 @@ def insert_5():
 			print("edu err")
 
 		# print rows1[0][0]=='modified' and rows1[0][1]=='modified' and rows2[0][0]=='modified'
-		if rows1[0][0]=='modified' and rows1[0][1]=='modified' and rows2[0][0]=='modified':
+		if (rows1[0][0]=='modified' or rows1[0][0]=='submitted') and (rows1[0][1]=='modified' or rows1[0][1]=='submitted') and (rows2[0][0]=='modified' or rows2[0][0]=='submitted' ):
 			
 			s = smtplib.SMTP("smtp.gmail.com", 587)
 			s.ehlo()
@@ -103,11 +107,13 @@ def insert_5():
 			rows2 = cursor.fetchall()
 			rows2 = list(rows2[0])
 			btech_list = rows2[2][1:-1].split(",")
-			mtech_list = rows2[3][1:-1].split(",")
-			phd_list = rows2[4][1:-1].split(",")
-			phd_thesis = rows2[5][1:-1].split(",")
-			gate_list = rows2[6][1:-1].split(",")
-			research_interest =",".join(rows2[8])
+			mtech_list = rows2[4][1:-1].split(",")
+			phd_list = rows2[6][1:-1].split(",")
+			phd_thesis = rows2[7][1:-1].split(",")
+			gate_list = rows2[8][1:-1].split(",")
+			research_interest =",".join(rows2[10])
+			btech_list2 = rows2[3][1:-1].split(",")
+			mtech_list2 = rows2[5][1:-1].split(",")
 
 			print("education-------")
 
@@ -168,13 +174,45 @@ def insert_5():
 				temp = [rows3[11][i], rows3[12][i], rows3[13][i], rows3[14][i]]
 				projects.append(temp)
 
-			sql = "SELECT type,filename,max(time_submitted) from attachments where type!='others' and application_no = '%s' group by type,filename;" %(session['application_number'])
+
+			filenames = []
+
+			sql = "SELECT filename from attachments where time_submitted = (select max(time_submitted) from attachments where type='photo' and application_no = '%s') group by filename; "%(session['application_number'])
 			cursor.execute(sql)
 			rows4 = cursor.fetchall()
-			filenames = []
-			print "rows4 ",rows4
-			for f in list(rows4):
-				filenames.append(f[1])
+			filenames.append(rows4[0][0])
+
+			sql = "SELECT filename from attachments where time_submitted = (select max(time_submitted) from attachments where type='signature' and application_no = '%s') group by filename; "%(session['application_number'])
+			cursor.execute(sql)
+			rows4 = cursor.fetchall()
+			filenames.append(rows4[0][0])
+
+			sql = "SELECT filename from attachments where time_submitted = (select max(time_submitted) from attachments where type='cv' and application_no = '%s') group by filename; "%(session['application_number'])
+			cursor.execute(sql)
+			rows4 = cursor.fetchall()
+			filenames.append(rows4[0][0])
+
+			sql = "SELECT filename from attachments where time_submitted = (select max(time_submitted) from attachments where type='teaching' and application_no = '%s') group by filename; "%(session['application_number'])
+			cursor.execute(sql)
+			rows4 = cursor.fetchall()
+			filenames.append(rows4[0][0])
+
+			sql = "SELECT filename from attachments where time_submitted = (select max(time_submitted) from attachments where type='research' and application_no = '%s') group by filename; "%(session['application_number'])
+			cursor.execute(sql)
+			rows4 = cursor.fetchall()
+			filenames.append(rows4[0][0])
+
+			sql = "SELECT filename from attachments where time_submitted = (select max(time_submitted) from attachments where type='LOP' and application_no = '%s') group by filename; "%(session['application_number'])
+			cursor.execute(sql)
+			rows4 = cursor.fetchall()
+			filenames.append(rows4[0][0])
+
+			# sql = "SELECT type,filename,max(time_submitted) from attachments where type!='others' and application_no = '%s' group by type,filename;" %(session['application_number'])
+			# cursor.execute(sql)
+			# rows4 = cursor.fetchall()
+			# print "rows4 ",rows4
+			# for f in list(rows4):
+			# 	filenames.append(f[1])
 
 			sql = " SELECT * from attachments where type='others' and application_no = '%s';" %(session['application_number'])
 			cursor.execute(sql)
@@ -184,17 +222,17 @@ def insert_5():
 			
 			print("tfg-------")
 			
-			params = [rows1[0], rows1[2], name, rows1[12], rows1[13], rows1[11], rows1[9], rows1[15], rows1[16], rows1[4], rows1[7], btech_list[1],btech_list[0], btech_list[3], btech_list[4], mtech_list[1],mtech_list[0], mtech_list[3], mtech_list[4],  phd_list[1], phd_list[0], phd_thesis[0], phd_thesis[1], phd_list[3], phd_list[4], gate_list[0], gate_list[1],  rows2[7], research_interest, post_doc, pos_info[0], pos_info[1], pos_info[2], pos_info[3], experience, projects, referee1[1], referee1[0], referee1[2], referee1[3], referee2[1], referee2[0], referee2[2], referee2[3], referee3[1], referee3[0], referee3[2], referee3[3], filenames]
+			params = [rows1[0], rows1[2], name, rows1[12], rows1[13], rows1[11], rows1[9], rows1[15], rows1[16], rows1[4], rows1[7], btech_list[1],btech_list[0], btech_list[3], btech_list[4], mtech_list[1],mtech_list[0], mtech_list[3], mtech_list[4],  phd_list[1], phd_list[0], phd_thesis[0], phd_thesis[1], phd_list[3], phd_list[4], gate_list[0], gate_list[1],  rows2[7], research_interest, post_doc, pos_info[0], pos_info[1], pos_info[2], pos_info[3], experience, projects, referee1[1], referee1[0], referee1[2], referee1[3], referee2[1], referee2[0], referee2[2], referee2[3], referee3[1], referee3[0], referee3[2], referee3[3], filenames,
+				btech_list2[1],btech_list2[0],btech_list2[3],btech_list2[4],mtech_list2[1],mtech_list2[0],mtech_list2[3],mtech_list2[4]]
 
 
 			from create_pdf import createDocx
 			createDocx(params)
-
-
-
+			
 
 			return redirect(url_for('show_applications')) 
 		else:
+			print("going to alert")
 			return render_template('application_alert_part5.html', email_=session['email'],msg="Please complete all the previous sections!!")
 
 	# return render_template('.html',params=params, email_=session['email'], application_number=session['application_number'])

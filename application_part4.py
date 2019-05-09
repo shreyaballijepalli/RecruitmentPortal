@@ -3,6 +3,8 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug import secure_filename
 from flask_oauth import OAuth
 from time import gmtime, strftime
+from nocache import nocache
+
 
 
 from app import app, cursor, db
@@ -14,7 +16,7 @@ application_part4 = Blueprint('application_part4', __name__, template_folder='te
 # UPLOAD_FOLDER = os.path.basename('static/uploads')
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 print("upload folder globally ",app.config['UPLOAD_FOLDER'])
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','doc','docx'])
+ALLOWED_EXTENSIONS = set(['pdf'])
 ALLOWED_EXTENSIONS_photo = set(['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG'])
 
 
@@ -28,6 +30,8 @@ def allowed_file_photo(filename):
 
 
 @application_part4.route('part4', methods=['GET'])       #on submission of login details
+@nocache
+
 def part4(): 
 	sql = "SELECT * FROM attachments WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
@@ -45,6 +49,8 @@ def part4():
 	return render_template('application_part4.html', params=rows, email_=session['email'])
 
 @application_part4.route('insert_4', methods=['GET','POST'])       #on submission of login details
+@nocache
+
 def insert_4(): 
 	params = []
 	if request.method == 'POST':

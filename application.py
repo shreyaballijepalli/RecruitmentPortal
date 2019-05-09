@@ -53,9 +53,16 @@ def part1():
 
 	name_list = rows[3][1:-1].split(",")
 	print rows
-	params_ = [rows[2],name_list,rows[9],rows[11],rows[12],rows[15],rows[16],rows[8],rows[13], rows[4],rows[5],rows[6],rows[14]]
+	params_ = [rows[2],name_list,rows[9],rows[11],rows[12],rows[15],rows[16],rows[8],rows[13], rows[4],rows[14]]
 	print "retrieved properly"
-	if rows[1] == 'submitted':
+
+	sql = "SELECT freeze_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
+	cursor.execute(sql)
+	freeze_rows = cursor.fetchall()
+
+	if freeze_rows[0][0] == "true":
+		return render_template('application_readonly_freezed_part1.html',email_=session['email'],params=params_, application_number=session['application_number'])		
+	elif rows[1] == 'submitted':
 		return render_template('application_readonly_part1.html',email_=session['email'],params=params_, application_number=session['application_number'])
 	return render_template('application_placeholders_part1.html',email_=session['email'],params=params_, application_number=session['application_number'])
 
@@ -74,8 +81,8 @@ def insert_1():
 		else:	
 			name =  "(\""+firstname+"\",\""+middlename+"\",\""+lastname+"\")"
 		address1 = request.form['address_1']
-		address2 = request.form['address_2']
-		address3 = request.form['address_3']
+		# address2 = request.form['address_2']
+		# address3 = request.form['address_3']
 		altemail = request.form['alt_email']
 		nationality = request.form['nationality']
 		# age = request.form['age']
@@ -88,16 +95,16 @@ def insert_1():
 		marital_status = request.form['marital_status']
 		
 		params = [position,[firstname,middlename,lastname],nationality,date_of_birth,
-		caste,gender,marital_status,altemail,disability,address1,address2,address3,other_info]
+		caste,gender,marital_status,altemail,disability,address1,other_info]
 
 		status = "modified"
 
 		dob = date_of_birth.replace('/','-')
 		dob = datetime.strptime(dob, '%Y-%m-%d')
 
-		sql = "UPDATE main_table SET position_applied = '%s', name='%s',address1='%s', address2='%s', address3='%s',\
+		sql = "UPDATE main_table SET position_applied = '%s', name='%s',address1='%s',\
 		alt_email='%s',nationality='%s',age='%d',date_of_birth='%s',caste='%s', status='%s',\
-		disability='%s',other_info='%s',gender = '%s',marital_status='%s' WHERE application_no = '%d';" % (position,name,address1,address2,address3,\
+		disability='%s',other_info='%s',gender = '%s',marital_status='%s' WHERE application_no = '%d';" % (position,name,address1,\
 		altemail,nationality,calculate_age(dob),date_of_birth,caste,status,disability,other_info,gender,marital_status,int(session['application_number']))
 
 		print sql

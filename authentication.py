@@ -3,6 +3,8 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug import secure_filename
 from flask_oauth import OAuth
 from flask_login import logout_user, confirm_login, LoginManager
+from nocache import nocache
+
 
 GOOGLE_CLIENT_ID = '968468250852-0hgdrduaga14on3nqo72mhhi0aovspel.apps.googleusercontent.com'
 GOOGLE_CLIENT_SECRET = 'AowoVK79d8yLqWt7M-5cy3mJ'
@@ -18,6 +20,7 @@ app.secret_key = SECRET_KEY
 oauth = OAuth()
 login_manager = LoginManager()
 login_manager.init_app(app)
+# cache.init_app(app)
 login_manager.login_view = 'login'
 
 from application import application
@@ -54,10 +57,14 @@ consumer_secret=GOOGLE_CLIENT_SECRET)
 
 
 @app.route('/')
+@nocache
+
 def index():
 	return render_template('index.html')
 
 @app.route('/verify/')
+@nocache
+
 def verify():
 	access_token = session.get('access_token')
 	if access_token is None:
@@ -96,6 +103,8 @@ def verify():
 
 
 @app.route('/menu/', methods=['GET','POST'])       #on submission of login details
+@nocache
+
 def show_applications(): 
 	sql = "SELECT * FROM main_table WHERE email = '%s'" % (session['email'])       #checking if user is already there in database
 	cursor.execute(sql)
@@ -104,11 +113,15 @@ def show_applications():
 
 
 @app.route('/login')
+@nocache
+
 def login():
 	callback = url_for('authorized', _external=True)
 	return google.authorize(callback=callback)
  
 @app.route("/logout/")
+@nocache
+
 def logout():
     logout_user()
     session.clear()

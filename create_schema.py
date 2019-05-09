@@ -45,7 +45,7 @@ cur.execute('''CREATE TABLE main_table (application_no serial primary key, statu
 	disability text,other_info text,gender text,marital_status text,date_submitted date, attachment_status text,freeze_status text );''')
 
 cur.execute('''CREATE TABLE education (application_no integer references main_table(application_no), status text,
-	bachelors education_info,masters education_info,phd education_info,phd_thesis phd_thesis_info,
+	bachelors education_info,bachelors2 education_info,masters education_info,masters2 education_info,phd education_info,phd_thesis phd_thesis_info,
 	gate gate_info,research_specialization text,research_interest text[]);''')
 
 cur.execute('''CREATE TABLE teaching_experience (application_no integer references main_table(application_no),

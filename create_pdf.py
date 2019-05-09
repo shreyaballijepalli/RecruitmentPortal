@@ -1,5 +1,7 @@
 from docx import Document
 from docx.shared import Inches
+
+
 # from textwrap import TextWrapper
 # from PDFWriter import PDFWriter
 
@@ -141,12 +143,30 @@ def createDocx(params):
 	row_cells[2].text = params[12]
 	row_cells[3].text = params[13]
 	row_cells[4].text = params[14]
+	print "check params 49 ------------------ ",params[49]
+	print params[49]!=""
+	if params[49]!="":
+		row_cells = table_edu.add_row().cells
+		row_cells[0].text = 'Bachelors 2'
+		row_cells[1].text = params[49]
+		row_cells[2].text = params[50]
+		row_cells[3].text = params[51]
+		row_cells[4].text = params[52]
+		print "Added bachelors 2",params[49]," ",params[50]," ",params[51]," ",params[52]
+
 	row_cells = table_edu.add_row().cells
 	row_cells[0].text = 'Masters'
 	row_cells[1].text = params[15]
 	row_cells[2].text = params[16]
 	row_cells[3].text = params[17]
 	row_cells[4].text = params[18]
+	if params[53]!="":
+		row_cells = table_edu.add_row().cells
+		row_cells[0].text = 'Masters 2'
+		row_cells[1].text = params[53]
+		row_cells[2].text = params[54]
+		row_cells[3].text = params[55]
+		row_cells[4].text = params[56]
 
 	document.add_paragraph(
 	    'PHD: ', style='List Number'
@@ -285,7 +305,7 @@ def createDocx(params):
 	from docxtopdf import convert_to
 	convert_to('static/applications', filen)
 
-	print("check file name params -----",params[-1])
+	print("check file name params -----",params[48])
 
-	mergepdf("static/applications/"+str(params[0])+".pdf", params[-1], str(params[0]))
+	mergepdf("static/applications/"+str(params[0])+".pdf", params[48], str(params[0]))
 

@@ -13,6 +13,8 @@ from werkzeug import secure_filename
 from flask_oauth import OAuth
 from dateutil import relativedelta
 from datetime import datetime
+from nocache import nocache
+
 
 from app import app, cursor, db
 
@@ -20,6 +22,8 @@ application_part3 = Blueprint('application_part3', __name__, template_folder='te
 
 
 @application_part3.route('part3', methods=['GET'])       #on submission of login details
+@nocache
+
 def part3(): 
 	sql = "SELECT status FROM teaching_experience WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
@@ -42,13 +46,21 @@ def part3():
 		# fetch the already stored values in the database and display them
 		params_ = [rows[2],position_info_list,rows[4],rows[5],rows[6],rows[8],rows[9],rows[10],rows[11],rows[12],
 		rows[13],rows[14],rows[15],rows[16],rows[17],referee1,referee2,referee3,rows[21]]
-		
-		if rows[1] == "submitted" :												#if status is submitted the person can no longer chnage the form
+
+		sql = "SELECT freeze_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
+		cursor.execute(sql)
+		freeze_rows = cursor.fetchall()
+
+		if freeze_rows[0][0] == "true":
+			return render_template('application_readonly_freezed_part3.html',email_=session['email'],params=params_, application_number=session['application_number'])		
+		elif rows[1] == "submitted" :												#if status is submitted the person can no longer chnage the form
 			return render_template('application_readonly_part3.html',email_=session['email'],params=params_, application_number=session['application_number'])
 		return render_template('application_placeholders_part3.html',params=params_,email_=session['email'], application_number=session['application_number'])
 	
 
 @application_part3.route('insert_3', methods=['GET','POST'])       #on submission of login details
+@nocache
+
 def insert_3(): 
 	if (request.method =='POST'):
 
