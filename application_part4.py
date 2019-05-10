@@ -19,19 +19,20 @@ print("upload folder globally ",app.config['UPLOAD_FOLDER'])
 ALLOWED_EXTENSIONS = set(['pdf'])
 ALLOWED_EXTENSIONS_photo = set(['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG'])
 
-
+'''Only odf is allowed for cv,teaching statement,research statement,LOP,others'''
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+'''png,jpg,jpeg are allowed for photo,signature'''
 def allowed_file_photo(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_photo
 
 
+'''This handles displaying page 4, once files have been submitted'''
 @application_part4.route('part4', methods=['GET'])       #on submission of login details
 @nocache
-
 def part4(): 
 	sql = "SELECT * FROM attachments WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
@@ -48,9 +49,13 @@ def part4():
 	
 	return render_template('application_part4.html', params=rows, email_=session['email'])
 
+	
+
+	
+'''This handles inserting/updating the files in the database attachments table.
+   All the files entered by the applicant are stored. (we restore previous versions)'''
 @application_part4.route('insert_4', methods=['GET','POST'])       #on submission of login details
 @nocache
-
 def insert_4(): 
 	params = []
 	if request.method == 'POST':

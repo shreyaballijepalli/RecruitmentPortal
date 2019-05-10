@@ -4,7 +4,7 @@ from werkzeug import secure_filename
 from flask_oauth import OAuth
 from flask_login import logout_user, confirm_login, LoginManager
 from nocache import nocache
-
+'''Application file where we register blueprints for all parts and add google api for login'''
 
 GOOGLE_CLIENT_ID = '968468250852-0hgdrduaga14on3nqo72mhhi0aovspel.apps.googleusercontent.com'
 GOOGLE_CLIENT_SECRET = 'AowoVK79d8yLqWt7M-5cy3mJ'

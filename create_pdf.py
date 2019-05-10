@@ -5,6 +5,7 @@ from docx.shared import Inches
 # from textwrap import TextWrapper
 # from PDFWriter import PDFWriter
 
+'''Function for converting docx to pdf'''
 def docx_to_pdf(infilename, outfilename):
 
     try:
@@ -36,6 +37,10 @@ def docx_to_pdf(infilename, outfilename):
     pw.savePage()
     pw.close()
 
+
+'''Function for merging application pdf with other attachments.
+   All upload files will be available in static/uploads folder
+   All generated application pdfs will be avilable in static/applications folder '''
 def mergepdf(outpdfname, filenames, application_no):
 	print "Going to mergepdf"
 	from PyPDF2 import PdfFileMerger
@@ -86,6 +91,9 @@ def mergepdf(outpdfname, filenames, application_no):
 	merger.write("static/applications/"+str(application_no)+".pdf")    
 
 
+
+'''Function creates application docx using passed parameters.
+   application pdf will be stored in static/applications folder named as application_no.pdf'''
 def createDocx(params):
 	document = Document()
 
@@ -279,24 +287,6 @@ def createDocx(params):
 	row_cells[2].text = params[46]
 	row_cells[3].text = params[47]
 
-	# document.add_picture('monty-truth.png', width=Inches(1.25))
-
-	# records = (
-	#     (3, '101', 'Spam'),
-	#     (7, '422', 'Eggs'),
-	#     (4, '631', 'Spam, spam, eggs, and spam')
-	# )
-
-	# table = document.add_table(rows=1, cols=3)
-	# hdr_cells = table.rows[0].cells
-	# hdr_cells[0].text = 'Qty'
-	# hdr_cells[1].text = 'Id'
-	# hdr_cells[2].text = 'Desc'
-	# for qty, id, desc in records:
-	#     row_cells = table.add_row().cells
-	#     row_cells[0].text = str(qty)
-	#     row_cells[1].text = id
-	#     row_cells[2].text = desc
 
 	document.add_page_break()
 	filen = 'static/applications/'+ str(params[0])+'.docx'
@@ -304,8 +294,6 @@ def createDocx(params):
 
 	from docxtopdf import convert_to
 	convert_to('static/applications', filen)
-
-	print("check file name params -----",params[48])
 
 	mergepdf("static/applications/"+str(params[0])+".pdf", params[48], str(params[0]))
 

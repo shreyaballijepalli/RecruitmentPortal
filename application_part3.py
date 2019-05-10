@@ -20,10 +20,10 @@ from app import app, cursor, db
 
 application_part3 = Blueprint('application_part3', __name__, template_folder='templates', static_folder='static')   
 
-
-@application_part3.route('part3', methods=['GET'])       #on submission of login details
+'''This function handles displaying the experience form once data has been entered.
+ It fetches data from the database teaching_experience table and displays it in placeholders. '''
+@application_part3.route('part3', methods=['GET'])      
 @nocache
-
 def part3(): 
 	sql = "SELECT status FROM teaching_experience WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
@@ -51,16 +51,18 @@ def part3():
 		cursor.execute(sql)
 		freeze_rows = cursor.fetchall()
 
-		if freeze_rows[0][0] == "true":
+		if freeze_rows[0][0] == "true":											# once freezed there should be np submit button
 			return render_template('application_readonly_freezed_part3.html',email_=session['email'],params=params_, application_number=session['application_number'])		
 		elif rows[1] == "submitted" :												#if status is submitted the person can no longer chnage the form
 			return render_template('application_readonly_part3.html',email_=session['email'],params=params_, application_number=session['application_number'])
 		return render_template('application_placeholders_part3.html',params=params_,email_=session['email'], application_number=session['application_number'])
 	
 
-@application_part3.route('insert_3', methods=['GET','POST'])       #on submission of login details
-@nocache
 
+'''This function corresponds to inserting/updating data in the teaching_experience table once 
+   data has been inserted/submitted in the experience form.'''
+@application_part3.route('insert_3', methods=['GET','POST'])      
+@nocache
 def insert_3(): 
 	if (request.method =='POST'):
 
@@ -112,17 +114,6 @@ def insert_3():
 		total_period_str=temp
 
 
-
-
-
-		# total_period = request.form.getlist('total_period[]')
-		# temp="{"+ ",".join(total_period)+"}"
-		# total_period_str=temp
-
-
-
-		# total_period = [r for r in total_period]
-
 		full_time = request.form.getlist('full_time[]')
 		full_time = [r.encode("utf8") for r in full_time]
 		temp="{"+ ",".join(full_time)+"}"
@@ -137,14 +128,6 @@ def insert_3():
 		type_of_work = [r.encode("utf8") for r in type_of_work]
 		temp="{"+ ",".join(type_of_work)+"}"
 		type_of_work_str=temp
-
-		# experience_str = "{";
-		# for i in range(len(experience_org)):
-		# 	temp = "("+experience_org[i]+","+start_date[i]+","+end_date[i]+","+total_period[i]+","+full_time[i]+","+desgn[i]+","+type_of_work[i]+")"
-		# 	if i==len(experience_org)-1:
-		# 		experience_str+=temp+"}"
-		# 	else:
-		# 		experience_str+=temp+","
 
 
 		google_scholar = request.form['google_scholar']

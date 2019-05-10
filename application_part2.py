@@ -9,11 +9,13 @@ from app import app, cursor, db
 
 application_part2 = Blueprint('application_part2', __name__, template_folder='templates', static_folder='static')   
 
+'''This function handles the education form after information is entered. 
+It fetches data from the database education table and displays it in the placeholders.'''
 
 @application_part2.route('part2', methods=['GET'])       #on submission of login details
 @nocache
 
-def part2(): 
+def part2(): 	
 	sql = "SELECT status FROM education WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
 	rows = cursor.fetchall()
@@ -38,16 +40,17 @@ def part2():
 		cursor.execute(sql)
 		freeze_rows = cursor.fetchall()
 
-		if freeze_rows[0][0] == "true":
+		if freeze_rows[0][0] == "true":					# if application is freezed there should be no option to submit
 			return render_template('application_readonly_freezed_part2.html',email_=session['email'],params=params_, application_number=session['application_number'])		
-		elif rows[1] == "submitted" :
+		elif rows[1] == "submitted" :					# if application is submitted, the form should be read only
 			return render_template('application_readonly_part2.html',email_=session['email'],params=params_, application_number=session['application_number'])
 		return render_template('application_placeholders_part2_.html',params=params_,email_=session['email'], application_number=session['application_number'])
 	
 
+'''The function that handles insertion/update in the database education table, once data has been entered or updated in the education form.'''
+
 @application_part2.route('insert_2', methods=['GET','POST'])       #on submission of login details
 @nocache
-
 def insert_2(): 
 	if (request.method =='POST'):
 		bachelors_date_studied = request.form.getlist('bachelors_date_studied[]')
@@ -75,8 +78,6 @@ def insert_2():
 		masters_cgpa = request.form.getlist('masters_cgpa[]')
 		masters_scale = request.form.getlist('masters_cgpa_scale[]')
 
-
-		print "check arrays ",masters_date_studied,masters_university
 
 		masters_info = "("+masters_date_studied[0]+","+masters_university[0]+","+masters_institute[0]+","+masters_specialization[0]+","+masters_cgpa[0]+","+masters_scale[0]+")"
 
@@ -111,8 +112,6 @@ def insert_2():
 		research_interest = [r.encode("utf8") for r in research_interest]
 		temp="{"+ ",".join(research_interest)+"}"
 		research_interest_str=temp
-
-		print "research_interest ",research_interest_str
 
 
 		# post_doc = request.form.getlist('post_doc_spec[]')
