@@ -81,7 +81,7 @@
                 <nav class="site-navigation position-relative text-right" role="navigation">
 
                     <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                        <li><a href="">{{name_}}</a></li>
+                        <li><a href="">{{email_}}</a></li>
                         <li class="ml-xl-3 login"><a href="/logout/"><span class="border-left pl-xl-4"></span>Logout</a></li>
                     </ul>
                 </nav>
@@ -118,6 +118,7 @@
             <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>
             <li style="display:block;font-size:20px;color: #000;"><a href="" class="active">Experience</a></li>
             <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
+            <li style="display:block;font-size:20px;color: #000;"><a href="part5">Submit Application</a></li>
             <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
             <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
         </ul>
@@ -140,145 +141,163 @@
               border-radius: 4px;
               box-sizing: border-box;
           }
+           .required:after {
+            color: #e32;
+            content: ' *';
+            display:inline;}
       </style>
 
       <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
-          <form >
+          <form action="insert_3" method="POST">
 
-              <!-- <input type="file" value="upload" style="background-color: #008080;color:white;width=100%"> -->
+              <h2 > Post Doc</h2>
+              <div id='post_doc'>
+                  <div id="input-postdoc-list">Post Doc Specialization
+                    {% for item in params[0] %}
+                    <input id="post_doc_spec[]" type='text' name='post_doc_spec[]' value="{{item}}" readonly><br>
+                    {% endfor %}
+                  </div>
+               <!--  <input type='button' id='Add_postdoc' value='Add'>
+                <input type='button' id='Remove_postdoc' value='Remove'> -->
+              
+              </div>
+              <script>
+              // var count1 = 1;
+              // document.getElementById('Add_postdoc').onclick = function createInputField() {
+              //     if(count1<3){
+              //     count1=count1+1;
+              //     var input = document.createElement('input');
+              //     input.setAttribute('id', "post_doc_spec" + count1);
+              //     input.type = 'text';
+              //     input.name = 'post_doc_spec[]';
+              //     input.placeholder='Post Doc Sepcialization'+count1;
+                  
+              //     var currentDiv = document.getElementById("input-postdoc-list");
+              //     currentDiv.appendChild(input);
+              //     currentDiv.appendChild(lineBreak);
+              //   }  
+              //   }
+
+              //   document.getElementById('Remove_postdoc').onclick = function removeInputField() {
+
+              //       // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+              //       if (count1 >1) {
+              //           var currentDiv = document.getElementById("input-postdoc-list");
+              //           $('#input-postdoc-list input:last').remove();
+              //           $('#input-postdoc-list br:last').remove();
+              //           count1--;
+              //           return false;
+              //       } else {}
+              //   }
+            </script>
+
               <h2>Present Position</h2>
 
-              <label for="current_position">First Name</label>
-              <input type="text" id="current_position" name="current_position" value="{{params[0][0]}}" readonly>
+             <label for="current_position">Current Position</label>
+              <input type="text" id="current_position" name="current_position" value="{{params[1][0]}}" readonly>
 
               <label for="pay_band">Pay Band</label>
-              <input type="number" id="pay_band" name="pay_band" value="{{params[0][1]}}" readonly>
+              <input type="text" id="pay_band" name="pay_band" value="{{params[1][1]}}" readonly>
 
               <label for="grade_pay">Grade Pay</label>
-              <input type="number" id="grade_pay" name="grade_pay" value="{{params[0][2]}}" readonly>
+              <input type="text" id="grade_pay" name="grade_pay" value="{{params[1][2]}}" readonly>
 
               <label for="consolidated_salary">Consolidated Salary</label>
-              <input type="number" id="consolidated_salary" name="consolidated_salary" value="{{params[0][3]}}" readonly>
+              <input type="text" id="consolidated_salary" name="consolidated_salary" value="{{params[1][3]}}"readonly>
 
               <h2>Research/Teaching/Industrial Experience</h2>
 
               <div id='experience'>
                 <div id="input-experience-list">
-                    {% for i in range(0,params[1]|length) %}
-                      <!-- <input id="research_interest" type='text' name='research_interest[]' value={{ your_list_element }} ><br> -->
-                      <!-- <p>{{ your_list_element }} </p> -->
-                      <div>
-                      <label for="experience_org">Organization</label>
-                      <input id="experience_org" type="text" name="experience_org[]" value="{{params[1][i]}}" readonly><br>
-
-                      <label for="start_date">Start Date</label>
-                      <input id="start_date" type="date" name="start_date[]" value="{{params[2][i]}}" readonly><br>
-
-                      <label for="end_date">End Date</label>
-                      <input id="end_date" type="date" name="end_date[]" value="{{params[3][i]}}" readonly><br>
-
-                      <label for="total_period">Total period</label>
-                      <input id="total_period" type="number" name="total_period[]" value="{{params[4][i]}}" readonly><br>
-
-                      <label for="full_time">Full Time</label>
-                      <input type="radio" name="full_time[]" value="Yes" style="margin: 0 30px 0 30px"> Yes
-                      <input type="radio" name="full_time[]" value="No" style="margin: 0 30px 0 30px"> No<br>
-
-                      <label for="desgn">Designation</label>
-                      <input id="desgn" type="text" name="desgn[]" value="{{params[6][i]}}" readonly><br>
-
-                      <label for="type_of_work">Type of Work</label>
-                      <input id="type_of_work" type="text" name="type_of_work[]" value="{{params[7][i]}}" readonly>
-                      <br>
-                      </div>
-                    {% endfor %}
-                    
-                   <!--  <label for="experience_org">Organization</label>
-                    <input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..">
+                  {% for i in range(0,params[2]|length) %}
+                    <div>
+                    <label for="experience_org">Organization</label>
+                    <input id="experience_org" type="text" name="experience_org[]" value="{{params[2][i]}}" readonly>
                     <br>
 
                     <label for="start_date">Start Date</label>
-                    <input id="start_date" type="date" name="start_date[]">
+                    <input id="start_date" type="date" name="start_date[] " value="{{params[3][i]}}" readonly>
                     <br>
 
                     <label for="end_date">End Date</label>
-                    <input id="end_date" type="date" name="end_date[]">
-                    <br>
-
-                    <label for="total_period">Total period</label>
-                    <input id="total_period" type="number" name="total_period[]" placeholder="Your period..">
+                    <input id="end_date" type="date" name="end_date[]" value="{{params[4][i]}}" readonly>
                     <br>
 
                     <label for="full_time">Full Time</label>
-                    <input type="radio" name="full_time[]" value="Yes" style="margin: 0 30px 0 30px"> Yes
-                    <input type="radio" name="full_time[]" value="No" style="margin: 0 30px 0 30px"> No
+                    <select style="background-color:white" id="full_time[]" name="full_time[]" disabled="disabled">
+                    <option selected required>{{params[5][i]}}</option>
+                    <option value="YES" required>YES</option> 
+                    <option value="NO" required>NO</option> 
+                    </select>
                     <br>
 
                     <label for="desgn">Designation</label>
-                    <input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..">
+                    <input id="desgn" type="text" name="desgn[]" value="{{params[6][i]}}" readonly>
                     <br>
 
                     <label for="type_of_work">Type of Work</label>
-                    <input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..">
-                    <br> -->
+                    <input id="type_of_work" type="text" name="type_of_work[]" value="{{params[7][i]}}" readonly>
+                    <br>
+                  </div>
+                    {% endfor %}
+                </div>                                                  
 
-                  
-                </div>
-
-                <!-- <input type='button' id='Add' value='Add'>
+               <!--  <input type='button' id='Add' value='Add'>
                 <input type='button' id='Remove' value='Remove'> -->
                   
               </div>
               <script>
-                var count = 1;
-                document.getElementById('Add').onclick = function createInputField() {
-                    count++;
-                    var str1 = '<div ><label for="experience_org">Organization</label><input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..'+count+'"><br><label for="start_date">Start Date</label><input id="start_date" type="date" name="start_date[]" ><br><label for="end_date">End Date</label><input id="end_date" type="date" name="end_date[]" ><br><label for="total_period">Total period</label><input id="total_period" type="number" name="total_period[]" placeholder="Your period..'+count+'" ><br><label for="full_time">Full Time</label><input type = "radio" name = "full_time[]" value = "Yes" style="margin: 0 30px 0 30px"> Yes<input type = "radio" name = "full_time[]" value = "No" style="margin: 0 30px 0 30px"> No <br><label for="desgn">Designation</label><input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..'+count+'"><br><label for="type_of_work">Type of Work</label><input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..'+count+'"><br></div>';
+                // var count = 1;
+                // document.getElementById('Add').onclick = function createInputField() {
+                //     count++;
+                //      var str1 = '<label for="experience_org">Organization</label><input id="experience_org" type="text" name="experience_org[]" placeholder="Your Organization..'+count+'"><br><label for="start_date">Start Date</label><input id="start_date" type="date" name="start_date[]" ><br><label for="end_date">End Date</label><input id="end_date" type="date" name="end_date[]" ><br><label for="full_time">Full Time</label><select style="background-color:white" id="full_time[]" name="full_time[]"><option selected required>Select</option><option value="YES" required>YES</option> <option value="NO" required>NO</option></select><br><label for="desgn">Designation</label><input id="desgn" type="text" name="desgn[]" placeholder="Your Designation..'+count+'"><br><label for="type_of_work">Type of Work</label><input id="type_of_work" type="text" name="type_of_work[]" placeholder="Your Type of Work..'+count+'"><br>';
                     
-                    var new_div = document.createElement('div');
-                    new_div.innerHTML=str1;
-                    var currentDiv = document.getElementById("input-experience-list");
-                    currentDiv.appendChild(new_div);     
-                }
+                //     var new_div = document.createElement('div');
+                //     new_div.innerHTML=str1;
+                //     var currentDiv = document.getElementById("input-experience-list");
+                //     currentDiv.appendChild(new_div);     
+                // }
 
-                document.getElementById('Remove').onclick = function removeInputField() {
+                // document.getElementById('Remove').onclick = function removeInputField() {
 
-                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                    if (count >= 2) {
-                        var currentDiv = document.getElementById("input-experience-list");
-                        currentDiv.removeChild(currentDiv.lastChild);
-                        count--;
-                        return false;
+                //     // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                //     if (count >= 2) {
+                //         var currentDiv = document.getElementById("input-experience-list");
+                //         currentDiv.removeChild(currentDiv.lastChild);
+                //         count--;
+                //         return false;
 
-                    } else {}
-                }
+                //     } else {}
+                // }
               </script>
 
               <h2>Online Profiles</h2>
-              <label for="google_scholar">Google Scholar</label>
-              <input id="google_scholar" type="text" name="google_scholar" value="{{params[11]}}" readonly>
+              <label for="google_scholar" >Google Scholar</label>
+              <input id="google_scholar" type="text" name="google_scholar" value="{{params[12]}}" readonly>
               <br>
 
-              <label for="dblp">DBLP</label>
-              <input id="dblp" type="text" name="dblp" value="{{params[12]}}" readonly>
+              <label for="dblp" >DBLP</label>
+              <input id="dblp" type="text" name="dblp" value="{{params[13]}}" readonly>
               <br>
 
               <label for="linkedin">Linkedin</label>
-              <input id="linkedin" type="text" name="linkedin" value="{{params[13]}}" readonly>
+              <input id="linkedin" type="text" name="linkedin" value="{{params[14]}}" readonly>
               <br>
 
               <h2>Projects</h2>
               <!-- <div id='projects'> -->
                 <div id="input-sponsored_project-list">
-                   <label for="sponsored_project"></label>
                   {% for i in range(0,params[8]|length) %}
                     {% if params[8][i]=="sponsored" %}
                       <div>
-                       <label for="">Sponsored Project Number</label>
-                        <input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" value="{{params[9][i]}}" style="width:100%" readonly>
+                        <label for="">Sponsored Project Title</label>
+                        <input id="sponsored_project_title" type="text" name="sponsored_project_title[]" value="{{params[9][i]}}" style="width:100%" readonly>
                         <br>
                         <label for="">Sponsored Project Amount</label>
-                        <input id="sponsored_project_amount" type="Number" name="sponsored_project_amount[]" value="{{params[10][i]}}" style="width:100%" readonly>
+                        <input id="sponsored_project_amount" type="text" name="sponsored_project_amount[]" value="{{params[10][i]}}" style="width:100%" readonly>
+                        <br>
+                        <label for="">Sponsored Project Details</label>
+                        <input id="sponsored_project_details" type="text" name="sponsored_project_details[]" value="{{params[11][i]}}" style="width:100%" readonly>
                         <br>
                       </div>
                     {% endif %}
@@ -287,26 +306,26 @@
                 <!-- <input type='button' id='Add1' value='Add'>
                 <input type='button' id='Remove1' value='Remove'> -->
                 <script>
-                  var count3 = 1;
-                  document.getElementById('Add1').onclick = function createInputField() {
-                      count3++;
-                      var str2 = '<div><label for="">Sponsored Project Number</label><input id="sponsored_project_number" type="Number" name="sponsored_project_number[]" placeholder="Your sponsored project number..'+count3+'"><br><label for="">Sponsored Project Amount</label><input id="sponsored_project_amount"type="Number" name="sponsored_project_amount[]" placeholder="Your sponsored project amount..'+count3+'"><br> </div>';
-                      var new_div = document.createElement('div');
-                      new_div.innerHTML=str2;
-                      var currentDiv = document.getElementById("input-sponsored_project-list");
-                      currentDiv.appendChild(new_div);
-                    }
+                  // var count3 = 1;
+                  // document.getElementById('Add1').onclick = function createInputField() {
+                  //     count3++;
+                  //    var str2 = '<label for="">Sponsored Project Title</label><input id="sponsored_project_title" type="text" name="sponsored_project_title[]" placeholder="Your sponsored project title..'+count3+'" style="width:100%"><br><label for="">Sponsored Project Amount</label><input id="sponsored_project_amount" type="text" name="sponsored_project_amount[]" placeholder="Your sponsored project amount..'+count3+'" style="width:100%"><br><label for="">Sponsored Project Details</label><input id="sponsored_project_details" type="text" name="sponsored_project_details[]" placeholder="Your sponsored project details..'+count3+'" style="width:100%"><br>';
+                  //     var new_div = document.createElement('div');
+                  //     new_div.innerHTML=str2;
+                  //     var currentDiv = document.getElementById("input-sponsored_project-list");
+                  //     currentDiv.appendChild(new_div);
+                  //   }
 
-                    document.getElementById('Remove1').onclick = function removeInputField() {
+                  //   document.getElementById('Remove1').onclick = function removeInputField() {
 
-                        // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                        if (count3 >= 2) {
-                            var currentDiv = document.getElementById("input-sponsored_project-list");
-                            currentDiv.removeChild(currentDiv.lastChild);
-                            count3--;
-                            return false;
-                        } else {}
-                    }
+                  //       // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                  //       if (count3 >= 2) {
+                  //           var currentDiv = document.getElementById("input-sponsored_project-list");
+                  //           currentDiv.removeChild(currentDiv.lastChild);
+                  //           count3--;
+                  //           return false;
+                  //       } else {}
+                  //   }
                   </script>
 
               
@@ -315,11 +334,14 @@
                     {% for i in range(0,params[8]|length) %}
                     {% if params[8][i]=="consultancy" %}
                       <div>
-                          <label for="">Consultancy Project Number</label>
-                          <input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" value="{{params[9][i]}}" style="width=100%" readonly>
+                          <label for="">Consultancy Project Title</label>
+                          <input id="consultancy_project_title" type="text" name="consultancy_project_title[]" value="{{params[9][i]}}" style="width=100%" readonly>
                           <br>
                           <label for="">Consultancy Project Amount</label>
-                          <input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" value="{{params[10][i]}}" style="width=100%" readonly>
+                          <input id="consultancy_project_amount" type="text" name="consultancy_project_amount[]" value="{{params[10][i]}}" style="width=100%" readonly>
+                          <br>
+                          <label for="">Consultancy Project Details</label>
+                          <input id="consultancy_project_details" type="text" name="consultancy_project_details[]" value="{{params[11][i]}}" style="width=100%" readonly>
                           <br>
                       </div>
                     {% endif %}
@@ -328,76 +350,87 @@
                   <!-- <input type='button' id='Add2' value='Add'>
                   <input type='button' id='Remove2' value='Remove'> -->
                   <script>
-                      var count2 = 1;
-                      document.getElementById('Add2').onclick = function createInputField() {
-                          count2++;
-                          var str3 = '<div><label for="">Consultancy Project Number</label><input id="consultancy_project_number" type="Number" name="consultancy_project_number[]" placeholder="Your Consultancy Project number..'+count2+'"><br><label for="">Consultancy Project Amount</label><input id="consultancy_project_amount" type="Number" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount..'+count2+'"><br></div>';
+                      // var count2 = 1;
+                      // document.getElementById('Add2').onclick = function createInputField() {
+                      //     count2++;
+                      //    var str3 = '<label for="">Consultancy Project Title</label><input id="consultancy_project_title" type="text" name="consultancy_project_title[]" placeholder="Your Consultancy Project title..'+count2+'" style="width=100%"><br><label for="">Consultancy Project Amount</label><input id="consultancy_project_amount" type="text" name="consultancy_project_amount[]" placeholder="Your Consultancy Project amount..'+count2+'" style="width=100%"><br><label for="">Consultancy Project Details</label><input id="consultancy_project_details" type="text" name="consultancy_project_details[]" placeholder="Your Consultancy Project details..'+count2+'" style="width=100%"><br>';
                           
-                          var new_div = document.createElement('div');
-                          new_div.innerHTML=str3;
-                          var currentDiv = document.getElementById("input-consultancy_project-list");
-                          currentDiv.appendChild(new_div);
+                      //     var new_div = document.createElement('div');
+                      //     new_div.innerHTML=str3;
+                      //     var currentDiv = document.getElementById("input-consultancy_project-list");
+                      //     currentDiv.appendChild(new_div);
      
-                      }
+                      // }
 
-                      document.getElementById('Remove2').onclick = function removeInputField() {
+                      // document.getElementById('Remove2').onclick = function removeInputField() {
 
-                          // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
-                          if (count2 >= 2) {
-                              var currentDiv = document.getElementById("input-consultancy_project-list");
-                              currentDiv.removeChild(currentDiv.lastChild);
-                              count2--;
-                              return false;
+                      //     // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                      //     if (count2 >= 2) {
+                      //         var currentDiv = document.getElementById("input-consultancy_project-list");
+                      //         currentDiv.removeChild(currentDiv.lastChild);
+                      //         count2--;
+                      //         return false;
 
-                          } else {}
-                      }
+                      //     } else {}
+                      // }
                   </script>
                 
 
                 <h2 style="padding-top:10px"> Referees</h2>
                   <div id="input-referee-list">
                    <!--  <div> -->
-                        <label for="">Referee Email1</label>
-                        <input id="referee1_email" type="text" name="referee1_email" value="{{params[14][0]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Email1</label>
+                        <input id="referee1_email" type="text" name="referee1_email" value="{{params[15][0]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Name1</label>
-                        <input id="referee1_name" type="text" name="referee1_name" value="{{params[14][1]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Name1</label>
+                        <input id="referee1_name" type="text" name="referee1_name" value="{{params[15][1]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Designation1</label>
-                        <input id="referee1_desg" type="text" name="referee1_desg" value="{{params[14][2]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Designation1</label>
+                        <input id="referee1_desg" type="text" name="referee1_desg" value="{{params[15][2]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Address1</label>
-                        <input id="referee1_address" type="text" name="referee1_address" value="{{params[14][3]}}" style="width=100%" readonly>
-                        <br><hr><br>
-                        <label for="">Referee Email2</label>
-                        <input id="referee2_email" type="text" name="referee2_email" value="{{params[15][0]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Address1</label>
+                        <input id="referee1_address" type="text" name="referee1_address" value="{{params[15][3]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Name2</label>
-                        <input id="referee2_name" type="text" name="referee2_name" value="{{params[15][1]}}" style="width=100%" readonly>
+
+                         <hr style="height:1px; border:none;  background-color:#008080;">
+
+                        <label for="" class="required">Referee Email2</label>
+                        <input id="referee2_email" type="text" name="referee2_email" value="{{params[16][0]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Designation2</label>
-                        <input id="referee2_desg" type="text" name="referee2_desg" value="{{params[15][2]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Name2</label>
+                        <input id="referee2_name" type="text" name="referee2_name" value="{{params[16][1]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Address2</label>
-                        <input id="referee2_address" type="text" name="referee2_address" value="{{params[15][3]}}" style="width=100%" readonly>
-                        <br><hr><br>
-                        <label for="">Referee Email3</label>
-                        <input id="referee3_email" type="text" name="referee3_email" value="{{params[16][0]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Designation2</label>
+                        <input id="referee2_desg" type="text" name="referee2_desg" value="{{params[16][2]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Name3</label>
-                        <input id="referee3_name" type="text" name="referee3_name" value="{{params[16][1]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Address2</label>
+                        <input id="referee2_address" type="text" name="referee2_address" value="{{params[16][3]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Designation3</label>
-                        <input id="referee3_desg" type="text" name="referee3_desg" value="{{params[16][2]}}" style="width=100%" readonly>
+
+                         <hr style="height:1px; border:none;  background-color:#008080;">
+
+
+                         
+                        <label for="" class="required">Referee Email3</label>
+                        <input id="referee3_email" type="text" name="referee3_email" value="{{params[17][0]}}" style="width=100%" readonly>
                         <br>
-                        <label for="">Referee Address3</label>
-                        <input id="referee3_address" type="text" name="referee3_address" value="{{params[16][3]}}" style="width=100%" readonly>
+                        <label for="" class="required">Referee Name3</label>
+                        <input id="referee3_name" type="text" name="referee3_name" value="{{params[17][1]}}" style="width=100%" readonly>
+                        <br>
+                        <label for="" class="required">Referee Designation3</label>
+                        <input id="referee3_desg" type="text" name="referee3_desg" value="{{params[17][2]}}" style="width=100%" readonly>
+                        <br>
+                        <label for="" class="required">Referee Address3</label>
+                        <input id="referee3_address" type="text" name="referee3_address" value="{{params[17][3]}}" style="width=100%" readonly>
+                        <br>
+                        <label>Remarks</label>
+                        <input id="reamrks" type="text" name="remarks" value="{{params[18]}}" style="width=100%" readonly>
                         <br>
 
                     <!-- </div> -->
                   </div>
-              
-                  <!-- <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%"> -->
+                  
+                  <!-- <input type="submit" value="Save" style="background-color: #008080;color:white;width=100%"> -->
           </form>
         </div>
     </section>

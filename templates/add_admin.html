@@ -55,14 +55,6 @@
   </head>
   </head>
   <body style="background-color: #333333;">
-
-    <script> 
-         function message() { alert("Please complete all the previous sections!!");} 
-         message()
-         //alert("Please complete all the previous sections!!"); 
-    </script>
-
-
   
   <div class="site-wrap">
 
@@ -103,7 +95,8 @@
       
     </header>
 
- <section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
+<!--  <section style="position:fixed; top:20%; left:5%; width:80%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+ --><section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
          <div>
           <style>
             li a {
@@ -122,12 +115,13 @@
           }
           </style>
         <ul>
-        <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="part1">Personal Information</a></li>
-        <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>   
-         <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
+         <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="view_applications" > View applications</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="" class = "active">Create New Admin</a></li>
+         <!-- <li style="display:block;font-size:20px;color: #000;"><a href="part2">View Applications</a></li>    -->
+         <!-- <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
          <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="" class="active">Submit Application</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
+        <li style="display:block;font-size:20px;color: #000;"><a href="part5">Submit Application</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li> -->
          <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
       </ul>
       </div>
@@ -143,28 +137,26 @@
       border-radius: 4px;
       box-sizing: border-box;
       }
-      
+       .test {
+          width:60%;
+          display:inline;
+          overflow: auto;
+          white-space: nowrap;
+          margin:0px auto;
+        }
         </style>
          
          <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
-           <form action="insert_5" method="POST">
-             <h2>Here By I accept that all the information provided is true to my knowledge</h2><br>
-              
-             <label for="Name" style="margin-top:25px">Full Name</label>
-             <input type="text" id="name" name="name" placeholder="Your Full Name.." required>
-
-             <label for="place">Place</label>
-             <input type="text" id="place" name="place" placeholder="Enter the place" required><br>
-
-           <!--   <label for="date_of_birth_">Date</label>
-             <input type="date" id="date" name="date" required><br> -->
-
-             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
+           <form action="add_admin" method="POST">
+           <label>Admin Email </label>
+              <input type="text" placeholder="Enter email" id="addthisemail" name="addthisemail" >
+              <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
              
            </form>
          </div>
       </section> 
       
+ 
 
   </div>
 

@@ -3,6 +3,8 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug import secure_filename
 from flask_oauth import OAuth
 from flask_login import logout_user, confirm_login, LoginManager
+from nocache import nocache
+'''Application file where we register blueprints for all parts and add google api for login'''
 
 GOOGLE_CLIENT_ID = '968468250852-0hgdrduaga14on3nqo72mhhi0aovspel.apps.googleusercontent.com'
 GOOGLE_CLIENT_SECRET = 'AowoVK79d8yLqWt7M-5cy3mJ'
@@ -18,6 +20,7 @@ app.secret_key = SECRET_KEY
 oauth = OAuth()
 login_manager = LoginManager()
 login_manager.init_app(app)
+# cache.init_app(app)
 login_manager.login_view = 'login'
 
 from application import application
@@ -35,6 +38,9 @@ app.register_blueprint(application_part4, url_prefix='/application')
 from application_part5 import application_part5
 app.register_blueprint(application_part5, url_prefix='/application')
 
+from admin_section import admin_section
+app.register_blueprint(admin_section, url_prefix='/admin')
+
 
 
 google = oauth.remote_app('google',
@@ -51,10 +57,14 @@ consumer_secret=GOOGLE_CLIENT_SECRET)
 
 
 @app.route('/')
+@nocache
+
 def index():
 	return render_template('index.html')
 
 @app.route('/verify/')
+@nocache
+
 def verify():
 	access_token = session.get('access_token')
 	if access_token is None:
@@ -79,26 +89,42 @@ def verify():
 	d = json.loads(result)
 	session['email'] = d['email']
 	print d['email']
-	
+
 	confirm_login()
+
+	sql = "SELECT * FROM admins WHERE email = '%s'" % (session['email'])       #checking if user is already there in database
+	cursor.execute(sql)
+	results = cursor.fetchall()
+	print results
+	if list(results) != []:
+		return redirect(url_for('admin.admin_view_part1'))
+	
 	return redirect(url_for('show_applications')) 
 
 
 @app.route('/menu/', methods=['GET','POST'])       #on submission of login details
+@nocache
+
 def show_applications(): 
 	sql = "SELECT * FROM main_table WHERE email = '%s'" % (session['email'])       #checking if user is already there in database
 	cursor.execute(sql)
 	results = cursor.fetchall()
 	return render_template('show_application.html', rows=results, email_=session['email'])
 
+
 @app.route('/login')
+@nocache
+
 def login():
-	callback=url_for('authorized', _external=True)
+	callback = url_for('authorized', _external=True)
 	return google.authorize(callback=callback)
  
 @app.route("/logout/")
+@nocache
+
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('index'))
 
 @app.route(REDIRECT_URI)

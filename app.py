@@ -4,9 +4,11 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug import secure_filename
 
 
+'''Main app file where we connect to database'''
 global app
 app = Flask(__name__, template_folder='templates/')
 app.secret_key = 'secret'
+
 
 
 #################### connect to database ###############

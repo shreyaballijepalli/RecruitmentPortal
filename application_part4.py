@@ -3,6 +3,8 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug import secure_filename
 from flask_oauth import OAuth
 from time import gmtime, strftime
+from nocache import nocache
+
 
 
 from app import app, cursor, db
@@ -11,36 +13,49 @@ application_part4 = Blueprint('application_part4', __name__, template_folder='te
 
 
 
-UPLOAD_FOLDER = os.path.basename('static/uploads')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','doc','docx'])
+# UPLOAD_FOLDER = os.path.basename('static/uploads')
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+print("upload folder globally ",app.config['UPLOAD_FOLDER'])
+ALLOWED_EXTENSIONS = set(['pdf'])
 ALLOWED_EXTENSIONS_photo = set(['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG'])
 
-
+'''Only odf is allowed for cv,teaching statement,research statement,LOP,others'''
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+'''png,jpg,jpeg are allowed for photo,signature'''
 def allowed_file_photo(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_photo
 
 
+'''This handles displaying page 4, once files have been submitted'''
 @application_part4.route('part4', methods=['GET'])       #on submission of login details
+@nocache
 def part4(): 
 	sql = "SELECT * FROM attachments WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
 	rows = cursor.fetchall()
 
-	sql = "SELECT attachment_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
+	sql = "SELECT attachment_status,freeze_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
 	rows1 = cursor.fetchall()
-	if rows1[0][0] == 'submitted':
+	if rows1[0][1] == 'true':
+		print "going to freezed read only"
+		return render_template('application_readonly_freezed_part4.html', params=rows, email_=session['email'])
+	elif rows1[0][0] == 'submitted':
 		return render_template('application_readonly_part4.html', params=rows, email_=session['email'])
 	
 	return render_template('application_part4.html', params=rows, email_=session['email'])
 
+	
+
+	
+'''This handles inserting/updating the files in the database attachments table.
+   All the files entered by the applicant are stored. (we restore previous versions)'''
 @application_part4.route('insert_4', methods=['GET','POST'])       #on submission of login details
+@nocache
 def insert_4(): 
 	params = []
 	if request.method == 'POST':
@@ -48,8 +63,9 @@ def insert_4():
 		photo_f = request.files['photo']
 		if photo_f and allowed_file_photo(photo_f.filename):
 			filename = secure_filename(photo_f.filename)
-			file_name = str(session['application_number']) + "_photo_" + strftime("%Y-%m-%d_%H:%M:%S", gmtime()) +"."+filename.split(".")[-1]
+			file_name = str(session['application_number']) + "_photo_" + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) +"."+filename.split(".")[-1]
 			print filename
+			print "config folder ",app.config['UPLOAD_FOLDER']
 			photo_f.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
 			sql = "INSERT INTO attachments(application_no,type,filename) VALUES ('%s','%s','%s');"%(session['application_number'],'photo',
 				file_name)
@@ -63,7 +79,7 @@ def insert_4():
 		signature_f = request.files['signature']
 		if signature_f and allowed_file_photo(signature_f.filename):
 			filename = secure_filename(signature_f.filename)
-			file_name = str(session['application_number']) + "_signature_" + strftime("%Y-%m-%d_%H:%M:%S", gmtime()) +"."+filename.split(".")[-1]
+			file_name = str(session['application_number']) + "_signature_" + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) +"."+filename.split(".")[-1]
 			signature_f.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
 			sql = "INSERT INTO attachments(application_no,type,filename) VALUES ('%s','%s','%s');"%(session['application_number'],'signature',
 				file_name)
@@ -77,7 +93,7 @@ def insert_4():
 		cv_f = request.files['cv']
 		if cv_f and allowed_file(cv_f.filename):
 			filename = secure_filename(cv_f.filename)
-			file_name = str(session['application_number']) + "_cv_" + strftime("%Y-%m-%d_%H:%M:%S", gmtime()) +"."+filename.split(".")[-1]
+			file_name = str(session['application_number']) + "_cv_" + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) +"."+filename.split(".")[-1]
 			cv_f.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
 			sql = "INSERT INTO attachments(application_no,type,filename) VALUES ('%s','%s','%s');"%(session['application_number'],'cv',
 				file_name)
@@ -91,7 +107,7 @@ def insert_4():
 		teaching_f = request.files['teaching']
 		if teaching_f and allowed_file(teaching_f.filename):
 			filename = secure_filename(teaching_f.filename)
-			file_name = str(session['application_number']) + "_teaching_" + strftime("%Y-%m-%d_%H:%M:%S", gmtime()) +"."+filename.split(".")[-1]
+			file_name = str(session['application_number']) + "_teaching_" + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) +"."+filename.split(".")[-1]
 			teaching_f.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
 			sql = "INSERT INTO attachments(application_no,type,filename) VALUES ('%s','%s','%s');"%(session['application_number'],'teaching',
 				file_name)
@@ -105,7 +121,7 @@ def insert_4():
 		research_f = request.files['research']
 		if research_f and allowed_file(research_f.filename):
 			filename = secure_filename(research_f.filename)
-			file_name = str(session['application_number']) + "_research_" + strftime("%Y-%m-%d_%H:%M:%S", gmtime()) +"."+filename.split(".")[-1]
+			file_name = str(session['application_number']) + "_research_" + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) +"."+filename.split(".")[-1]
 			research_f.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
 			sql = "INSERT INTO attachments(application_no,type,filename) VALUES ('%s','%s','%s');"%(session['application_number'],'research',
 				file_name)
@@ -119,7 +135,7 @@ def insert_4():
 		LOP = request.files['LOP']
 		if LOP and allowed_file(LOP.filename):
 			filename = secure_filename(LOP.filename)
-			file_name = str(session['application_number']) + "_LOP_" + strftime("%Y-%m-%d_%H:%M:%S", gmtime()) +"."+filename.split(".")[-1]
+			file_name = str(session['application_number']) + "_LOP_" + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) +"."+filename.split(".")[-1]
 			LOP.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
 			sql = "INSERT INTO attachments(application_no,type,filename) VALUES ('%s','%s','%s');"%(session['application_number'],'LOP',
 				file_name)
@@ -134,7 +150,7 @@ def insert_4():
 		for f in others:
 			if f and allowed_file(f.filename):
 				filename = secure_filename(f.filename)
-				file_name = str(session['application_number']) + "_others_" + strftime("%Y-%m-%d_%H:%M:%S", gmtime()) +"."+filename.split(".")[-1]
+				file_name = str(session['application_number']) + "_others_" + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) +"."+filename.split(".")[-1]
 				f.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
 				sql = "INSERT INTO attachments(application_no,type,filename) VALUES ('%s','%s','%s');"%(session['application_number'],'others',
 				file_name)
@@ -155,10 +171,15 @@ def insert_4():
 			cursor.execute(sql)
 			rows = cursor.fetchall()
 
-			sql = "SELECT attachment_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
+			sql = "SELECT attachment_status,freeze_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
 			cursor.execute(sql)
 			rows1 = cursor.fetchall()
-			if rows1[0][0] == 'submitted':
+
+			if rows1[0][1] == 'true':
+				print "going to freezed read only"
+				return render_template('application_readonly_freezed_part4.html', params=rows, email_=session['email'])
+
+			elif rows1[0][0] == 'submitted':
 				return render_template('application_readonly_part4.html', params=rows, email_=session['email'])
 	
 			return  render_template('application_part4.html', params = rows,email_=session['email'])

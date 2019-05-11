@@ -24,6 +24,8 @@
 
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/style.css') }}">
     <style type="text/css">
+
+
       table {
           border-collapse: collapse;    
           }
@@ -160,7 +162,7 @@
              <label for="first_name_" class="required">First Name</label>
              <input type="text" id="first_name" name="first_name" placeholder="Your First Name.." required>
 
-             <label for="middle_name_" class="required">Middle Name</label>
+             <label for="middle_name_">Middle Name</label>
              <input type="text" id="middle_name" name="middle_name" placeholder="Your Middle Name.." >
 
              <label for="last_name_" class="required">Last Name</label>
@@ -172,8 +174,23 @@
              <!-- <label for="age_">Age</label>
              <input type="number" id="age" name="age" placeholder="Your Age.." required> -->
 
-             <label for="date_of_birth_" class="required">Date of Birth</label>
-             <input type="date" id="date_of_birth" name="date_of_birth" required><br>
+              <script> var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+                 if(dd<10){
+                        dd='0'+dd
+                    } 
+                    if(mm<10){
+                        mm='0'+mm
+                    } 
+
+                today = yyyy+'-'+mm+'-'+dd;
+                document.getElementById("date_of_birth").setAttribute("max", today);
+              </script>
+
+             <label for="date_of_birth" class="required">Date of Birth</label>
+             <input type="date" id="date_of_birth" name="date_of_birth" min='1919-01-01' required><br>
 
              <label for="caste_" class="required">Category</label>
              <select style="background-color:white" id="caste" name="caste">
@@ -182,7 +199,7 @@
               <option value="OC" required>OC</option> 
               <option value="OBC" required>OBC</option> 
               <option value="ST" required>ST</option> 
-              <option value="PWD" required>PWD</option>
+              <option value="PWS" required>PWS</option>
               </select> 
 <!-- 
              <label for="email_">Email</label>
@@ -216,12 +233,12 @@
              <label for="address1_" class="required">Address Line1</label>
              <input type = "text" id="address_1" name="address_1" placeholder="" required><br>
 
-             <label for="address2_">Address Line2</label>
+             <!-- <label for="address2_">Address Line2</label>
              <input type = "text" id="address_2" name="address_2" placeholder="" ><br>
 
              <label for="address3_">Address Line3</label>
              <input type = "text" id="address_3" name="address_3" placeholder=""><br>
-
+ -->
 
             <label for="other_info_">Other Information</label>
              <input type = "text" id="other_info" name="other_info" placeholder="">

@@ -166,32 +166,68 @@
               </script>
               -->
 
-            <label for="end_year" class="required">Year of Graduation</label>
-            <input type="date" id="bachelors_date_studied" name="bachelors_date_studied" required><br>
+             <div>
+            <div id="bachelors">
+              <div>
+              <label for="end_year" class="required">Year of Graduation</label>
+              <input type="date" id="bachelors_date_studied" name="bachelors_date_studied[]" required><br>
 
-            <!-- <select id="bachelors_date_studied" style="background-color:white" name="bachelors_date_studied"></select>
-            <script type="text/javascript">
-              var start1 = 2000;
-              var end1 = 2025;
-              var options1 = "";
-              options1 += "<option>select</option>";
-              for(var year = start1 ; year <=end1; year++){
-                options1 += "<option>"+ year +"</option>";
-              }
-              document.getElementById("bachelors_date_studied").innerHTML = options1;
-            </script> -->
+              <!-- <select id="bachelors_date_studied" style="background-color:white" name="bachelors_date_studied"></select>
+              <script type="text/javascript">
+                var start1 = 2000;
+                var end1 = 2025;
+                var options1 = "";
+                options1 += "<option>select</option>";
+                for(var year = start1 ; year <=end1; year++){
+                  options1 += "<option>"+ year +"</option>";
+                }
+                document.getElementById("bachelors_date_studied").innerHTML = options1;
+              </script> -->
 
-            <label for="bachelors_university_name_" class="required">University Name</label>
-            <input type="text" id="bachelors_university" name="bachelors_university" placeholder="Your University Name.." required>
+              <label for="bachelors_university_name_" class="required">University Name</label>
+              <input type="text" id="bachelors_university" name="bachelors_university[]" placeholder="Your University Name.." required><br>
 
-            <label for="bachelors_institute_name_" class="required">Institute Name</label>
-            <input type="text" id="bachelors_institute" name="bachelors_institute" placeholder="Your Institute Name.." required>
+              <label for="bachelors_institute_name_" class="required">Institute Name</label>
+              <input type="text" id="bachelors_institute" name="bachelors_institute[]" placeholder="Your Institute Name.." required><br>
 
-            <label for="bachelors_specialization_" class="required">Specialization</label>
-            <input type="text" id="bachelors_specialization" name="bachelors_specialization" placeholder="Your Specialization.." required>
+              <label for="bachelors_specialization_" class="required">Specialization</label>
+              <input type="text" id="bachelors_specialization" name="bachelors_specialization[]" placeholder="Your Specialization.." required><br>
 
-            <label for="cgpa" class="required">CGPA/10</label>
-            <input type="number" step="0.01" id="bachelors_cgpa" name="bachelors_cgpa" min=0 max=10 placeholder="Your CGPA.." required>
+              <label for="cgpa" class="required">CGPA</label>
+              <input type="number" step="0.01" id="bachelors_cgpa" name="bachelors_cgpa[]" min=0 max=10 placeholder="Your CGPA.." required style="width:45%">
+              <label for="scale" class="required">Scale</label>
+              <input type="number" id="bachelors_cgpa_scale" name="bachelors_cgpa_scale[]" min=1 max=10 placeholder="Your CGPA Scale.." required style="width:44%"><br>
+              </div>
+            </div>
+            <input type='button' id='Add_bach' value='Add'>
+            <input type='button' id='Remove_bach' value='Remove'>
+        </div>
+            <script>
+                var count_bach = 1;
+                document.getElementById('Add_bach').onclick = function createInputField() {
+                    if(count_bach<2)
+                   { count_bach++;
+                    var str_bach = '<label for="end_year" class="required">Year of Graduation</label><input type="date" id="bachelors_date_studied" name="bachelors_date_studied[]" required><br><label for="bachelors_university_name_" class="required">University Name</label><input type="text" id="bachelors_university" name="bachelors_university[]" placeholder="Your University Name.." required><br><label for="bachelors_institute_name_" class="required">Institute Name</label><input type="text" id="bachelors_institute" name="bachelors_institute[]" placeholder="Your Institute Name.." required><br><label for="bachelors_specialization_" class="required">Specialization</label><input type="text" id="bachelors_specialization" name="bachelors_specialization[]" placeholder="Your Specialization.." required><br><label for="cgpa" class="required">CGPA</label><input type="number" step="0.01" id="bachelors_cgpa" name="bachelors_cgpa[]" min=0 max=10 placeholder="Your CGPA.." required style="width:45%"><label for="scale" class="required">Scale</label><input type="number" id="bachelors_cgpa_scale" name="bachelors_cgpa_scale[]" min=1 max=10 placeholder="Your CGPA Scale.." required style="width:44%"><br>';
+
+                    var new_div = document.createElement('div');
+                    new_div.innerHTML=str_bach;
+                    var currentDiv = document.getElementById("bachelors");
+                    currentDiv.appendChild(new_div);  
+                  }
+                }
+
+                document.getElementById('Remove_bach').onclick = function removeInputField() {
+
+                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                    if (count_bach >= 2) {
+                        var currentDiv = document.getElementById("bachelors");
+                        currentDiv.removeChild(currentDiv.lastChild);
+                        count_bach--;
+                        return false;
+
+                    } else {}
+                }
+              </script>
 
             <h2>Master's</h2>
             <!--
@@ -209,26 +245,64 @@
               </script>
             -->
 
-            <label for="masters_end_year" class="required">Year of Graduation</label>
-            <input type="date" id="masters_date_studied" name="masters_date_studied" required><br>
+             <div>
+            <div id="masters">
+            <div>
+              <label for="masters_end_year" class="required">Year of Graduation</label>
+              <input type="date" id="masters_date_studied" name="masters_date_studied[]" required><br>
 
 
-           <!--  <select id="masters_date_studied" style="background-color:white" name="masters_date_studied"></select>
-            <script>
-              document.getElementById("masters_date_studied").innerHTML = options1;
-            </script> -->
-             
-            <label for="masters_university_name_" class="required">University Name</label>
-            <input type="text" id="masters_university" name="masters_university" placeholder="Your University Name.." required>
+             <!--  <select id="masters_date_studied" style="background-color:white" name="masters_date_studied"></select>
+              <script>
+                document.getElementById("masters_date_studied").innerHTML = options1;
+              </script> -->
+               
+              <label for="masters_university_name_" class="required">University Name</label>
+              <input type="text" id="masters_university" name="masters_university[]" placeholder="Your University Name.." required><br>
 
-            <label for="masters_institute_name_" class="required">Institute Name</label>
-            <input type="text" id="masters_institute" name="masters_institute" placeholder="Your Institute Name.." required>
+              <label for="masters_institute_name_" class="required">Institute Name</label>
+              <input type="text" id="masters_institute" name="masters_institute[]" placeholder="Your Institute Name.." required><br>
 
-            <label for="masters_specialization_" class="required">Specialization</label>
-            <input type="text" id="masters_specialization" name="masters_specialization" placeholder="Your Specialization.." required>
+              <label for="masters_specialization_" class="required">Specialization</label>
+              <input type="text" id="masters_specialization" name="masters_specialization[]" placeholder="Your Specialization.." required><br>
 
-            <label for="masters_cgpa" class="required">CGPA / Percentage</label>
-            <input type="number" step="0.01" id="masters_cgpa" name="masters_cgpa" min=0 max=10 placeholder="Your CGPA.." required>
+              <label for="masters_cgpa" class="required">CGPA</label>
+              <input type="number" step="0.01" id="masters_cgpa" name="masters_cgpa[]" min=0 max=10 placeholder="Your CGPA.." required style="width:45%">
+              <label for="scale" class="required">Scale</label>
+              <input type="number" id="masters_cgpa_scale" name="masters_cgpa_scale[]" min=1 max=10 placeholder="Your CGPA Scale.." required style="width:44%"><br>
+            </div>
+          </div>
+           <input type='button' id='Add_mas' value='Add'>
+           <input type='button' id='Remove_mas' value='Remove'>
+          </div>
+          <script>
+                var count_mas = 1;
+                document.getElementById('Add_mas').onclick = function createInputField() {
+                    
+                    if(count_mas<2)
+                   { count_mas++;
+                      var str_mas = '<label for="masters_end_year" class="required">Year of Graduation</label><input type="date" id="masters_date_studied" name="masters_date_studied[]" required><br><label for="masters_university_name_" class="required">University Name</label><input type="text" id="masters_university" name="masters_university[]" placeholder="Your University Name.." required><br><label for="masters_institute_name_" class="required">Institute Name</label><input type="text" id="masters_institute" name="masters_institute[]" placeholder="Your Institute Name.." required><br><label for="masters_specialization_" class="required">Specialization</label><input type="text" id="masters_specialization" name="masters_specialization[]" placeholder="Your Specialization.." required><br><label for="masters_cgpa" class="required">CGPA</label><input type="number" step="0.01" id="masters_cgpa" name="masters_cgpa[]" min=0 max=10 placeholder="Your CGPA.." required style="width:45%"><label for="scale" class="required">Scale</label><input type="number" id="masters_cgpa_scale" name="masters_cgpa_scale[]" min=1 max=10 placeholder="Your CGPA Scale.." required style="width:44%"><br>';
+
+                    var new_div = document.createElement('div');
+                    new_div.innerHTML=str_mas;
+                    var currentDiv = document.getElementById("masters");
+                    currentDiv.appendChild(new_div);  
+                  }
+                }
+
+                document.getElementById('Remove_mas').onclick = function removeInputField() {
+
+                    // var x = document.getElementsByTagName('INPUT').length-input_tillnow;
+                    if (count_mas >= 2) {
+                        var currentDiv = document.getElementById("masters");
+                        currentDiv.removeChild(currentDiv.lastChild);
+                        count_mas--;
+                        return false;
+
+                    } else {}
+                }
+              </script>
+
 
             <h2>PhD</h2>
 
@@ -242,16 +316,19 @@
             </script> -->
 
             <label for="phd_university_name_" class="required">University Name</label>
-            <input type="text" id="phd_university" name="phd_university" placeholder="Your University Name.." required>
+            <input type="text" id="phd_university" name="phd_university" placeholder="Your University Name.." required><br>
 
             <label for="phd_institute_name_" class="required">Institute Name</label>
-            <input type="text" id="phd_institute" name="phd_institute" placeholder="Your Institute Name.." required>
+            <input type="text" id="phd_institute" name="phd_institute" placeholder="Your Institute Name.." required><br>
 
             <label for="phd_specialization_" class="required">Specialization</label>
-            <input type="text" id="phd_specialization" name="phd_specialization" placeholder="Your Specialization.." required>
+            <input type="text" id="phd_specialization" name="phd_specialization" placeholder="Your Specialization.." required><br>
 
-            <label for="cgpa" class="required">CGPA / Percentage</label>
-            <input type="number" step="0.01" id="phd_cgpa" name="phd_cgpa"  min=0 max=10 placeholder="Your CGPA.." required>
+            <label for="cgpa" class="required">CGPA</label>
+            <input type="number" step="0.01" id="phd_cgpa" name="phd_cgpa"  min=0 max=10 placeholder="Your CGPA.." required style="width:45%">
+            <label for="scale" class="required">Scale</label>
+            <input type="number" id="phd_cgpa_scale" name="phd_cgpa_scale" min=1 max=10 placeholder="Your CGPA Scale.." required style="width:44%">
+            <br>
 
 
             <label for="phd_date_thesis" class="required">Date of Thesis Submission</label>

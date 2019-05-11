@@ -1,43 +1,75 @@
+'''
+This is the part that handles the third form. 
+The function part3() corresponds to the get request of the form. It checks if the application is a new one or already modified one.
+If it is a new application, we show a new empty form else we retrieve from database and show the previously entered values.
+This form can be updated multiple times till application is submitted.
+The function insert3() corresponds to the post request of the form. This is responsible for updating the entered details in the database.
+The table corresponding to this form is teching_experience.
+'''
+
 import os, jinja2, json
 from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory, Blueprint, session
 from werkzeug import secure_filename
 from flask_oauth import OAuth
+from dateutil import relativedelta
+from datetime import datetime
+from nocache import nocache
+
 
 from app import app, cursor, db
 
 application_part3 = Blueprint('application_part3', __name__, template_folder='templates', static_folder='static')   
 
-
-@application_part3.route('part3', methods=['GET'])       #on submission of login details
+'''This function handles displaying the experience form once data has been entered.
+ It fetches data from the database teaching_experience table and displays it in placeholders. '''
+@application_part3.route('part3', methods=['GET'])      
+@nocache
 def part3(): 
 	sql = "SELECT status FROM teaching_experience WHERE application_no = '%s';" %(session['application_number'])
 	cursor.execute(sql)
 	rows = cursor.fetchall()
-	if rows[0][0] == "new" :
+	if rows[0][0] == "new" :												# if the application is new show new empty form
 		return render_template('application_part3.html', email_=session['email'], application_number=session['application_number'])
-	else:
+	else:																	# else retrieve already present data
 		sql = "SELECT * FROM teaching_experience WHERE application_no = '%s';" %(session['application_number'])
 		cursor.execute(sql)
 		rows = cursor.fetchall()
 		rows = list(rows[0])
-		position_info_list = rows[2][1:-1].split(",")
-		referee1 = rows[16][1:-1].split(",")
-		referee2 = rows[17][1:-1].split(",")
-		referee3 = rows[18][1:-1].split(",")
+		position_info_list = rows[3][1:-1].split(",")
+		referee1 = rows[18][1:-1].split(",")
+		referee1 = [r.replace("\"","") for r in referee1]
+		referee2 = rows[19][1:-1].split(",")
+		referee2 = [r.replace("\"","") for r in referee2]
+		referee3 = rows[20][1:-1].split(",")
+		referee3 = [r.replace("\"","") for r in referee3]
 
-		params_ = [position_info_list,rows[3],rows[4],rows[5],rows[6],rows[7],rows[8],rows[9],rows[10],rows[11],rows[12],
-		rows[13],rows[14],rows[15],referee1,referee2,referee3]
-		
-		# print "retrieved properly"
+		# fetch the already stored values in the database and display them
+		params_ = [rows[2],position_info_list,rows[4],rows[5],rows[6],rows[8],rows[9],rows[10],rows[11],rows[12],
+		rows[13],rows[14],rows[15],rows[16],rows[17],referee1,referee2,referee3,rows[21]]
 
-		if rows[1] == "submitted" :
-			return render_template('application_readonly_part3.html',params=params_, application_number=session['application_number'])
+		sql = "SELECT freeze_status FROM main_table WHERE application_no = '%s';" %(session['application_number'])
+		cursor.execute(sql)
+		freeze_rows = cursor.fetchall()
+
+		if freeze_rows[0][0] == "true":											# once freezed there should be np submit button
+			return render_template('application_readonly_freezed_part3.html',email_=session['email'],params=params_, application_number=session['application_number'])		
+		elif rows[1] == "submitted" :												#if status is submitted the person can no longer chnage the form
+			return render_template('application_readonly_part3.html',email_=session['email'],params=params_, application_number=session['application_number'])
 		return render_template('application_placeholders_part3.html',params=params_,email_=session['email'], application_number=session['application_number'])
 	
 
-@application_part3.route('insert_3', methods=['GET','POST'])       #on submission of login details
+
+'''This function corresponds to inserting/updating data in the teaching_experience table once 
+   data has been inserted/submitted in the experience form.'''
+@application_part3.route('insert_3', methods=['GET','POST'])      
+@nocache
 def insert_3(): 
 	if (request.method =='POST'):
+
+		post_doc = request.form.getlist('post_doc_spec[]')
+		post_doc = [p.encode('utf8') for p in post_doc]
+		temp="{"+ ",".join(post_doc)+"}"
+		post_doc_str=temp
 
 		current_position = request.form['current_position']
 		pay_band = request.form['pay_band']
@@ -52,6 +84,7 @@ def insert_3():
 		experience_org_str=temp
 
 		start_date = request.form.getlist('start_date[]')
+		print("check start date --------",start_date)
 		start_date = [r.encode("utf8") for r in start_date]
 		temp="{"+ ",".join(start_date)+"}"
 		start_date_str=temp
@@ -63,11 +96,23 @@ def insert_3():
 		end_date_str=temp
 
 
-		total_period = request.form.getlist('total_period[]')
+
+		total_period = []
+		# temp = "{"
+
+		if (len(start_date)!=0 and start_date[0]!="") and (len(end_date)!=0 and end_date[0]!=""):
+			for i in range(len(start_date)):		
+				d1 =  start_date[i].replace('/','-')
+				d1 =  datetime.strptime(d1, '%Y-%m-%d')
+				d2 =  end_date[i].replace('/','-')
+				d2 = datetime.strptime(d2, '%Y-%m-%d')
+				difference = relativedelta.relativedelta(d1, d2)
+				diff = str(difference.years)+"years "+ str(difference.months)+"months"
+				total_period.append(str(diff))
+
 		temp="{"+ ",".join(total_period)+"}"
 		total_period_str=temp
 
-		# total_period = [r for r in total_period]
 
 		full_time = request.form.getlist('full_time[]')
 		full_time = [r.encode("utf8") for r in full_time]
@@ -84,65 +129,62 @@ def insert_3():
 		temp="{"+ ",".join(type_of_work)+"}"
 		type_of_work_str=temp
 
-		# experience_str = "{";
-		# for i in range(len(experience_org)):
-		# 	temp = "("+experience_org[i]+","+start_date[i]+","+end_date[i]+","+total_period[i]+","+full_time[i]+","+desgn[i]+","+type_of_work[i]+")"
-		# 	if i==len(experience_org)-1:
-		# 		experience_str+=temp+"}"
-		# 	else:
-		# 		experience_str+=temp+","
-
 
 		google_scholar = request.form['google_scholar']
 		dblp = request.form['dblp']
 		linkedin = request.form['linkedin']
 
-		sponsored_project_number = request.form.getlist('sponsored_project_number[]')
-		consultancy_project_number = request.form.getlist('consultancy_project_number[]')
-		temp="{"+ ",".join(sponsored_project_number) + ","
-		temp+=",".join(consultancy_project_number)+"}"
-		project_number_str=temp
-		merged_project_number = sponsored_project_number+consultancy_project_number
+		sponsored_project_title = request.form.getlist('sponsored_project_title[]')
+		consultancy_project_title = request.form.getlist('consultancy_project_title[]')
+
+		if len(sponsored_project_title)!=0 and sponsored_project_title[0]!="":
+			temp="{"+ ",".join(sponsored_project_title) + ","
+		else:
+			temp="{"
+		temp+=",".join(consultancy_project_title)+"}"
+
+		project_title_str=temp
+		merged_project_title = sponsored_project_title+consultancy_project_title
 
 
 		sponsored_project_amount = request.form.getlist('sponsored_project_amount[]')
 		consultancy_project_amount = request.form.getlist('consultancy_project_amount[]')
-		temp = "{"+ ",".join(sponsored_project_amount) + ","
+		if len(sponsored_project_amount)!=0 and sponsored_project_amount[0]!="":
+			temp = "{"+ ",".join(sponsored_project_amount) + ","
+		else:
+			temp = "{"
 		temp += ",".join(consultancy_project_amount)+"}"
 		project_amount_str = temp
 		merged_project_amount=sponsored_project_amount+consultancy_project_amount 
 
+		sponsored_project_details = request.form.getlist('sponsored_project_details[]')
+		consultancy_project_details = request.form.getlist('consultancy_project_details[]')
+		if len(sponsored_project_details)!=0 and sponsored_project_details[0]!="":
+			temp = "{"+ ",".join(sponsored_project_details) + ","
+		else:
+			temp = "{"
+		temp += ",".join(consultancy_project_details)+"}"
+		project_details_str = temp
+		merged_project_details=sponsored_project_details+consultancy_project_details 
+
 
 		project_type = []
 
-		project_type_str="{"
+		if len(sponsored_project_title)!=0 and sponsored_project_title[0]!="" and len(consultancy_project_title) and consultancy_project_title[0]!="":
+			project_type_str="{"
+			for i in range(len(sponsored_project_title)):
+				project_type.append("sponsored")
+				project_type_str+="sponsored"+","
 
-		for i in range(len(sponsored_project_number)):
-			project_type.append("sponsored")
-			project_type_str+="sponsored"+","
+			for i in range(len(consultancy_project_title)):
+				project_type.append("consultancy")
+				if i == len(consultancy_project_amount)-1:
+					project_type_str+="consultancy}"
+				else:
+					project_type_str+="consultancy"+","
+		else:
+			project_type_str="{}"
 
-		for i in range(len(consultancy_project_amount)):
-			project_type.append("consultancy")
-
-			if i == len(consultancy_project_amount)-1:
-				project_type_str+="consultancy}"
-			else:
-				project_type_str+="consultancy"+","
-
-
-
-
-		# project_str = "{";
-		# for i in range(len(sponsored_project_number)):
-		# 	temp = "(sponsored,"+sponsored_project_number[i]+","+sponsored_project_amount[i]+")"
-		# 	project_str+=temp+","
-
-		# for i in range(len(consultancy_project_number)):
-		# 	temp = "(consultancy,"+consultancy_project_number[i]+","+consultancy_project_number[i]+")"
-		# 	if i==len(consultancy_project_number)-1:
-		# 		project_str+=temp+"}"
-		# 	else:
-		# 		project_str+=temp+","
 
 
 		referee1_email = request.form['referee1_email']
@@ -165,15 +207,18 @@ def insert_3():
 		referee3_info = "("+referee3_email+","+referee3_name+","+referee3_desg+",\""+referee3_address+"\")";
 
 
+		remarks = request.form['remarks']
 
-		sql = "UPDATE teaching_experience SET status='%s',position='%s',\
+
+
+		sql = "UPDATE teaching_experience SET status='%s',post_doc='%s',position='%s',\
 		experience_organization='%s',experience_start_date='%s',experience_end_date='%s',\
 		experience_total_period = '%s',experience_full_time='%s',experience_desgn='%s',\
-		experience_type_of_work = '%s',project_type='%s',project_number='%s',project_amount= '%s',\
-		google_scholar='%s',dblp='%s',linkedin='%s',referee1='%s',referee2='%s',referee3='%s'\
-		WHERE application_no='%d';" %("modified",position_info,experience_org_str,start_date_str,end_date_str,
-			total_period_str,full_time_str,desgn_str,type_of_work_str,project_type_str,project_number_str,
-			project_amount_str,google_scholar,dblp,linkedin,referee1_info,referee2_info,referee3_info,int(session['application_number']))
+		experience_type_of_work = '%s',project_type='%s',project_title='%s',project_amount= '%s',\
+		project_details='%s',google_scholar='%s',dblp='%s',linkedin='%s',referee1='%s',referee2='%s',referee3='%s',remarks='%s'\
+		WHERE application_no='%d';" %("modified",post_doc_str,position_info,experience_org_str,start_date_str,end_date_str,
+			total_period_str,full_time_str,desgn_str,type_of_work_str,project_type_str,project_title_str,
+			project_amount_str,project_details_str,google_scholar,dblp,linkedin,referee1_info,referee2_info,referee3_info,remarks,int(session['application_number']))
 		print sql
 		try:   
 		   cursor.execute(sql)
@@ -183,44 +228,10 @@ def insert_3():
 			print "Info error"
 
 
-		params = [[current_position,pay_band,grade_pay,consolidated_salary],experience_org,start_date,end_date,
-		total_period,full_time,desgn,type_of_work,project_type,merged_project_number,merged_project_amount,google_scholar,dblp,linkedin,[referee1_email,referee1_name,referee1_desg,referee1_address],[referee2_email,referee2_name,
-		referee2_desg,referee2_address],[referee3_email,referee3_name,referee3_desg,referee3_address]]
-
-
-		# for i in range(len(sponsored_project_number)):
-
-		# 	sql2 = "INSERT INTO project_info SET type='%s',project_number='%d',amount='%d' WHERE application_no='%d';" %("sponsored",sponsored_project_number[i],sponsored_project_amount[i],int(session['application_number']))
-		# 	print sql2
-		# 	try:   
-		# 	   cursor.execute(sql2)
-		# 	   db.commit()
-		# 	   print "Form sponsored project is stored"
-		# 	except:
-		# 		print "Info error"
-
-		# for i in range(len(consultancy_project_number)):
-		# 	sql3 = "UPDATE project_info SET type='%s',project_number='%d',amount='%d' WHERE application_no='%d';" %("consultancy",consultancy_project_number[i],consultancy_project_amount[i],int(session['application_number']))
-		# 	print sql3
-		# 	try:   
-		# 	   cursor.execute(sql3)
-		# 	   db.commit()
-		# 	   print "Form consultancy project is stored"
-		# 	except:
-		# 		print "Info error"
-
-		# for i in range(len(experience_org)):
-		# 	sql4 = "UPDATE experience_info SET organization='%s',start_date='%s',end_date='%s',total_period='%d',full_time='%s',desgn='%s',type_of_work='%s' WHERE application_no='%d';" %(experience_org[i],start_date[i],end_date[i],
-		# 		total_period[i],full_time[i],desgn[i],type_of_work[i],int(session['application_number']))
-		# 	print sql4
-		# 	try:   
-		# 	   cursor.execute(sql4)
-		# 	   db.commit()
-		# 	   print "Form experience is stored"
-		# 	except:
-		# 		print "Info error"
-
-
+		params = [post_doc,[current_position,pay_band,grade_pay,consolidated_salary],experience_org,start_date,end_date,
+		full_time,desgn,type_of_work,project_type,merged_project_title,merged_project_amount,merged_project_details,
+		google_scholar,dblp,linkedin,[referee1_email,referee1_name,referee1_desg,referee1_address],[referee2_email,referee2_name,
+		referee2_desg,referee2_address],[referee3_email,referee3_name,referee3_desg,referee3_address],remarks]
 
 		# return "Saved!"
 	return render_template('application_placeholders_part3.html',params=params, email_=session['email'], application_number=session['application_number'])

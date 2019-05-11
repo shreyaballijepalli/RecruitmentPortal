@@ -55,14 +55,6 @@
   </head>
   </head>
   <body style="background-color: #333333;">
-
-    <script> 
-         function message() { alert("Please complete all the previous sections!!");} 
-         message()
-         //alert("Please complete all the previous sections!!"); 
-    </script>
-
-
   
   <div class="site-wrap">
 
@@ -103,7 +95,8 @@
       
     </header>
 
- <section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
+<!--  <section style="position:fixed; top:20%; left:5%; width:80%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
+ --><section style="position:fixed; top:20%; left:5%; width:20%; height:75%; padding:25px 20px 10px 0px; overflow-y:scroll; background-color: white">
          <div>
           <style>
             li a {
@@ -122,19 +115,15 @@
           }
           </style>
         <ul>
-        <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="part1">Personal Information</a></li>
-        <li style="display:block;font-size:20px;color: #000;"><a href="part2">Educational Qualifications</a></li>   
-         <li style="display:block;font-size:20px;color: #000;"><a href="part3">Experience</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="part4">Attachments</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="" class="active">Submit Application</a></li>
-         <li style="display:block;font-size:20px;color: #000;"><a href="/menu">Back to menu</a></li>
-         <!-- <li style="display:block;font-size:20px;color: #000;"><a href="/">logout</a></li> -->
+         <li style="display:block;font-size:20px;background-color:#30e3ca,color: #000;"><a href="" class = "active"> View applications</a></li>
+         <li style="display:block;font-size:20px;color: #000;"><a href="add_admin">Create New Admin</a></li>
+         
       </ul>
       </div>
     </section>
     <section style="position:fixed; top:20%; left:25%; width:70%; height:75%; margin:0 auto; border:1px solid black; padding:25px 20px 10px 20px; overflow-y:scroll; background-color: white">
         <style>
-        input[type=text], input[type=date],input[type=number],input[type=number],input[type=textarea],input[type=submit],select {
+        input[type=text], input[type=date],input[type=number],input[type=number],input[type=textarea],select {
       width: 100%;
       padding: 12px 20px;
       margin: 8px 0;
@@ -143,28 +132,56 @@
       border-radius: 4px;
       box-sizing: border-box;
       }
-      
+       .test {
+          width:60%;
+          display:inline;
+          overflow: auto;
+          white-space: nowrap;
+          margin:0px auto;
+        }
+
+        .button {
+        background-color: #008080;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        /*margin: 4px 2px;*/
+        cursor: pointer;
+      }
         </style>
          
          <div style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
-           <form action="insert_5" method="POST">
-             <h2>Here By I accept that all the information provided is true to my knowledge</h2><br>
-              
-             <label for="Name" style="margin-top:25px">Full Name</label>
-             <input type="text" id="name" name="name" placeholder="Your Full Name.." required>
-
-             <label for="place">Place</label>
-             <input type="text" id="place" name="place" placeholder="Enter the place" required><br>
-
-           <!--   <label for="date_of_birth_">Date</label>
-             <input type="date" id="date" name="date" required><br> -->
-
-             <input type="submit" value="Submit" style="background-color: #008080;color:white;width=100%">
-             
-           </form>
+           
+            <h1 align="center">APPLICATIONS</h1><hr>
+            <form action="freeze_admin" method="post">
+            <label>If you want to freeze the applications click on Freeze Applications</label><input type="submit" value="Freeze Applications" class="button" style="float:right;"><br><br>
+            </form>
+<!--             <input type="submit" value="Freeze Applications" style="background-color: #008080;color:white;width: 100%;padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;" >
+ -->           <h1>List of Applications</h1> 
+           <table border =1 align="center" style="width:100%; background-color: #f2f2f2;"> 
+              <tr style="background-color:#008080;color:white">
+                  <th>Application number</th>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th></th>
+               </tr>  
+               {% for row in rows %}
+               <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{row[1]}}</td>
+                  <td>{{row[2]}}</td>
+                  <td><a href="{{url_for('static',filename='applications/'+ row[3]) }}" target="_blank">View application</a>
+               </tr>
+            {% endfor %}   
+              </table>
          </div>
       </section> 
       
+ 
 
   </div>
 
