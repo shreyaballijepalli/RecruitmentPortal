@@ -43,7 +43,7 @@ The files included in the project are as follows:
 
 
 
- -  app.py : This is the main application file that connects to the database and maintains app variables.
+ -  app.py : This is the main application file that connects to the database and maintains app variables. The username and password corresponding to the database can be changed here.
 
  -  authentication.py : This file has code corresponding to registering blueprints and google api authentication.
  
@@ -55,7 +55,7 @@ The files included in the project are as follows:
 
  -  application_part4.py : This file handles the Attachments form in the application. All the previous versions of files are displyed in the page.
 
- -  application_part5.py : This file handles the submit part of the application. It updates the status of the application, generates a pdf of the application which is stored in static/applications and sends emails to referees. The content that is sent to the referees can be changed in the insert_5() function in the file.
+ -  application_part5.py : This file handles the submit part of the application. It updates the status of the application, generates a pdf of the application which is stored in static/applications and sends emails to referees. The content that is sent to the referees can be changed in the insert_5() function in the file. We have used our email for sending mails to referees. The email can also be changed in this function.
 
  -  admin_Section.py : This file handles the admin part of the application. It implements the add admin and freeze application functionalities.
 
