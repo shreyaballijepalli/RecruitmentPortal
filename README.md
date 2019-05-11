@@ -18,7 +18,8 @@ The web portal has 5 forms.
 
 - Personal Information : This contains fields corresponding to the Position Applied, Name, Email, Date of Birth, Category, Gender and other Personal information about the candidate. All fields are compulsory in this form.
 - Education : This contains fields corresponding to Education information of the candidate. It is possible to have upto 2 entries for Btech, Mtech fields. Fields corresponding to GATE, Research Specialiation, Research Interests are optional.
-- Experience : This contains fields corresponding to post doc, industrial/organization experience, projects, google scholar, dblp profiles, referee information. All fields in this form are optional except the information corresponding to the 3 referees.
+Upto 3 research interests can be added.
+- Experience : This contains fields corresponding to post doc, industrial/organization experience, projects, google scholar, dblp profiles, referee information. All fields in this form are optional except the information corresponding to the 3 referees. The experience details, project details can be added any number of times.
 - Attachments : This contains option to upload photo, signature, cv, teahcing statement, research statement, list of publications , any other documents.
   Photo, signature are accepted in png,jpg,jpeg format whereas all other files are accepted only in pdf format. This page also displays previously uploaded files.
 - Submit Application :  This is where the candidate can mention his Name, Place and submit the application. It is possible to modify the attachments Section even after submitting the application, but the other sections can't be modified. Once the admin freezes the application, it is not possible to edit any section of the application.   
@@ -35,7 +36,7 @@ The files included in the project are as follows:
    We have used postgres database.Before creating the schema using this file, a database named recruitment_portal has be created.
    - main_table: This is the table that stores personal information of the applicant. It has fields status, freeze_status which determine the status of the application whether it is 'submitted' or 'freezed'.  
    - education : This is the table that stores the education details of the applicant. Fields like bachelors, masters, phd are user defined fields.
-   - teaching_experience: This is the table that stores experience details of the applicant. It also stores information corresponding to the three referees.
+   - teaching_experience: This is the table that stores experience details of the applicant. It also stores information corresponding to the three referees. 
    - attachments : This is the table that stores the attachments uploaded by the applicant along with timestamp. All the attachments are stored in static/uploads folder.
    - admins: This is the table that stores the emails corresponding to admins. The first admin email has to be inserted manually.
      It can be done using the query *INSERT INTO admins (email) values(email_id);*  
